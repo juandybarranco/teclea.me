@@ -1,6 +1,6 @@
-#En desarollo...
+En desarollo...
 
-#####[tecleaME](https://www.teclea.me), una nueva red social de microbloggin con código abierto, libre y gratis.
+[tecleaME](https://www.teclea.me), una nueva red social de microbloggin con código abierto, libre y gratis.
 
 Desarrollando utilizando **Symfony 3.2.6** (acompañado de Doctrine, Twig, Javascript...) para hacer de ésta una red social robusta y segura.
  
