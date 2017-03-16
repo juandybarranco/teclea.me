@@ -68,6 +68,29 @@ class ReportsAdmin
     protected $isActive = true;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $isDeleted = false;
+
+    /**
+     * @return bool
+     */
+    public function isIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param bool $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
+
+    /**
      * @return int
      */
     public function getId()

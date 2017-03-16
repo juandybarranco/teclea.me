@@ -54,6 +54,13 @@ class ReportCommunity
     protected $isActive = true;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $isDeleted = false;
+
+    /**
      * @return int
      */
     public function getId()

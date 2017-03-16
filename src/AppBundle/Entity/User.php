@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @ORM\Entity
  */
@@ -31,6 +32,13 @@ class User implements UserInterface
      * @var string
      */
     protected $password;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, unique=true, length=60)
+     *
+     * @var string
+     */
+    protected $email;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -82,6 +90,13 @@ class User implements UserInterface
     protected $isSuspended = false;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $isAdmin = false;
+
+    /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="referred")
      *
      * @var User
@@ -96,14 +111,14 @@ class User implements UserInterface
     protected $referred;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Community", mappedBy="communityCreator")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Community", mappedBy="communityCreator")
      *
      * @var Community
      */
     protected $userCommunityCreator;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Community", mappedBy="admin")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Community", mappedBy="admin")
      *
      * @var Community
      */
@@ -192,6 +207,38 @@ class User implements UserInterface
      * @var PM
      */
     protected $PMRecipient;
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param mixed $isAdmin
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
 
     /**
      * @return PM
@@ -595,6 +642,10 @@ class User implements UserInterface
      */
     public function getRoles()
     {
+        if($this->getIsAdmin()){
+            return array('ROLE_ADMIN');
+        }
+
         return array('ROLE_USER');
     }
 

@@ -33,7 +33,7 @@ class Message
     protected $community;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, length=1024)
      *
      * @var string
      */

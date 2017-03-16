@@ -68,14 +68,14 @@ class Community
     protected $isDeleted = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="userCommunityCreator")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userCommunityCreator")
      *
      * @var User
      */
     protected $communityCreator;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="userCommunityAdmin")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userCommunityAdmin")
      *
      * @var User
      */
