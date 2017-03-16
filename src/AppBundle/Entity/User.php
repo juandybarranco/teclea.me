@@ -225,6 +225,22 @@ class User implements UserInterface
     }
 
     /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -238,6 +254,22 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
     /**
@@ -650,19 +682,6 @@ class User implements UserInterface
     }
 
     /**
-     * Returns the password used to authenticate the user.
-     *
-     * This should be the encoded password. On authentication, a plain-text
-     * password will be salted, encoded, and then compared to this value.
-     *
-     * @return string The password
-     */
-    public function getPassword()
-    {
-        // TODO: Implement getPassword() method.
-    }
-
-    /**
      * Returns the salt that was originally used to encode the password.
      *
      * This can return null if the password was not encoded using a salt.
@@ -672,16 +691,6 @@ class User implements UserInterface
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
-    }
-
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
     }
 
     /**

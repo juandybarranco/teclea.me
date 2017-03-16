@@ -27,7 +27,7 @@
                 <div class="inner">
                     <h1>tecleaME</h1>
                     <p><!--[-->La nueva red social basada en Microblogging.<!--]--><br />
-                        <!--[-->¡<a href="#login">Entra</a> o <a href="#signUp">crea una nueva cuenta</a> y comienza a comunicarte con tus amigos!<!--]--></p>
+                        <!--[-->¡<a href="#login">Entra</a> o <a href="#signup">crea una nueva cuenta</a> y comienza a comunicarte con tus amigos!<!--]--></p>
                 </div>
             </div>
             <nav>
@@ -61,14 +61,7 @@
                 <h2 class="major center">Nuevo Usuario</h2>
                 <p>Rellena el siguiente formulario para crear una cuenta de usuario.</p>
 
-                <form>
-                    <input type="text" class="form-control" placeholder="Nombre de Usuario: "/>
-                    <input type="password" class="form-control" placeholder="Contraseña: "/>
-                    <input type="password" class="form-control" placeholder="Repite la Contraseña: "/>
-                    <input type="email" class="form-control" placeholder="Correo Electrónico: "/>
-                    <input type="text" class="form-control" placeholder="País: "/>
-                    <button class="btn btn-lg mt5">Crear Cuenta</button>
-                </form>
+                {{ form(form) }}
             </article>
 
             <!-- FAQ -->
