@@ -1,128 +1,13 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>{% block title %}tecleaME{% endblock %}</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/main_anon.css') }}" />
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/noscript.css') }}" /></noscript>
-    </head>
-    <body>
-
-    <!-- Wrapper -->
-    <div id="wrapper">
-
-        <!-- Header -->
-        <header id="header">
-            <div class="logo">
-                <span class="icon fa-users"></span>
-            </div>
-            <div class="content">
-                <div class="inner">
-                    <h1>tecleaME</h1>
-                    <p><!--[-->La nueva red social basada en Microblogging.<!--]--><br />
-                        <!--[-->¡<a href="#login">Entra</a> o <a href="#signUp">crea una nueva cuenta</a> y comienza a comunicarte con tus amigos!<!--]--></p>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#login">Conéctate</a></li>
-                    <li><a href="#signup">Regístrate</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contact">Contacto</a></li>
-                    <!--<li><a href="#elements">Elements</a></li>-->
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Main -->
-        <div id="main">
-
-            <!-- Log In -->
-            <article id="login" class="text-center">
-                <h2 class="major center">Iniciar Sesión</h2>
-                <p>Usa tus datos de usuario para iniciar sesión.</p>
-
-                <form>
-                    <input type="text" class="form-control" placeholder="Nombre de Usuario: "/>
-                    <input type="password" class="form-control" placeholder="Contraseña: "/>
-                    <button class="btn btn-lg mt5">Iniciar Sesión</button>
-                </form>
-            </article>
-
-            <!-- Sign Up -->
-            <article id="signup" class="text-center">
-                <h2 class="major center">Nuevo Usuario</h2>
-                <p>Rellena el siguiente formulario para crear una cuenta de usuario.</p>
-
-                <form>
-                    <input type="text" class="form-control" placeholder="Nombre de Usuario: "/>
-                    <input type="password" class="form-control" placeholder="Contraseña: "/>
-                    <input type="password" class="form-control" placeholder="Repite la Contraseña: "/>
-                    <input type="email" class="form-control" placeholder="Correo Electrónico: "/>
-                    <input type="text" class="form-control" placeholder="País: "/>
-                    <button class="btn btn-lg mt5">Crear Cuenta</button>
-                </form>
-            </article>
-
-            <!-- FAQ -->
-            <article id="faq" class="text-center">
-                <h2 class="major center">Preguntas Frecuentes</h2>
-                <p>En desarrollo...</p>
-            </article>
-
-            <!-- Contact -->
-            <article id="contact" class="text-center">
-                <h2 class="major center">Contacto</h2>
-                <p>¿Tienes algún problema? Háznoslo saber.</p>
-                <form method="post" action="#">
-                    <div class="field half first">
-                        <label for="name">Nombre: </label>
-                        <input type="text" name="name" id="name" />
-                    </div>
-                    <div class="field half">
-                        <label for="email">Correo Electrónico: </label>
-                        <input type="text" name="email" id="email" />
-                    </div>
-                    <div class="field">
-                        <label for="message">Mensaje: </label>
-                        <textarea name="message" id="message" rows="4"></textarea>
-                    </div>
-                    <ul class="actions">
-                        <li><input type="submit" value="Enviar Mensaje" class="special" /></li>
-                        <li><input type="reset" value="Reiniciar" /></li>
-                    </ul>
-                </form>
-                <ul class="icons">
-                    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
-                </ul>
-            </article>
-        </div>
-
-        <!-- Footer -->
-        <footer id="footer">
-            <p class="copyright">&copy; 2017 <a href="https://www.teclea.me">tecleaME</a>. Desarrollado por: <a href="https://www.pedrojanula.xyz">Pedro José Anula</a>.</p>
-        </footer>
-
-    </div>
-
-    <!-- BG -->
-    <div id="bg"></div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/skel.min.js') }}"></script>
-    <script src="{{ asset('assets/js/util.js') }}"></script>
-    <script src="{{ asset('assets/js/main_anon.js') }}"></script>
-
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}tecleaME{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
