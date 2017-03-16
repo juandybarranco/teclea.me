@@ -49,10 +49,11 @@
                 <h2 class="major center">Iniciar Sesión</h2>
                 <p>Usa tus datos de usuario para iniciar sesión.</p>
 
-                <form>
-                    <input type="text" class="form-control" placeholder="Nombre de Usuario: "/>
-                    <input type="password" class="form-control" placeholder="Contraseña: "/>
-                    <button class="btn btn-lg mt5">Iniciar Sesión</button>
+                <form action="{{ path('login_check') }}" method="post">
+                    <input type="text" id="username" name="_username" placeholder="Nombre de Usuario: " class="form-control" />
+                    <input type="password" id="password" name="_password" placeholder="Contraseña: " class="form-control" />
+
+                    <button type="submit" class="btn btn-lg mt5">Iniciar Sesión</button>
                 </form>
             </article>
 

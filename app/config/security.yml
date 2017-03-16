@@ -20,7 +20,15 @@ security:
             security: false
 
         main:
+            pattern: ^/
             anonymous: ~
+            provider: provider_user
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: logout
+                target: /
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
