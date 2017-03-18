@@ -55,6 +55,8 @@
 
                     <button type="submit" class="btn btn-lg mt5">Iniciar Sesión</button>
                 </form>
+
+                <a href="#forgottedPassword">¿Has olvidado tu contraseña?</a>
             </article>
 
             <!-- Sign Up -->
@@ -99,6 +101,19 @@
                     <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
                     <li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
                 </ul>
+            </article>
+
+            <!-- Forgotted Password -->
+            <article id="forgottedPassword" class="text-center">
+                <h2 class="major center">¿Has olvidado tu contraseña?</h2>
+
+                {% if sendMail == 2 %}
+                    <div class="alert alert-danger" role="alert">No se encuentra esta dirección de correo en nuestra base de datos.</div>
+                {% endif %}
+
+                <p>Introduce tu dirección de correo: </p>
+
+                {{ form(formForgottedPassword) }}
             </article>
         </div>
 
