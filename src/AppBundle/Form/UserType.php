@@ -1,6 +1,6 @@
 <?php
 namespace AppBundle\Form;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -28,6 +28,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('password', RepeatedType::class, [
+                'label' => true,
                 'required' => true,
                 'type' => PasswordType::class,
                 'mapped' => false,

@@ -49,6 +49,18 @@
                 <h2 class="major center">Iniciar Sesión</h2>
                 <p>Usa tus datos de usuario para iniciar sesión.</p>
 
+                {% if option == 2 %}
+                    <div class="alert alert-success" role="alert">Se ha enviado una nueva contraseña a su correo electrónico.</div>
+                {% endif %}
+
+                {% if error %}
+                    {% if error.messageKey == "Invalid credentials." %}
+                        <div class="alert alert-danger" role="alert">Nombre de Usuario o Contraseña Incorrectos.</div>
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">{{ error.messageKey }}</div>
+                    {% endif %}
+                {% endif %}
+
                 <form action="{{ path('login_check') }}" method="post">
                     <input type="text" id="username" name="_username" placeholder="Nombre de Usuario: " class="form-control" />
                     <input type="password" id="password" name="_password" placeholder="Contraseña: " class="form-control" />
@@ -64,7 +76,24 @@
                 <h2 class="major center">Nuevo Usuario</h2>
                 <p>Rellena el siguiente formulario para crear una cuenta de usuario.</p>
 
-                {{ form(form) }}
+                {{ form_start(form) }}
+                    {% if form_errors(form.username) or form_errors(form.email) or form_errors(form.password.first) %}
+                        <div class="alert alert-danger text-left">
+                            Se han encontrado los siguientes errores:
+                            {{ form_errors(form.username) }}
+                            {{ form_errors(form.password.first) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(form.username) }}
+                    {{ form_widget(form.password.first) }}
+                    {{ form_widget(form.password.second) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_widget(form.country) }}
+                    {{ form_widget(form.referred) }}
+                    {{ form_widget(form.Enviar)}}
+                {{ form_end(form) }}
             </article>
 
             <!-- FAQ -->
@@ -107,14 +136,41 @@
             <article id="forgottedPassword" class="text-center">
                 <h2 class="major center">¿Has olvidado tu contraseña?</h2>
 
-                {% if sendMail == 2 %}
+                {% if sendMail == 1 %}
+                    <div class="alert alert-success" role="alert">Correo de recuperación enviado. Comprueba tu bandeja de entrada.</div>
+                {% elseif sendMail == 2 %}
                     <div class="alert alert-danger" role="alert">No se encuentra esta dirección de correo en nuestra base de datos.</div>
+                {% elseif option == 1 %}
+                    <div class="alert alert-danger" role="alert">El código de recuperación no es válido o ha caducado.</div>
                 {% endif %}
 
                 <p>Introduce tu dirección de correo: </p>
 
-                {{ form(formForgottedPassword) }}
+                {{ form_start(formForgottedPassword) }}
+                    {{ form_widget(formForgottedPassword.email) }}
+                    <input type="hidden" value="{{ form_errors(formForgottedPassword.email) }}">
+                    {{ form_widget(formForgottedPassword.Enviar) }}
+                {{ form_end(formForgottedPassword) }}
             </article>
+
+            <!-- Password Changed -->
+            <article id="loginPasswordChanged" class="text-center">
+                <h2 class="major center">Contraseña Cambiada</h2>
+
+                <p>Enhorabuena, se ha cambiado correctamente tu contraseña. En breve recibirás en tu dirección de correo
+                    electrónico una nueva contraseña. Ahora puedes <a href="{{ path('login') }}">iniciar sesión</a>.
+                </p>
+            </article>
+
+            <!-- Invalid Code -->
+            <article id="invalidCode" class="text-center">
+                <h2 class="major center">ERROR</h2>
+
+                <p>Se ha producido un error. El código de recuperación utilizado no es válido o no corresponde con la
+                    dirección de correo electrónico utilizada.</p>
+                <p>Si lo desea, puede volver a solicitar otro código <a href="./#forgottedPassword">pulsando aquí</a>.</p>
+            </article>
+
         </div>
 
         <!-- Footer -->

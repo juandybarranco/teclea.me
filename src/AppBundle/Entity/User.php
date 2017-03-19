@@ -3,10 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"username"}, errorPath="username", message="El nombre de usuario ya está en uso.")
+ * @UniqueEntity(fields={"email"}, errorPath="email", message="La dirección de correo electrónico ya está en uso.")
  */
 class User implements UserInterface
 {
@@ -35,6 +39,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", nullable=false, unique=true, length=60)
+     * @Assert\Email()
      *
      * @var string
      */

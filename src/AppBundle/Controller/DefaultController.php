@@ -18,6 +18,8 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')){
+            $auth = $this->get('security.authentication_utils');
+
             $user = new User();
 
             $form = $this->createForm(UserType::class, $user);
@@ -27,6 +29,11 @@ class DefaultController extends Controller
             $form2->handleRequest($request);
 
             $sendMail = 0;
+            $options = 0;
+
+            if(isset($_GET['o'])){
+                $options = $_GET['o'];
+            }
 
             if($form->isSubmitted() && $form->isValid()){
                 $password = $this->get('security.password_encoder');
@@ -39,10 +46,10 @@ class DefaultController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirectToRoute('index');
+                return $this->redirectToRoute('login');
             }
 
-            if($form2->isSubmitted() && $form2->isValid()){
+            if($form2->isSubmitted()){
                 $email = $form2->getData()->getEmail();
 
                 $nUsers = $this->getDoctrine()->getRepository('AppBundle:User')->findBy([
@@ -80,16 +87,19 @@ class DefaultController extends Controller
 
                     $this->get('mailer')->send($message);
 
-                    return $this->redirect('./#newPassword');
+                    $sendMail = 1;
                 }else{
                     $sendMail = 2;
                 }
             }
 
             return $this->render('default/index.html.twig', [
+                'last_username' => $auth->getLastUsername(),
+                'error' => $auth->getLastAuthenticationError(),
                 'form' => $form->createView(),
                 'formForgottedPassword' => $form2->createView(),
-                'sendMail' => $sendMail
+                'sendMail' => $sendMail,
+                'option' => $options
             ]);
         }else{
             return $this->render('default/index.html.twig');
@@ -103,50 +113,68 @@ class DefaultController extends Controller
     {
         $pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 
-        $code = $_GET['code'];
-        $email = $_GET['email'];
+        if(isset($_GET['code']) && isset($_GET['email'])){
+            $code = $_GET['code'];
+            $email = $_GET['email'];
 
-        $check = $this->getDoctrine()->getRepository('AppBundle:ForgottedPassword')->findBy([
-            'code' => $code,
-            'email' => $email,
-            'isActive' => true
-        ]);
+            $check = $this->getDoctrine()->getRepository('AppBundle:ForgottedPassword')->findBy([
+                'code' => $code,
+                'email' => $email,
+                'isActive' => true
+            ]);
 
-        if(count($check) == 1){
-            $check[0]->setIsActive(0);
+            if(count($check) == 1){
+                $check[0]->setIsActive(0);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($check[0]);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($check[0]);
+                $em->flush();
 
-            $user = $this->getDoctrine()->getRepository('AppBundle:User')->findBy([
-                'email' => $email
-            ])[0];
+                $m = $this->getDoctrine()->getRepository('AppBundle:ForgottedPassword')->findBy([
+                    'email' => $email,
+                    'isActive' => true
+                ]);
 
-            $password = $this->get('security.password_encoder');
-            $user->setPassword($password->encodePassword($user, $pass));
+                if(count($m) > 0){
+                    for($i=0; $i<count($m); $i++){
+                        $m[$i]->setIsActive(0);
 
-            $em->persist($user);
-            $em->flush();
+                        $em->persist($m[$i]);
+                        $em->flush();
+                    }
+                }
 
-            $message = \Swift_Message::newInstance(null)
-                ->setSubject('Nueva contraseña')
-                ->setFrom('tecleadotme@gmail.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'mails/newPassword.html.twig', [
-                            'pass' => $pass
-                        ]
-                    ),
-                    'text/html'
-                );
+                $user = $this->getDoctrine()->getRepository('AppBundle:User')->findBy([
+                    'email' => $email
+                ])[0];
 
-            $this->get('mailer')->send($message);
+                $password = $this->get('security.password_encoder');
+                $user->setPassword($password->encodePassword($user, $pass));
 
-            return $this->redirectToRoute('login');
+                $em->persist($user);
+                $em->flush();
+
+                $message = \Swift_Message::newInstance(null)
+                    ->setSubject('Nueva contraseña')
+                    ->setFrom('tecleadotme@gmail.com')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'mails/newPassword.html.twig', [
+                                'pass' => $pass
+                            ]
+                        ),
+                        'text/html'
+                    );
+
+                $this->get('mailer')->send($message);
+
+                return $this->redirect('./#loginPasswordChanged');
+            }else{
+                return $this->redirect('./#invalidCode');
+            }
+        }else{
+            return $this->redirectToRoute('index');
         }
-
-        return $this->render('userBase.html.twig');
     }
 }
