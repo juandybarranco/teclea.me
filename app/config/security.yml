@@ -13,6 +13,9 @@ security:
                 class: AppBundle:User
                 property: username
 
+    role_hierarchy:
+        ROLE_USER:  ROLE_USER
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:

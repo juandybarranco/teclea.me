@@ -17,7 +17,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')){
+        if($this->isGranted('ROLE_USER')){
+
+            return $this->render('userBase.html.twig', [
+                'user' => $this->getUser()
+            ]);
+        }else{
             $auth = $this->get('security.authentication_utils');
 
             $user = new User();
@@ -31,11 +36,11 @@ class DefaultController extends Controller
             $sendMail = 0;
             $options = 0;
 
-            if(isset($_GET['o'])){
+            if (isset($_GET['o'])) {
                 $options = $_GET['o'];
             }
 
-            if($form->isSubmitted() && $form->isValid()){
+            if ($form->isSubmitted() && $form->isValid()) {
                 $password = $this->get('security.password_encoder');
 
                 $user->setPassword($password->encodePassword($user, $form->get('password')->get('first')->getData()));
@@ -49,7 +54,7 @@ class DefaultController extends Controller
                 return $this->redirectToRoute('login');
             }
 
-            if($form2->isSubmitted()){
+            if ($form2->isSubmitted()) {
                 $email = $form2->getData()->getEmail();
 
                 $nUsers = $this->getDoctrine()->getRepository('AppBundle:User')->findBy([
@@ -58,7 +63,7 @@ class DefaultController extends Controller
                     'isSuspended' => false
                 ]);
 
-                if(count($nUsers) == 1){
+                if (count($nUsers) == 1) {
                     $code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 
                     $fp = new ForgottedPassword();
@@ -88,7 +93,7 @@ class DefaultController extends Controller
                     $this->get('mailer')->send($message);
 
                     $sendMail = 1;
-                }else{
+                } else {
                     $sendMail = 2;
                 }
             }
@@ -101,8 +106,6 @@ class DefaultController extends Controller
                 'sendMail' => $sendMail,
                 'option' => $options
             ]);
-        }else{
-            return $this->render('default/index.html.twig');
         }
     }
 
