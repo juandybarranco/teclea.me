@@ -74,6 +74,13 @@ class User implements UserInterface
     protected $personalMessage;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $image;
+
+    /**
      * @ORM\Column(type="boolean", nullable=false)
      *
      * @var boolean
@@ -227,6 +234,22 @@ class User implements UserInterface
     public function setIsAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
     /**

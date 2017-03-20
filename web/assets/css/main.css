@@ -2558,3 +2558,12 @@
 				}
 
 	}
+
+/* Personal Config */
+li.dropdown ul{
+	display: none;
+}
+
+li.dropdown ul li a{
+    padding: 0.2em 2em 0.2em 2em!important;
+}
