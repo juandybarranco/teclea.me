@@ -702,11 +702,13 @@ class User implements UserInterface
      */
     public function getRoles()
     {
+        $roles = ['ROLE_USER'];
+
         if($this->getIsAdmin()){
-            return array('ROLE_ADMIN');
+            $roles[] = 'ROLE_ADMIN';
         }
 
-        return array('ROLE_USER');
+        return $roles;
     }
 
     /**
