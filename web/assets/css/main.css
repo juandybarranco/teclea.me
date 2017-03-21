@@ -2614,6 +2614,25 @@ li.dropdown ul li a span:before{
     margin-top: 20px;
 }
 
+.mb10{
+    margin-bottom: 10px!important   ;
+}
+
+.editProfile form input[type="text"],
+.editProfile form input[type="email"],
+.editProfile form input[type="password"]{
+    height: 45px;
+    font-size: 16px;
+}
+
+.editProfile .input-group{
+    margin-bottom: 5px!important;
+}
+
+#personalMessage input{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
 @media screen and (max-width: 991px){
     .info .panel-body>div{

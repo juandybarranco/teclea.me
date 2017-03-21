@@ -1,0 +1,67 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <header class="">
+            <div class="image avatar58">
+                {% if user.image is null %}
+                    <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
+                {% else %}
+                    <img src="{{ user.image }}" alt="Imagen de Perfil de {{ user.username }}" class="img-responsive img-circle" />
+                {% endif %}
+            </div>
+
+            <h2>{{ user.username }}</h2>
+            <small>Usuario desde: {{ user.signupdate | date('d-m-Y') }}</small>
+
+            <hr/>
+        </header>
+
+        <div class="panel panel-info info">
+            <div class="panel-heading">
+                <b><span class="fa fa-edit"></span> Edición de Perfil</b>
+            </div>
+
+            <div class="panel-body editProfile">
+
+                {% if check == '1' %}
+                    <div class="alert alert-danger mb10" role="alert">El nombre de usuario no puede estar vacío.</div>
+                {% elseif check == '2' %}
+                    <div class="alert alert-danger mb10" role="alert">La dirección de correo electrónico no puede estar vacía.</div>
+                {% endif %}
+
+                {{ form_start(form) }}
+                <div class="col-md-12 input-group">
+                    <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
+                    {{ form_widget(form.username) }}
+                </div>
+
+                <div class="col-md-12 input-group">
+                    <span class="input-group-addon"><span class="fa fa-2x fa-envelope-square"></span></span>
+                    {{ form_widget(form.email) }}
+                </div>
+
+                <div class="col-md-12 input-group">
+                    <span class="input-group-addon"><span class="fa fa-2x fa-globe"></span></span>
+                    {{ form_widget(form.country) }}
+                </div>
+
+                <div class="col-md-12 input-group">
+                    <span class="input-group-addon"><span class="fa fa-2x fa-location-arrow"></span></span>
+                    {{ form_widget(form.location) }}
+                </div>
+
+                <div id="personalMessage" class="col-md-12 input-group">
+                    {{ form_widget(form.personalMessage) }}
+                    <span class="input-group-addon"><span class="numberCount">{{ lPM }}</span></span>
+                </div>
+
+                <div class="col-md-12 mt20">
+                    {{ form_rest(form) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
