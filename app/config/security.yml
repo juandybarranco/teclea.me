@@ -40,3 +40,7 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             #form_login: ~
+
+    access_control:
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/profile/edit, roles: ROLE_USER }

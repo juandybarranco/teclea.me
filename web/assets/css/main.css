@@ -1707,14 +1707,25 @@
 		}
 
 		.image.avatar48 {
-			width: 48px;
-			height: 48px;
-			background: #f00;
+			width: 60px;
+			height: 60px;
+			background: transparent;
 		}
 
 			.image.avatar48 img {
-				width: 48px;
-				height: 48px;
+				width: 60px;
+				height: 60px;
+			}
+
+		.image.avatar58 {
+			width: 150px;
+			height: 150px;
+			background: transparent;
+		}
+
+			.image.avatar58 img {
+				width: 150px;
+				height: 150px;
 			}
 
 		.image.fit {
@@ -2566,4 +2577,27 @@ li.dropdown ul{
 
 li.dropdown ul li a{
     padding: 0.2em 2em 0.2em 2em!important;
+}
+
+.info .panel-body div{
+    margin-bottom: 1px;
+}
+
+.info .panel-body div label{
+    margin-left: 20px;
+}
+
+.mt20{
+    margin-top: 20px;
+}
+
+
+@media screen and (max-width: 991px){
+    .info .panel-body>div{
+        margin-bottom: 15px;
+    }
+
+    .info .panel-body div{
+        text-align: center;
+    }
 }
