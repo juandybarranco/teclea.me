@@ -1970,7 +1970,7 @@
 		.icon:before {
 			display: inline-block;
 			font-family: FontAwesome;
-			font-size: 1.25em;
+			font-size: 23px;
 			text-decoration: none;
 			font-style: normal;
 			font-weight: normal;
@@ -2293,19 +2293,19 @@
 			}
 
 			#nav ul li a {
-				font-size: 0.8em;
-				padding-top: 0.5em;
-				padding-bottom: 0.5em;
+				font-size: 20px;
+				padding-top: 10px;
+				padding-bottom: 10px;
 			}
 
 				#nav ul li a span {
-					padding-right: 2.25em;
+					padding-right: 45px;
 				}
 
 					#nav ul li a span:before {
 						left: 100%;
 						margin-left: -1.25em;
-						line-height: 2.25em;
+						line-height: 40px;
 					}
 
 		/* Footer */
@@ -2407,7 +2407,7 @@
 			}
 
 			#nav ul li a {
-				padding: 0.5em 1.25em 0.5em 1.25em;
+				padding: 0.5em 1.25em 0.5em 1.25em!important;
 			}
 
 			#headerToggle {
@@ -2571,12 +2571,35 @@
 	}
 
 /* Personal Config */
+
+#nav ul li{
+    border-top: 1px solid #41484C;
+}
+
+#nav ul li:last-child{
+    border-bottom: 1px solid #41484C;
+}
+
 li.dropdown ul{
 	display: none;
 }
 
 li.dropdown ul li a{
-    padding: 0.2em 2em 0.2em 2em!important;
+    padding: 0 10px 0 0!important;
+}
+
+li.dropdown ul li{
+    background-color: #404143;
+    border-bottom: 1px solid #222629;
+}
+
+li.dropdown ul li:hover{
+    background-color: #313132;
+}
+
+li.dropdown ul li a span:before{
+    color: #E7E9EB!important;
+    font-size: 20px;
 }
 
 .info .panel-body div{
