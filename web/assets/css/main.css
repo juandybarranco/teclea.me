@@ -2151,6 +2151,7 @@
 
 	#main {
 		margin-left: 375px;
+		background-color: #F2F2F2;
 	}
 
 		#main > section {
@@ -2571,6 +2572,10 @@
 
 /* Personal Config */
 
+.flex{
+    display: flex;
+}
+
 #nav ul li{
     border-top: 1px solid #41484C;
 }
@@ -2609,8 +2614,20 @@ li.dropdown ul li a span:before{
     margin-left: 20px;
 }
 
+.mt1{
+    margin-top: 1px;
+}
+
+.mt4{
+    margin-top: 4px;
+}
+
 .mt20{
     margin-top: 20px;
+}
+
+.mr-30{
+    margin-right: -30px;
 }
 
 .mb10{
@@ -2636,6 +2653,12 @@ li.dropdown ul li a span:before{
 @media screen and (min-width: 1320px){
     li.dropdown ul li a{
         padding: 0 1.5em 0 1.5em!important;
+    }
+}
+
+@media screen and (max-width: 1080px){
+    .imageProfile h3{
+        font-size: 1em!important;
     }
 }
 

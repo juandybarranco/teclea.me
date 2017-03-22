@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\ChangeImageURL;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\editUserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,6 +39,9 @@ class ProfileController extends Controller
         $form2 = $this->createForm(ChangePasswordType::class);
         $form2->handleRequest($request);
 
+        $imgURL = $this->createForm(ChangeImageURL::class);
+        $imgURL->handleRequest($request);
+
         $personalMessage = $user->getPersonalMessage();
         $lengthPersonalMessage = 150 - strlen($personalMessage);
         $em = $this->getDoctrine()->getManager();
@@ -67,10 +71,19 @@ class ProfileController extends Controller
             $check = 3;
         }
 
+        if($imgURL->isSubmitted() && $imgURL->isValid()){
+            $image = $imgURL->get('image')->getData();
+            $user->setImage($image);
+
+            $em->persist($user);
+            $em->flush();
+        }
+
         return $this->render('Profile/editProfile.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
             'form2' => $form2->createView(),
+            'imgURL' => $imgURL->createView(),
             'lPM' => $lengthPersonalMessage,
             'check' => $check
         ]);
