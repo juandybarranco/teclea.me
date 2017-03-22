@@ -19,7 +19,7 @@
 
         <div class="panel panel-info info">
             <div class="panel-heading">
-                <b><span class="fa fa-edit"></span> Edición de Perfil</b>
+                <b><span class="fa fa-edit"></span> Información Principal</b>
             </div>
 
             <div class="panel-body editProfile">
@@ -62,6 +62,36 @@
                 {{ form_end(form) }}
             </div>
 
+        </div>
+
+        <div class="panel panel-info info">
+            <div class="panel-heading">
+                <b><span class="fa fa-edit"></span> Cambiar Contraseña</b>
+            </div>
+
+            <div class="panel-body editProfile">
+                {{ form_start(form2) }}
+                    {% if form_errors(form2.password.first) %}
+                        <div class="alert alert-danger mb10" role="alert">{{ form_errors(form2.password.first) }}</div>
+                    {% elseif check == '3' %}
+                        <div class="alert alert-success mb10" role="alert">La contraseña se ha cambiado correctamente.</div>
+                    {% endif %}
+
+                    <div class="col-md-12 input-group">
+                        <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
+                        {{ form_widget(form2.password.first) }}
+                    </div>
+
+                    <div class="col-md-12 input-group">
+                        <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
+                        {{ form_widget(form2.password.second) }}
+                    </div>
+
+                <div class="col-md-12 mt20">
+                    {{ form_rest(form2) }}
+                </div>
+                {{ form_end(form2) }}
+            </div>
         </div>
     </div>
 {% endblock %}
