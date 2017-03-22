@@ -2071,7 +2071,6 @@
 		}
 
 		#logo .image {
-			position: absolute;
 			left: 0;
 			top: 0;
 		}
@@ -2632,6 +2631,12 @@ li.dropdown ul li a span:before{
 #personalMessage input{
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+@media screen and (min-width: 1320px){
+    li.dropdown ul li a{
+        padding: 0 1.5em 0 1.5em!important;
+    }
 }
 
 @media screen and (max-width: 991px){
