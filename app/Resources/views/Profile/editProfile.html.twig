@@ -7,7 +7,7 @@
                 {% if user.image is null %}
                     <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
                 {% else %}
-                    <img src="{{ user.image }}" alt="Imagen de Perfil de {{ user.username }}" class="img-responsive img-circle" />
+                    <img src="{{ asset('uploads/profileImages/' ~ user.image ) }}" alt="Imagen de Perfil de {{ user.username }}" class="img-responsive img-circle" />
                 {% endif %}
             </div>
 
@@ -104,7 +104,7 @@
                     <div class="thumbnail">
                         <div class="image avatar58">
                             {% if user.image %}
-                                <img src="{{ user.image }}" alt="Imagen Actual" />
+                                <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen Actual" />
                             {% else %}
                                 <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen Actual" />
                             {% endif %}
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    <h3>Sube una imagen desde URL: </h3>
+                    <h1>Sube una imagen desde URL: </h1>
 
                     <div class="col-md-12">
                         {{ form_start(imgURL)}}
@@ -129,6 +129,29 @@
                                 {{ form_widget(imgURL.Enviar) }}
                             </div>
                         {{ form_end(imgURL) }}
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <h1>Sube tu Propia Imagen: </h1>
+
+                    <div class="col-md-12">
+                        {{ form_start(img)}}
+
+                        {% if form_errors((img.image)) %}
+                            <div class="alert alert-danger smaller" role="alert"><small>Se ha producido un error al subir la imagen. <br/>
+                                    La imagen debe .jpg, .jpeg o .png y no superar 1MB de tamaño.</small></div>
+                        {% endif %}
+
+                        <div class="col-md-10 col-xs-12 mr-30">
+                            {{ form_widget(img.image) }}
+
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form_widget(img.Enviar) }}
+                        </div>
+                        {{ form_end(img) }}
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\ChangeImage;
 use AppBundle\Form\ChangeImageURL;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\editUserType;
@@ -42,6 +43,9 @@ class ProfileController extends Controller
         $imgURL = $this->createForm(ChangeImageURL::class);
         $imgURL->handleRequest($request);
 
+        $img = $this->createForm(ChangeImage::class);
+        $img->handleRequest($request);
+
         $personalMessage = $user->getPersonalMessage();
         $lengthPersonalMessage = 150 - strlen($personalMessage);
         $em = $this->getDoctrine()->getManager();
@@ -79,11 +83,27 @@ class ProfileController extends Controller
             $em->flush();
         }
 
+        if($img->isSubmitted() && $img->isValid()){
+            $file = $img->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            $file->move(
+                $this->getParameter('profile_images'),
+                $fileName
+            );
+
+            $user->setImage($fileName);
+
+            $em->persist($user);
+            $em->flush();
+        }
+
         return $this->render('Profile/editProfile.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
             'form2' => $form2->createView(),
             'imgURL' => $imgURL->createView(),
+            'img' => $img->createView(),
             'lPM' => $lengthPersonalMessage,
             'check' => $check
         ]);

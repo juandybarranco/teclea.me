@@ -2572,6 +2572,10 @@
 
 /* Personal Config */
 
+.smaller small{
+	font-size: 85%!important;
+}
+
 .flex{
     display: flex;
 }
