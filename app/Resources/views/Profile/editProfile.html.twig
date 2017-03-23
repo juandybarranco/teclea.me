@@ -31,6 +31,22 @@
                 {% endif %}
 
                 {{ form_start(form) }}
+                <div class="col-md-12 privacy">
+                    <div class="col-md-5 ">
+                        <label>Privado</label>
+                    </div>
+                    <div class="col-md-2" >
+                        {% if user.isPublic %}
+                            <a href="{{ path('userChangePrivacy') }}"><span class="fa fa-2x fa-toggle-on"></span></a>
+                        {% else %}
+                            <a href="{{ path('userChangePrivacy') }}"><span class="fa fa-2x fa-toggle-off"></span></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-5 ">
+                        <label>Público</label>
+                    </div>
+
+                </div>
                 <div class="col-md-12 input-group">
                     <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
                     {{ form_widget(form.username) }}

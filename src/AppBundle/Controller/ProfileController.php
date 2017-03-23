@@ -108,4 +108,24 @@ class ProfileController extends Controller
             'check' => $check
         ]);
     }
+
+    /**
+     * @Route("/edit/changePrivacy", name="userChangePrivacy")
+     */
+    public function userChangePrivacy()
+    {
+        $user = $this->getUser();
+
+        if($user->getIsPublic()){
+            $user->setIsPublic(0);
+        }else{
+            $user->setIsPublic(1);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('editProfile');
+    }
 }

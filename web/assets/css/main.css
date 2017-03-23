@@ -2649,6 +2649,10 @@ li.dropdown ul li a span:before{
     margin-bottom: 5px!important;
 }
 
+.editProfile .privacy label{
+	text-align: center;
+}
+
 #personalMessage input{
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -2673,5 +2677,19 @@ li.dropdown ul li a span:before{
 
     .info .panel-body div{
         text-align: center;
+    }
+
+	.editProfile .privacy{
+		display: inline-flex;
+	}
+}
+
+@media screen and (max-width: 400px){
+	.editProfile .privacy span{
+		font-size: inherit!important;
+	}
+
+    .editProfile .privacy label{
+        font-size: 15px;
     }
 }
