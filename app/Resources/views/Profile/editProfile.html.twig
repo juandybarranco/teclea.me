@@ -116,39 +116,7 @@
             </div>
 
             <div class="panel-body imageProfile">
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="image avatar58">
-                            {% if user.image %}
-                                <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen Actual" />
-                            {% else %}
-                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen Actual" />
-                            {% endif %}
-                        </div>
-
-                        <div class="caption">
-                            <h3>Imagen Actual</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <h1>Sube una imagen desde URL: </h1>
-
-                    <div class="col-md-12">
-                        {{ form_start(imgURL)}}
-                            <div class="col-md-10 col-xs-12 mr-30">
-                                {{ form_widget(imgURL.image) }}
-                            </div>
-
-                            <div class="col-md-2">
-                                {{ form_widget(imgURL.Enviar) }}
-                            </div>
-                        {{ form_end(imgURL) }}
-                    </div>
-                </div>
-
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <h1>Sube tu Propia Imagen: </h1>
 
                     <div class="col-md-12">

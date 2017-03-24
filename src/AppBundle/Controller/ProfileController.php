@@ -40,9 +40,6 @@ class ProfileController extends Controller
         $form2 = $this->createForm(ChangePasswordType::class);
         $form2->handleRequest($request);
 
-        $imgURL = $this->createForm(ChangeImageURL::class);
-        $imgURL->handleRequest($request);
-
         $img = $this->createForm(ChangeImage::class);
         $img->handleRequest($request);
 
@@ -75,17 +72,9 @@ class ProfileController extends Controller
             $check = 3;
         }
 
-        if($imgURL->isSubmitted() && $imgURL->isValid()){
-            $image = $imgURL->get('image')->getData();
-            $user->setImage($image);
-
-            $em->persist($user);
-            $em->flush();
-        }
-
         if($img->isSubmitted() && $img->isValid()){
             $file = $img->get('image')->getData();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = 'img'.md5(uniqid()).'.'.$file->guessExtension();
 
             $file->move(
                 $this->getParameter('profile_images'),
@@ -102,7 +91,6 @@ class ProfileController extends Controller
             'user' => $user,
             'form' => $form->createView(),
             'form2' => $form2->createView(),
-            'imgURL' => $imgURL->createView(),
             'img' => $img->createView(),
             'lPM' => $lengthPersonalMessage,
             'check' => $check
