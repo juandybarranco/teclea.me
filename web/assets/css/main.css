@@ -2580,6 +2580,10 @@
     display: flex;
 }
 
+.no-padding{
+    padding: 0;
+}
+
 #nav ul li{
     border-top: 1px solid #41484C;
 }
@@ -2618,6 +2622,48 @@ li.dropdown ul li a span:before{
     margin-left: 20px;
 }
 
+#community>.panel{
+	border: 1px solid #DCE3E2;
+}
+
+#community>.panel>.panel-heading h1, #community>.panel>.panel-heading h2{
+	color: white!important;
+}
+
+#community>.panel-body{
+	background-color: white;
+}
+
+#community>.panel>.panel-heading hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+#community>.panel>.panel-heading header{
+    margin: 0;
+}
+
+#newMessage{
+    margin-bottom: 20px;
+}
+
+#newMessage input{
+    height: inherit;
+}
+
+#newMessage button{
+    height: 40px;
+}
+
+.messages .panel-heading{
+    padding: 0;
+}
+
+.messages .message{
+    font-size: 19px;
+}
+
 .mt1{
     margin-top: 1px;
 }
@@ -2638,6 +2684,11 @@ li.dropdown ul li a span:before{
     margin-bottom: 10px!important   ;
 }
 
+.messageImage{
+    width: 110px;
+    padding-right: 15px;
+}
+
 .editProfile form input[type="text"],
 .editProfile form input[type="email"],
 .editProfile form input[type="password"]{
@@ -2656,6 +2707,17 @@ li.dropdown ul li a span:before{
 #personalMessage input{
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.image.avatar95 {
+    width: 95px;
+    height: 95px;
+    background: transparent;
+}
+
+.image.avatar95 img {
+    width: 95px;
+    height: 95px;
 }
 
 @media screen and (min-width: 1320px){
@@ -2684,6 +2746,19 @@ li.dropdown ul li a span:before{
 	}
 }
 
+@media screen and (max-width: 640px){
+    .messages .panel-body{
+        display: block;
+    }
+
+    .messages .panel-body .messageImage{
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+    }
+}
+
 @media screen and (max-width: 400px){
 	.editProfile .privacy span{
 		font-size: inherit!important;
@@ -2691,5 +2766,9 @@ li.dropdown ul li a span:before{
 
     .editProfile .privacy label{
         font-size: 15px;
+    }
+
+    .message{
+        font-size: 16px!important;
     }
 }

@@ -15,6 +15,11 @@
         $(".numberCount").text($charsR);
     });
 
+    $("#newMessage").on('keyup', function(){
+        $charsR = 256 - ($("#newMessage input").val()).length;
+        $(".numberCount").text($charsR);
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',
