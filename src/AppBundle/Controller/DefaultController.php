@@ -41,6 +41,16 @@ class DefaultController extends Controller
             }
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if($form->get('referred')->getData()){
+                    $userReferred = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy([
+                        'username' => $form->get('referred')->getData()
+                    ]);
+
+                    if(count($userReferred) == 1){
+                        $user->setReferred($userReferred);
+                    }
+                }
+
                 $password = $this->get('security.password_encoder');
 
                 $user->setPassword($password->encodePassword($user, $form->get('password')->get('first')->getData()));
