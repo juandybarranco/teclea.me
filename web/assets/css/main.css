@@ -2644,6 +2644,37 @@ li.dropdown ul li a span:before{
     margin: 0;
 }
 
+#message .panel-primary{
+    border: 1px solid #ddd;
+}
+
+#message .panel-heading{
+    padding: 0;
+}
+
+#message .newReply{
+    display: none;
+}
+
+#message .backToCommunity{
+    width: 20%;
+    text-align: left;
+    margin-left: 5px;
+}
+
+#message .msgButtons{
+    width: 80%;
+}
+
+#message .replies .panel-footer{
+    display: flex;
+    padding: 0;
+}
+
+#message .replies .msgButtons{
+    width: 100%;
+}
+
 #newMessage{
     margin-bottom: 20px;
 }
@@ -2684,7 +2715,7 @@ li.dropdown ul li a span:before{
     margin-right: 10px;
 }
 
-.replies{
+#community .replies{
     background-color: ghostwhite;
 }
 
@@ -2692,7 +2723,7 @@ li.dropdown ul li a span:before{
     margin-left: 5%;
 }
 
-.replies .panel-body{
+#community .replies .panel-body{
     background-color: white;
 }
 
@@ -2706,6 +2737,13 @@ li.dropdown ul li a span:before{
     width: 40%;
     text-align: right;
     margin-right: 10px;
+}
+
+#message .replies .replyButtons{
+    width: 100%;
+    text-align: right;
+    margin-right: 10px;
+    margin-top: -4px;
 }
 
 .msgButtons .btn-options, .msgButtons .btn-options-sm{
@@ -2815,17 +2853,19 @@ li.dropdown ul li a span:before{
 }
 
 @media screen and (max-width: 670px){
-    .messages .panel-footer{
+    .messages .panel-footer, #message .replies .panel-footer{
         display: block;
     }
 
     .messages .panel-footer button, .messages .panel-footer .msgAnswers,
     .messages .panel-footer .msgButtons, .replies .panel-footer .replyInfo,
-    .replies .panel-footer .replyButtons, .messages .panel-footer .msgButtons a{
+    .replies .panel-footer .replyButtons, .messages .panel-footer .msgButtons a,
+    #message .backToCommunity, #message .backToCommunity a,
+    #message .msgButtons, #message .replies .panel-footer .replyButtons button{
         width: 100%;
     }
 
-    .messages .panel-footer .msgAnswers{
+    .messages .panel-footer .msgAnswers, #message .backToCommunity{
         margin-left: 0;
     }
     
@@ -2837,18 +2877,18 @@ li.dropdown ul li a span:before{
         display: inline-block;
     }
 
-    .msgButtons .btn-details, .msgButtons .btn-edit,
+    .msgButtons .btn-reply, .msgButtons .btn-edit,
     .msgButtons .btn-delete, .msgButtons .btn-report{
         display: none;
     }
 }
 
 @media screen and (max-width: 640px){
-    .messages .panel-body{
+    .messages .panel-body, #message .replies .panel-body{
         display: block;
     }
 
-    .messages .panel-body .messageImage{
+    .messages .panel-body .messageImage, #message .replies .panel-body .messageImage{
         text-align: center;
         margin-left: auto;
         margin-right: auto;

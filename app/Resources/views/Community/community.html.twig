@@ -54,8 +54,8 @@
                                     </div>
 
                                     <div class="msgButtons">
-                                        <a class="btn btn-sm btn-default btn-details"><span class="fa fa-eye"></span> Detalles</a>
-                                        <a class="btn btn-sm btn-default btn-reply"><span class="fa fa-reply"></span> Responder</a>
+                                        <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
+                                        <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
                                         {% if msg.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
                                         {% endif %}
@@ -65,6 +65,7 @@
                                         <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                                         <div class="btn-options-sm col-md-10">
+                                            <a class="btn btn-sm btn-default" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
                                             {% if msg.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
@@ -78,7 +79,7 @@
 
                                 {% if msg.messageReply | length > 0 %}
                                     <div class="panel-body replies">
-                                        {% for reply in msg.messageReply %}
+                                        {% for reply in msg.messageReply | reverse %}
                                             <div class="panel panel-default">
                                                 <div class="panel-body text-left flex">
                                                     <div class="messageImage">
