@@ -2810,6 +2810,26 @@ li.dropdown ul li a span:before{
 	}
 }
 
+@media screen and (max-width: 670px){
+    .messages .panel-footer{
+        display: block;
+    }
+
+    .messages .panel-footer button, .messages .panel-footer .msgAnswers,
+    .messages .panel-footer .msgButtons, .replies .panel-footer .replyInfo,
+    .replies .panel-footer .replyButtons{
+        width: 100%;
+    }
+
+    .messages .panel-footer .msgAnswers{
+        margin-left: 0;
+    }
+    
+    .replies{
+        text-align: center;
+    }
+}
+
 @media screen and (max-width: 640px){
     .messages .panel-body{
         display: block;
