@@ -79,7 +79,7 @@
 
                                 {% if msg.messageReply | length > 0 %}
                                     <div class="panel-body replies">
-                                        {% for reply in msg.messageReply | reverse %}
+                                        {% for reply in msg.messageReply | reverse | slice(0, 6) %}
                                             <div class="panel panel-default">
                                                 <div class="panel-body text-left flex">
                                                     <div class="messageImage">
@@ -108,6 +108,10 @@
                                                 </div>
                                             </div>
                                         {% endfor %}
+
+                                        {% if msg.messageReply | length > 6 %}
+                                            <a href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}" class="btn btn-lg btn-default">Ver más</a>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>

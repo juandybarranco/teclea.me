@@ -20,7 +20,7 @@
         $(".numberCount").text($charsR);
     });
 
-    $("#community").find(".replies").first().hide();
+    $("#community").find(".replies").hide();
 
     $(".msgAnswers").click(function(){
         $(this).parent().parent().find('.replies').first().toggle('fold', 500);
