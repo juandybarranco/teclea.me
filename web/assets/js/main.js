@@ -26,6 +26,10 @@
         $(this).parent().parent().find('.replies').first().toggle('fold', 500);
 	});
 
+    $(".btn-options").click(function(){
+        $(this).parent().find('.btn-options-sm').first().toggle('blind', 500);
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',

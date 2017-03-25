@@ -2664,7 +2664,7 @@ li.dropdown ul li a span:before{
     font-size: 19px;
 }
 
-.messages .panel-footer button{
+.messages .panel-footer a.btn, .messages .panel-footer button{
     margin-top: -4px;
 }
 
@@ -2673,13 +2673,13 @@ li.dropdown ul li a span:before{
 }
 
 .messages .panel-footer .msgAnswers{
-    width: 40%;
+    width: 25%;
     text-align: left;
     margin-left: 10px;
 }
 
 .messages .panel-footer .msgButtons{
-    width: 60%;
+    width: 75%;
     text-align: right;
     margin-right: 10px;
 }
@@ -2706,6 +2706,10 @@ li.dropdown ul li a span:before{
     width: 40%;
     text-align: right;
     margin-right: 10px;
+}
+
+.msgButtons .btn-options, .msgButtons .btn-options-sm{
+    display: none;
 }
 
 .mt1{
@@ -2817,7 +2821,7 @@ li.dropdown ul li a span:before{
 
     .messages .panel-footer button, .messages .panel-footer .msgAnswers,
     .messages .panel-footer .msgButtons, .replies .panel-footer .replyInfo,
-    .replies .panel-footer .replyButtons{
+    .replies .panel-footer .replyButtons, .messages .panel-footer .msgButtons a{
         width: 100%;
     }
 
@@ -2827,6 +2831,15 @@ li.dropdown ul li a span:before{
     
     .replies{
         text-align: center;
+    }
+
+    .msgButtons .btn-options{
+        display: inline-block;
+    }
+
+    .msgButtons .btn-details, .msgButtons .btn-edit,
+    .msgButtons .btn-delete, .msgButtons .btn-report{
+        display: none;
     }
 }
 
