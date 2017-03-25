@@ -2668,6 +2668,46 @@ li.dropdown ul li a span:before{
     margin-top: -4px;
 }
 
+.messages .panel-footer{
+    display: flex;
+}
+
+.messages .panel-footer .msgAnswers{
+    width: 40%;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.messages .panel-footer .msgButtons{
+    width: 60%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.replies{
+    background-color: ghostwhite;
+}
+
+.replies .panel{
+    margin-left: 5%;
+}
+
+.replies .panel-body{
+    background-color: snow;
+}
+
+.replies .replyInfo{
+    width: 60%;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.replies .replyButtons{
+    width: 40%;
+    text-align: right;
+    margin-right: 10px;
+}
+
 .mt1{
     margin-top: 1px;
 }
@@ -2688,9 +2728,13 @@ li.dropdown ul li a span:before{
     margin-bottom: 10px!important   ;
 }
 
-.messageImage{
+.messages .messageImage{
     width: 110px;
     padding-right: 15px;
+}
+
+.replies .messageImage{
+    width: 70px;
 }
 
 .editProfile form input[type="text"],
@@ -2734,6 +2778,10 @@ li.dropdown ul li a span:before{
     width: 85px;
     height: 85px;
     border: 2px solid white;
+}
+
+.btn-default{
+    color: #333!important;
 }
 
 @media screen and (min-width: 1320px){

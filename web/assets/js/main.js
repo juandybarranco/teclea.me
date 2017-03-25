@@ -20,6 +20,12 @@
         $(".numberCount").text($charsR);
     });
 
+    $(".replies").hide();
+
+    $(".msgAnswers").click(function(){
+        $(this).parent().parent().find('.replies').first().toggle('fold', 500);
+	});
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',

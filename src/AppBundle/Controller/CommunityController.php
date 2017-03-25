@@ -41,6 +41,7 @@ class CommunityController extends Controller
 
         $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
             'community' => $community,
+            'isReply' => false,
             'isActive' => true,
             'isDeleted' => false,
             'isBlock' => false

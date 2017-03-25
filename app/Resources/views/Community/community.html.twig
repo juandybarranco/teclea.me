@@ -43,12 +43,54 @@
                                     </div>
                                 </div>
                                 <div class="panel-footer">
-                                    <div class="btn-group-sm">
-                                        <button class="btn btn-sm btn-primary">Responder</button>
-                                        <button class="btn btn-sm btn-primary">Editar</button>
-                                        <button class="btn btn-sm btn-primary">Reportar</button>
+                                    <div class="msgAnswers">
+                                        <button class="btn btn-default">
+                                            {% if msg.messageReply | length == 1%}
+                                                <span>{{ msg.messageReply | length }} respuesta</span>
+                                            {% else %}
+                                                <span>{{ msg.messageReply | length }} respuestas</span>
+                                            {% endif %}
+                                        </button>
+                                    </div>
+
+                                    <div class="msgButtons">
+                                        <button class="btn btn-sm btn-default"><span class="fa fa-reply"></span> Responder</button>
+                                        <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                        <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                     </div>
                                 </div>
+
+                                {% if msg.messageReply | length > 0 %}
+                                    <div class="panel-body replies">
+                                        {% for reply in msg.messageReply %}
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-left flex">
+                                                    <div class="messageImage">
+                                                        <div class="image avatar48">
+                                                            {% if msg.user.image %}
+                                                                <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                            {% else %}
+                                                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 message">
+                                                        {{ reply.message }}
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="replyInfo small">
+                                                        <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
+                                                    </div>
+                                                    <div class="replyButtons">
+                                                        <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                        <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>

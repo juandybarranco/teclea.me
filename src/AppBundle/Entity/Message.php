@@ -110,6 +110,75 @@ class Message
     protected $messageReportCommunity;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="reply")
+     *
+     * @var Message
+     */
+    protected $messageReply;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Message", inversedBy="messageReply")
+     *
+     * @var Message
+     */
+    protected $reply;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $isReply;
+
+    /**
+     * @return bool
+     */
+    public function isIsReply()
+    {
+        return $this->isReply;
+    }
+
+    /**
+     * @param bool $isReply
+     */
+    public function setIsReply($isReply)
+    {
+        $this->isReply = $isReply;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMessageReply()
+    {
+        return $this->messageReply;
+    }
+
+    /**
+     * @param mixed $messageReply
+     */
+    public function setMessageReply($messageReply)
+    {
+        $this->messageReply = $messageReply;
+    }
+
+    /**
+     * @return Message
+     */
+    public function getReply()
+    {
+        return $this->reply;
+    }
+
+    /**
+     * @param Message $reply
+     */
+    public function setReply($reply)
+    {
+        $this->reply = $reply;
+    }
+
+    /**
      * @return ReportCommunity
      */
     public function getMessageReportCommunity()
