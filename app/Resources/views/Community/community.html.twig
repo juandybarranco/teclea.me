@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="panel-footer">
                                     <div class="msgAnswers">
-                                        <button class="btn btn-default">
+                                        <button class="btn btn-sm btn-default">
                                             {% if msg.messageReply | length == 1%}
                                                 <span>{{ msg.messageReply | length }} respuesta</span>
                                             {% else %}
@@ -55,7 +55,12 @@
 
                                     <div class="msgButtons">
                                         <button class="btn btn-sm btn-default"><span class="fa fa-reply"></span> Responder</button>
-                                        <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                        {% if msg.user.id == user.id %}
+                                            <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                        {% endif %}
+                                        {% if msg.user.id == user.id %}
+                                            <button class="btn btn-sm btn-default"><span class="fa fa-trash"></span> Borrar</button>
+                                        {% endif %}
                                         <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                     </div>
                                 </div>
@@ -67,7 +72,7 @@
                                                 <div class="panel-body text-left flex">
                                                     <div class="messageImage">
                                                         <div class="image avatar48">
-                                                            {% if msg.user.image %}
+                                                            {% if reply.user.image %}
                                                                 <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
                                                             {% else %}
                                                                 <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
@@ -83,7 +88,9 @@
                                                         <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                     </div>
                                                     <div class="replyButtons">
-                                                        <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                        {% if reply.user.id == user.id %}
+                                                            <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                        {% endif %}
                                                         <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                                     </div>
                                                 </div>

@@ -56,6 +56,7 @@ class CommunityController extends Controller
             $msg->setIsActive(1);
             $msg->setIsBlock(0);
             $msg->setIsDeleted(0);
+            $msg->setIsReply(0);
             $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
 
             $em = $this->getDoctrine()->getManager();
