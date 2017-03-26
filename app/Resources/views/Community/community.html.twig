@@ -45,10 +45,18 @@
                                 <div class="panel-footer">
                                     <div class="msgAnswers">
                                         <button class="btn btn-sm btn-default">
-                                            {% if msg.messageReply | length == 1%}
-                                                <span>{{ msg.messageReply | length }} respuesta</span>
+                                            {% set cont = 0 %}
+
+                                            {% for r in msg.messageReply %}
+                                                {% if r.isdeleted == false %}
+                                                    {% set cont = cont + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            
+                                            {% if cont == 1%}
+                                                <span>{{ cont }} respuesta</span>
                                             {% else %}
-                                                <span>{{ msg.messageReply | length }} respuestas</span>
+                                                <span>{{ cont }} respuestas</span>
                                             {% endif %}
                                         </button>
                                     </div>
@@ -70,7 +78,7 @@
                                                 <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
                                             {% if msg.user.id == user.id %}
-                                                <a class="btn btn-sm btn-default btn-delete-sm"><span class="fa fa-trash"></span> Borrar</a>
+                                                <a class="btn btn-sm btn-default btn-delete-sm" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
                                             <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
@@ -79,7 +87,7 @@
 
                                 {% if msg.messageReply | length > 0 %}
                                     <div class="panel-body replies">
-                                        {% for reply in msg.messageReply | reverse | slice(0, 6) %}
+                                        {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
                                             <div class="panel panel-default">
                                                 <div class="panel-body text-left flex">
                                                     <div class="messageImage">
@@ -102,6 +110,9 @@
                                                     <div class="replyButtons">
                                                         {% if reply.user.id == user.id %}
                                                             <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                        {% endif %}
+                                                        {% if reply.user.id == user.id %}
+                                                            <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                         {% endif %}
                                                         <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                                     </div>
