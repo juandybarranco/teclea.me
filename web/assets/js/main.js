@@ -61,6 +61,33 @@
         });
     });
 
+    $(".btn-delete-inMessage, .btn-delete-inMessage-sm").click(function(){
+        idMessage = $(this).attr('name');
+
+        swal({
+                title: "¿Estás seguro?",
+                text: "Este mensaje se borrará completamente",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Borrar",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../deleteMessage/'+idMessage
+                })
+                    .done(function( status ){
+                        swal(status);
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    });
+            });
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',

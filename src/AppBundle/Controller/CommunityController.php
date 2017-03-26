@@ -81,44 +81,56 @@ class CommunityController extends Controller
     public function messageDetailsGeneralAction($id, Request $request)
     {
         $user = $this->getUser();
+        $access = "";
 
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
+        $form = null;
+
 
         if(count($message) == 0){
             $message = null;
-            $form = null;
+            $access = 'notFound';
         }else{
-            $msg = new Message();
-            $form = $this->createForm(newMessageType::class, $msg);
-            $form->handleRequest($request);
 
-            if($form->isSubmitted() && $form->isValid()){
-                $msg->setUser($user);
-                $msg->setReply($message);
-                $msg->setCommunity($message->getCommunity());
-                $msg->setDate(new \DateTime("now"));
-                $msg->setIsActive(1);
-                $msg->setIsBlock(0);
-                $msg->setIsDeleted(0);
-                $msg->setIsReply(1);
-                $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+            if($message->isIsDeleted()){
+                $access = 'deleted';
+            }elseif ($message->isIsBlock()) {
+                $access = 'block';
+            }elseif ($message->isIsActive() == false){
+                $access = 'inactive';
+            }else{
+                $access = 'default';
+                $msg = new Message();
+                $form = $this->createForm(newMessageType::class, $msg);
+                $form->handleRequest($request);
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($msg);
-                $em->flush();
+                if($form->isSubmitted() && $form->isValid()){
+                    $msg->setUser($user);
+                    $msg->setReply($message);
+                    $msg->setCommunity($message->getCommunity());
+                    $msg->setDate(new \DateTime("now"));
+                    $msg->setIsActive(1);
+                    $msg->setIsBlock(0);
+                    $msg->setIsDeleted(0);
+                    $msg->setIsReply(1);
+                    $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
 
-                return $this->redirectToRoute('messageDetailsGeneral', [
-                    'id' => $message->getId()
-                ]);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($msg);
+                    $em->flush();
+
+                    return $this->redirectToRoute('messageDetailsGeneral', [
+                        'id' => $message->getId()
+                    ]);
+                }
+
+                $form = $form->createView();
             }
-
-            $form = $form->createView();
-
         }
 
         return $this->render('Community/messageDetails.html.twig', [
             'user' => $user,
-            'access' => 'default',
+            'access' => $access,
             'message' => $message,
             'isGeneral' => true,
             'form' => $form

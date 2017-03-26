@@ -39,7 +39,7 @@
                             <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
                         {% endif %}
                         {% if message.user.id == user.id %}
-                            <a class="btn btn-sm btn-default btn-delete"><span class="fa fa-trash"></span> Borrar</a>
+                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                         {% endif %}
                         <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
@@ -48,7 +48,7 @@
                                 <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                             {% endif %}
                             {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default"><span class="fa fa-trash"></span> Borrar</a>
+                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
                             <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                         </div>
@@ -76,7 +76,7 @@
 
             <div class="col-md-12 replies">
                 {% if message.messageReply | length > 0 %}
-                    {% for reply in message.messageReply | reverse %}
+                    {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
                         <div class="panel panel-default">
                             <div class="panel-heading small">
                                 <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
@@ -100,6 +100,9 @@
                                     {% if reply.user.id == user.id %}
                                         <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
                                     {% endif %}
+                                    {% if reply.user.id == user.id %}
+                                        <button class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                    {% endif %}
                                     <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                 </div>
                             </div>
@@ -107,8 +110,14 @@
                     {% endfor %}
                 {% endif %}
             </div>
-        {% else %}
-
+        {% elseif access == 'deleted' %}
+            <div class="alert alert-danger" role="alert">Este mensaje ha sido eliminado.</div>
+        {% elseif access == 'notFound' %}
+            <div class="alert alert-danger" role="alert">Este mensaje no existe.</div>
+        {% elseif access == 'block' %}
+            <div class="alert alert-danger" role="alert">Este mensaje ha sido bloqueado temporalmente por acumulación de reportes.</div>
+        {% elseif access == 'inactive' %}
+            <div class="alert alert-danger" role="alert">Este mensaje ha sido eliminado por acumulación de reportes.</div>
         {% endif %}
     </div>
 {% endblock %}

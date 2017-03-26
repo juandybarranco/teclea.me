@@ -52,7 +52,7 @@
                                                     {% set cont = cont + 1 %}
                                                 {% endif %}
                                             {% endfor %}
-                                            
+
                                             {% if cont == 1%}
                                                 <span>{{ cont }} respuesta</span>
                                             {% else %}
@@ -112,7 +112,7 @@
                                                             <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
                                                         {% endif %}
                                                         {% if reply.user.id == user.id %}
-                                                            <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                            <button class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
                                                         {% endif %}
                                                         <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
                                                     </div>
