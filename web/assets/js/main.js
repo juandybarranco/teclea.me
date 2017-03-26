@@ -36,7 +36,6 @@
 
     $(".btn-delete, .btn-delete-sm").click(function(){
         idMessage = $(this).attr('name');
-        code = 10;
 
         swal({
             title: "¿Estás seguro?",
@@ -55,6 +54,9 @@
             })
                 .done(function( status ){
                     swal(status);
+                    setTimeout(function(){
+                        location.reload();
+                    }, 2000);
                 });
         });
     });
