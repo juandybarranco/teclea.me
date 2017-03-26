@@ -124,4 +124,49 @@ class CommunityController extends Controller
             'form' => $form
         ]);
     }
+
+    /**
+     * @Route("/deleteMessage/{id}", name="deleteMessage")
+     */
+    public function deleteMessageAction($id)
+    {
+        $status = 'Se ha producido un error desconocido.';
+        $user = $this->getUser();
+
+        $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
+
+        if(($message->getUser() == $user) && ($message->isIsActive() == true) && ($message->isIsDeleted() == false) && ($message->isIsBlock() == false)){
+            if(count($message) == 1){
+                $em = $this->getDoctrine()->getManager();
+
+                $replies = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
+                    'isReply' => true,
+                    'reply' => $message,
+                    'isDeleted' => false,
+                    'isActive' => true,
+                    'isBlock' => false
+                ]);
+
+                for($i=0; $i<count($replies); $i++){
+                    $replies[$i]->setIsDeleted(1);
+                    $em->persist($replies[$i]);
+                    $em->flush();
+                }
+
+                $message->setIsDeleted(1);
+                $em->persist($message);
+                $em->flush();
+
+                $status = 'Mensaje eliminado correctamente.';
+            }else{
+                $status = 'No tienes permisos para borrar este mensaje.';
+            }
+        }else{
+            $status = 'No tienes permisos para borrar este mensaje.';
+        }
+
+        return $this->render('Community/deleteMessage.html.twig', [
+            'status' => $status
+        ]);
+    }
 }

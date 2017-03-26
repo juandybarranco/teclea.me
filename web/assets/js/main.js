@@ -34,6 +34,31 @@
         $(".newReply").toggle('fold', 500);
     });
 
+    $(".btn-delete, .btn-delete-sm").click(function(){
+        idMessage = $(this).attr('name');
+        code = 10;
+
+        swal({
+            title: "¿Estás seguro?",
+            text: "Este mensaje se borrará completamente",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Borrar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        },
+        function(){
+            $.ajax({
+                method: 'POST',
+                url: './deleteMessage/'+idMessage
+            })
+                .done(function( status ){
+                    swal(status);
+                });
+        });
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',
