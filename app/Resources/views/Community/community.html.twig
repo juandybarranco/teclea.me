@@ -130,8 +130,148 @@
                     </div>
                 </div>
             </div>
-        {% else %}
+        {% elseif access == 'notFound' %}
+            <div class="alert alert-danger" role="alert">Esta comunidad no existe.</div>
+        {% elseif access == 'blocked' %}
+            <div class="alert alert-danger" role="alert">Esta comunidad está bloqueada temporalmente debido a acumulación de reportes.</div>
+        {% elseif access == 'suspended' %}
+            <div class="alert alert-danger" role="alert">Esta comunidad ha sido suspendida.</div>
+        {% elseif access == 'deleted' %}
+            <div class="alert alert-danger" role="alert">Esta comunidad ha sido eliminada por su administrador.</div>
+        {% elseif access == 'active' %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <header>
+                        <h2>{{ community.name }}</h2>
+                        <hr/>
+                    </header>
+                    <h1>{{ community.description }}</h1>
+                </div>
 
+                {% if community.privacy == 'public' or community.privacy == 'default' %}
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            {{ form_start(msg) }}
+                            <div id="newMessage" class="col-md-12 input-group">
+                                <span class="input-group-addon"><span class="numberCount">256</span></span>
+                                {{ form_widget(msg.message) }}
+                                <span class="input-group-btn">{{ form_widget(msg.Enviar) }}</span>
+                            </div>
+                            {{ form_end(msg) }}
+                        </div>
+
+                        <div class="col-md-12">
+                            {% for msg in messages %}
+                                <div class="panel panel-default messages">
+                                    <div class="panel-heading smaller">
+                                        <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
+                                    </div>
+                                    <div class="panel-body text-left flex">
+                                        <div class="messageImage">
+                                            <div class="image avatar95">
+                                                {% if msg.user.image %}
+                                                    <img src="{{ asset('uploads/profileImages/' ~ msg.user.image) }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                {% else %}
+                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 message">
+                                            {{ msg.message }}
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="msgAnswers">
+                                            <button class="btn btn-sm btn-default">
+                                                {% set cont = 0 %}
+
+                                                {% for r in msg.messageReply %}
+                                                    {% if r.isdeleted == false %}
+                                                        {% set cont = cont + 1 %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if cont == 1%}
+                                                    <span>{{ cont }} respuesta</span>
+                                                {% else %}
+                                                    <span>{{ cont }} respuestas</span>
+                                                {% endif %}
+                                            </button>
+                                        </div>
+
+                                        <div class="msgButtons">
+                                            <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
+                                            <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
+                                            {% if msg.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                            {% endif %}
+                                            {% if msg.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default btn-delete" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            {% endif %}
+                                            <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                            <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
+                                            <div class="btn-options-sm col-md-10">
+                                                <a class="btn btn-sm btn-default" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
+                                                {% if msg.user.id == user.id %}
+                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                                {% endif %}
+                                                {% if msg.user.id == user.id %}
+                                                    <a class="btn btn-sm btn-default btn-delete-sm" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                {% endif %}
+                                                <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% if msg.messageReply | length > 0 %}
+                                        <div class="panel-body replies">
+                                            {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body text-left flex">
+                                                        <div class="messageImage">
+                                                            <div class="image avatar48">
+                                                                {% if reply.user.image %}
+                                                                    <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                {% else %}
+                                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 message">
+                                                            {{ reply.message }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-footer">
+                                                        <div class="replyInfo small">
+                                                            <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
+                                                        </div>
+                                                        <div class="replyButtons">
+                                                            {% if reply.user.id == user.id %}
+                                                                <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                            {% endif %}
+                                                            {% if reply.user.id == user.id %}
+                                                                <button class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                                            {% endif %}
+                                                            <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+
+                                            {% if msg.messageReply | length > 6 %}
+                                                <a href="{{ path('messageDetails', { 'id': msg.id }) }}" class="btn btn-lg btn-default">Ver más</a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                {% else %}
+
+                {% endif %}
+            </div>
         {% endif %}
     </div>
 {% endblock %}
