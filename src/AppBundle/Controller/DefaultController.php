@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Community;
 use AppBundle\Entity\ForgottedPassword;
 use AppBundle\Entity\User;
+use AppBundle\Form\CommunityType;
 use AppBundle\Form\ForgottedPasswordType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -189,5 +191,43 @@ class DefaultController extends Controller
         }else{
             return $this->redirectToRoute('index');
         }
+    }
+
+    /**
+     * @Route("/new", name="newCommunity")
+     */
+    public function newCommunityAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $community = new Community();
+        $form = $this->createForm(CommunityType::class, $community);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $community->setCommunityCreator($user);
+            $community->setAdmin($user);
+            $community->setCreationDate(new \DateTime("now"));
+            $community->setIsBlock(0);
+            $community->setIsSuspended(0);
+            $community->setIsDeleted(0);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($community);
+            $em->flush();
+
+            $lastCommunity = $this->getDoctrine()->getRepository('AppBundle:Community')->findBy([
+                'communityCreator' => $user
+            ],[
+                'creationDate' => 'DESC'
+            ])[0];
+
+            return $this->redirectToRoute('viewCommunity', ['id'=>$lastCommunity->getId()]);
+        }
+
+        return $this->render('Community/newCommunity.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
     }
 }

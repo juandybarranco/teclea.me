@@ -1,0 +1,33 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="newCommunity" class="container">
+        <h2>Crea tu propia comunidad</h2>
+        <p>¡Habla de tu tema favorito. Invita y conoce a nuevos usuarios!</p>
+        <hr/>
+        {{ form_start(form) }}
+            <div class="col-md-12 input-group">
+                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                {{ form_widget(form.name) }}
+            </div>
+
+            <div class="col-md-12 input-group mt4">
+                <span class="input-group-addon"><span class="fa fa-info-circle"></span></span>
+                {{ form_widget(form.description) }}
+            </div>
+
+            <div class="col-md-12 input-group mt4">
+                <span class="input-group-addon"><span class="fa fa-unlock"></span></span>
+                {{ form_widget(form.privacy) }}
+            </div>
+
+            {% if form_errors(form.privacy) %}
+                <div class="alert alert-danger" role="alert">Selecciona una opción de privacidad válida.</div>
+            {% endif %}
+
+            <div class="col-md-12 input-group mt4">
+                {{ form_rest(form) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
