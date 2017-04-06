@@ -119,113 +119,125 @@
         {% elseif access == 'inactive' %}
             <div class="alert alert-danger" role="alert">Este mensaje ha sido eliminado por acumulación de reportes.</div>
         {% elseif access == 'active' %}
-            <div class="panel panel-primary messages">
-                <div class="panel-heading">
-                    {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
-                </div>
-
-                <div class="panel-body text-left flex">
-                    <div class="messageImage">
-                        <div class="image avatar95">
-                            {% if message.user.image %}
-                                <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
-                            {% else %}
-                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ message.user.username }}"/>
-                            {% endif %}
-                        </div>
+            {% if status == 'userRelationNotFound' or status == 'notAccepted' %}
+                <div class="alert alert-danger" role="alert">No tienes permisos para ver este mensaje.</div>
+            {% elseif status == 'full' %}
+                <div class="panel panel-primary messages">
+                    <div class="panel-heading">
+                        {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                     </div>
 
-                    <div class="col-md-12 message">
-                        {{ message.message }}
-                    </div>
-                </div>
-
-                <div class="panel-footer">
-                    <div class="backToCommunity">
-                        {% if isGeneral %}
-                            <a href="{{ path('generalCommunity') }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> General</a>
-                        {% else %}
-                            <a href="{{ path('viewCommunity', {'id': message.community.id }) }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> Volver</a>
-                        {% endif %}
-                    </div>
-
-                    <div class="msgButtons">
-                        <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
-                        {% if message.user.id == user.id %}
-                            <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
-                        {% endif %}
-                        {% if message.user.id == user.id %}
-                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
-                        {% endif %}
-                        <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
-                        <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
-                        <div class="btn-options-sm col-md-10">
-                            {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                            {% endif %}
-                            {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
-                            {% endif %}
-                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-primary newReply">
-                <div class="panel-heading">
-                    ¡Escribe tu respuesta!
-                </div>
-
-                <div class="panel-body ">
-                    <div class="col-md-12">
-                        {{ form_start(form) }}
-                        <div id="newMessage" class="col-md-12 input-group">
-                            <span class="input-group-addon"><span class="numberCount">256</span></span>
-                            {{ form_widget(form.message) }}
-                            <span class="input-group-btn">{{ form_widget(form.Enviar) }}</span>
-                        </div>
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12 replies">
-                {% if message.messageReply | length > 0 %}
-                    {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
-                        <div class="panel panel-default">
-                            <div class="panel-heading small">
-                                <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                    <div class="panel-body text-left flex">
+                        <div class="messageImage">
+                            <div class="image avatar95">
+                                {% if message.user.image %}
+                                    <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
+                                {% else %}
+                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ message.user.username }}"/>
+                                {% endif %}
                             </div>
-                            <div class="panel-body text-left flex">
-                                <div class="messageImage">
-                                    <div class="image avatar48">
-                                        {% if reply.user.image %}
-                                            <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
-                                        {% else %}
-                                            <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
-                                        {% endif %}
+                        </div>
+
+                        <div class="col-md-12 message">
+                            {{ message.message }}
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="backToCommunity">
+                            {% if isGeneral %}
+                                <a href="{{ path('generalCommunity') }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> General</a>
+                            {% else %}
+                                <a href="{{ path('viewCommunity', {'id': message.community.id }) }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> Volver</a>
+                            {% endif %}
+                        </div>
+
+                        <div class="msgButtons">
+                            {% if status == 'protectedAllow' or status == 'full' %}
+                                <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
+                                {% if message.user.id == user.id %}
+                                    <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if message.user.id == user.id %}
+                                <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                            {% endif %}
+                            <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                            <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
+                            <div class="btn-options-sm col-md-10">
+                                {% if status == 'protectedAllow' or status == 'full' %}
+                                    {% if message.user.id == user.id %}
+                                        <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                    {% endif %}
+                                {% endif %}
+                                {% if message.user.id == user.id %}
+                                    <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                {% endif %}
+                                <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if status == 'protectedAllow' or status == 'full' %}
+                    <div class="panel panel-primary newReply">
+                        <div class="panel-heading">
+                            ¡Escribe tu respuesta!
+                        </div>
+
+                        <div class="panel-body ">
+                            <div class="col-md-12">
+                                {{ form_start(form) }}
+                                <div id="newMessage" class="col-md-12 input-group">
+                                    <span class="input-group-addon"><span class="numberCount">256</span></span>
+                                    {{ form_widget(form.message) }}
+                                    <span class="input-group-btn">{{ form_widget(form.Enviar) }}</span>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="col-md-12 replies">
+                    {% if message.messageReply | length > 0 %}
+                        {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading small">
+                                    <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                                </div>
+                                <div class="panel-body text-left flex">
+                                    <div class="messageImage">
+                                        <div class="image avatar48">
+                                            {% if reply.user.image %}
+                                                <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                            {% else %}
+                                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 message">
+                                        {{ reply.message }}
                                     </div>
                                 </div>
-                                <div class="col-md-12 message">
-                                    {{ reply.message }}
+                                <div class="panel-footer">
+                                    <div class="replyButtons">
+                                        {% if status == 'protectedAllow' or status == 'full' %}
+                                            {% if reply.user.id == user.id %}
+                                                <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if reply.user.id == user.id %}
+                                            <button class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                        {% endif %}
+                                        <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <div class="replyButtons">
-                                    {% if reply.user.id == user.id %}
-                                        <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
-                                    {% endif %}
-                                    {% if reply.user.id == user.id %}
-                                        <button class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
-                                    {% endif %}
-                                    <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

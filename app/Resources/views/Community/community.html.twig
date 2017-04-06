@@ -148,17 +148,19 @@
                     <h1>{{ community.description }}</h1>
                 </div>
 
-                {% if community.privacy == 'public' or community.privacy == 'default' %}
+                {% if userAccess %}
                     <div class="panel-body">
-                        <div class="col-md-12">
-                            {{ form_start(msg) }}
-                            <div id="newMessage" class="col-md-12 input-group">
-                                <span class="input-group-addon"><span class="numberCount">256</span></span>
-                                {{ form_widget(msg.message) }}
-                                <span class="input-group-btn">{{ form_widget(msg.Enviar) }}</span>
+                        {% if status == 'protectedAllow' or status == 'full' %}
+                            <div class="col-md-12">
+                                {{ form_start(msg) }}
+                                <div id="newMessage" class="col-md-12 input-group">
+                                    <span class="input-group-addon"><span class="numberCount">256</span></span>
+                                    {{ form_widget(msg.message) }}
+                                    <span class="input-group-btn">{{ form_widget(msg.Enviar) }}</span>
+                                </div>
+                                {{ form_end(msg) }}
                             </div>
-                            {{ form_end(msg) }}
-                        </div>
+                        {% endif %}
 
                         <div class="col-md-12">
                             {% for msg in messages %}
@@ -201,9 +203,11 @@
 
                                         <div class="msgButtons">
                                             <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
-                                            <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                            {% if msg.user.id == user.id %}
-                                                <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                            {% if status == 'protectedAllow' or status == 'full' %}
+                                                <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
+                                                {% if msg.user.id == user.id %}
+                                                    <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                                {% endif %}
                                             {% endif %}
                                             {% if msg.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -211,9 +215,11 @@
                                             <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                                             <div class="btn-options-sm col-md-10">
-                                                <a class="btn btn-sm btn-default" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                                {% if msg.user.id == user.id %}
-                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                                {% if status == 'protectedAllow' or status == 'full' %}
+                                                    <a class="btn btn-sm btn-default" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
+                                                    {% if msg.user.id == user.id %}
+                                                        <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                                    {% endif %}
                                                 {% endif %}
                                                 {% if msg.user.id == user.id %}
                                                     <a class="btn btn-sm btn-default btn-delete-sm" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -246,8 +252,10 @@
                                                             <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                         </div>
                                                         <div class="replyButtons">
-                                                            {% if reply.user.id == user.id %}
-                                                                <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                            {% if status == 'protectedAllow' or status == 'full' %}
+                                                                {% if reply.user.id == user.id %}
+                                                                    <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                                {% endif %}
                                                             {% endif %}
                                                             {% if reply.user.id == user.id %}
                                                                 <button class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
@@ -269,7 +277,11 @@
                     </div>
 
                 {% else %}
-
+                    {% if status == 'userRelationNotFound' %}
+                        <div class="alert alert-danger" role="alert">No tienes permisos para ver el contenido de esta sala.</div>
+                    {% elseif status == 'notAccepted' %}
+                        <div class="alert alert-warning" role="alert">La solicitud está pendiente.</div>
+                    {% endif %}
                 {% endif %}
             </div>
         {% endif %}

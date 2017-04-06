@@ -190,6 +190,7 @@ class CommunityController extends Controller
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         $user = $this->getUser();
+        $userAccess = false;
         $status = '';
         $messages = '';
         $form = '';
@@ -211,19 +212,76 @@ class CommunityController extends Controller
 
                 switch($privacy){
                     case 'public': {
+                        $userAccess = true;
+                        $status = 'full';
+                        break;
+                    }
+
+                    case 'private': {
+                        $check = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findOneBy([
+                            'community' => $community,
+                            'user' => $user,
+                            'isDeleted' => false
+                        ]);
+
+                        if(count($check) == 1){
+                            if($check->getIsActive()){
+                                $userAccess = true;
+                            }else{
+                                $status = 'notAccepted';
+                            }
+                        }else{
+                            $userAccess = false;
+                            $status = 'userRelationNotFound';
+                        }
+
+                        break;
+                    }
+
+                    case 'protected': {
+                        $userAccess = true;
+
+                        $check = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findOneBy([
+                            'community' => $community,
+                            'user' => $user,
+                            'isDeleted' => false
+                        ]);
+
+                        if(count($check) == 1){
+                            if($check->getIsActive()){
+                                $status = 'protectedAllow';
+                            }else{
+                                $status = 'protectedDeny';
+                            }
+                        }else{
+                            $status = 'protectedDeny';
+                        }
+
+                        break;
+                    }
+
+                    case 'default': {
+                        $userAccess = true;
+                        $status = 'full';
+                        break;
+                    }
+                }
+
+                if($userAccess){
+                    $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
+                        'community' => $community,
+                        'isReply' => false,
+                        'isActive' => true,
+                        'isDeleted' => false,
+                        'isBlock' => false
+                    ],[
+                        'date' => 'DESC'
+                    ]);
+
+                    if($status == 'protectedAllow' || $status == 'full'){
                         $msg = new Message();
                         $form = $this->createForm(newMessageType::class, $msg);
                         $form->handleRequest($request);
-
-                        $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
-                            'community' => $community,
-                            'isReply' => false,
-                            'isActive' => true,
-                            'isDeleted' => false,
-                            'isBlock' => false
-                        ],[
-                            'date' => 'DESC'
-                        ]);
 
                         if($form->isSubmitted() && $form->isValid()){
                             $msg->setUser($user);
@@ -243,21 +301,6 @@ class CommunityController extends Controller
                         }
 
                         $form = $form->createView();
-
-                        break;
-                    }
-
-                    case 'private': {
-
-                    }
-
-                    case 'protected': {
-
-                    }
-
-                    case 'default': {
-                        $status = null;
-                        break;
                     }
                 }
             }
@@ -274,7 +317,8 @@ class CommunityController extends Controller
             'access' => $access,
             'status' => $status,
             'messages' => $messages,
-            'msg' => $form
+            'msg' => $form,
+            'userAccess' => $userAccess
         ]);
     }
 
@@ -285,6 +329,8 @@ class CommunityController extends Controller
     {
         $user = $this->getUser();
         $access = "";
+        $userAccess = false;
+        $status = "";
 
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
 
@@ -307,32 +353,94 @@ class CommunityController extends Controller
                 $access = 'inactive';
             }else{
                 $access = 'active';
+                $privacy = $message->getCommunity()->getPrivacy();
 
-                $msg = new Message();
-                $form = $this->createForm(newMessageType::class, $msg);
-                $form->handleRequest($request);
+                switch($privacy){
+                    case 'public': {
+                        $userAccess = true;
+                        $status = 'full';
+                        break;
+                    }
 
-                if($form->isSubmitted() && $form->isValid()){
-                    $msg->setUser($user);
-                    $msg->setReply($message);
-                    $msg->setCommunity($message->getCommunity());
-                    $msg->setDate(new \DateTime("now"));
-                    $msg->setIsActive(1);
-                    $msg->setIsBlock(0);
-                    $msg->setIsDeleted(0);
-                    $msg->setIsReply(1);
-                    $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+                    case 'private': {
+                        $check = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findOneBy([
+                            'community' => $message->getCommunity(),
+                            'user' => $user,
+                            'isDeleted' => false
+                        ]);
 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($msg);
-                    $em->flush();
+                        if(count($check) == 1){
+                            if($check->getIsActive()){
+                                $userAccess = true;
+                                $status = 'full';
+                            }else{
+                                $status = 'notAccepted';
+                            }
+                        }else{
+                            $userAccess = false;
+                            $status = 'userRelationNotFound';
+                        }
 
-                    return $this->redirectToRoute('messageDetails', [
-                        'id' => $message->getId()
-                    ]);
+                        break;
+                    }
+
+                    case 'protected': {
+                        $userAccess = true;
+
+                        $check = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findOneBy([
+                            'community' => $message->getCommunity(),
+                            'user' => $user,
+                            'isDeleted' => false
+                        ]);
+
+                        if(count($check) == 1){
+                            if($check->getIsActive()){
+                                $status = 'protectedAllow';
+                            }else{
+                                $status = 'protectedDeny';
+                            }
+                        }else{
+                            $status = 'protectedDeny';
+                        }
+
+                        break;
+                    }
+
+                    case 'default': {
+                        $status = null;
+                        break;
+                    }
                 }
 
-                $form = $form->createView();
+                if($userAccess){
+                    if($status == 'protectedAllow' || $status == 'full'){
+                        $msg = new Message();
+                        $form = $this->createForm(newMessageType::class, $msg);
+                        $form->handleRequest($request);
+
+                        if($form->isSubmitted() && $form->isValid()){
+                            $msg->setUser($user);
+                            $msg->setReply($message);
+                            $msg->setCommunity($message->getCommunity());
+                            $msg->setDate(new \DateTime("now"));
+                            $msg->setIsActive(1);
+                            $msg->setIsBlock(0);
+                            $msg->setIsDeleted(0);
+                            $msg->setIsReply(1);
+                            $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($msg);
+                            $em->flush();
+
+                            return $this->redirectToRoute('messageDetails', [
+                                'id' => $message->getId()
+                            ]);
+                        }
+
+                        $form = $form->createView();
+                    }
+                }
             }
         }
 
@@ -341,6 +449,7 @@ class CommunityController extends Controller
             'access' => $access,
             'message' => $message,
             'isGeneral' => false,
+            'status' => $status,
             'form' => $form
         ]);
     }
