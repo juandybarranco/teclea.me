@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Community;
 use AppBundle\Entity\ForgottedPassword;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserCommunity;
 use AppBundle\Form\CommunityType;
 use AppBundle\Form\ForgottedPasswordType;
 use AppBundle\Form\UserType;
@@ -221,6 +222,16 @@ class DefaultController extends Controller
             ],[
                 'creationDate' => 'DESC'
             ])[0];
+
+            $newRelation = new UserCommunity();
+            $newRelation->setCommunity($lastCommunity);
+            $newRelation->setUser($user);
+            $newRelation->setDate(new \DateTime("now"));
+            $newRelation->setIsDeleted(0);
+            $newRelation->setIsActive(1);
+
+            $em->persist($newRelation);
+            $em->flush();
 
             return $this->redirectToRoute('viewCommunity', ['id'=>$lastCommunity->getId()]);
         }

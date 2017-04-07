@@ -2830,6 +2830,14 @@ li.dropdown ul li a span:before{
     background-color: white;
 }
 
+#tabs>li{
+    width: 25%;
+}
+
+.tab-content{
+    background-color: white;
+}
+
 @media screen and (min-width: 1320px){
     li.dropdown ul li a{
         padding: 0 1.5em 0 1.5em!important;

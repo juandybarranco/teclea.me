@@ -18,7 +18,11 @@ class CommunityController extends Controller
      */
     public function communityListAction()
     {
+        $user = $this->getUser();
 
+        return $this->render('Community/comunitiesList.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -227,6 +231,7 @@ class CommunityController extends Controller
                         if(count($check) == 1){
                             if($check->getIsActive()){
                                 $userAccess = true;
+                                $status = 'full';
                             }else{
                                 $status = 'notAccepted';
                             }

@@ -1,0 +1,62 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="communitiesList" class="container">
+        <h2>Comunidades</h2>
+        <p>¡Descubre y gestiona las distintas comunidades!</p>
+
+        <ul id="tabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Inscrito</a></li>
+            <li role="presentation"><a href="#official" aria-controls="official" role="tab" data-toggle="tab">Oficiales</a></li>
+            <li role="presentation"><a href="#own" aria-controls="own" role="tab" data-toggle="tab">Propias</a></li>
+            <li role="presentation"><a href="#lastCreated" aria-controls="lastCreated" role="tab" data-toggle="tab">Últimas</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="signUp">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1><b>Lista de comunidades donde estás inscrito.</b></h1>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="official">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1><b>Lista de comunidades oficiales.</b></h1>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="own">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1><b>Lista de comunidades creadas por tí.</b></h1>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="lastCreated">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1><b>Lista de comunidades creadas recientemente.</b></h1>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+{% endblock %}
