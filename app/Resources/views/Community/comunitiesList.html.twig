@@ -19,7 +19,17 @@
                         <h1><b>Lista de comunidades donde estás inscrito.</b></h1>
                     </div>
                     <div class="panel-body">
-
+                        {% for c in signup %}
+                            <div class="panel panel-default list">
+                                <a href="{{ path('viewCommunity', {'id': c.id }) }}">
+                                    <div class="panel-body">
+                                        <h2>{{ c.name }}</h2> {{ c.description }}
+                                    </div>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">No estás inscrito en ninguna comunidad.</div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -29,17 +39,41 @@
                         <h1><b>Lista de comunidades oficiales.</b></h1>
                     </div>
                     <div class="panel-body">
-
+                        <ul>
+                            {% for c in officials %}
+                                <div class="panel panel-default list">
+                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
+                                        <div class="panel-body">
+                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                        </div>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="own">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h1><b>Lista de comunidades creadas por tí.</b></h1>
+                        <h1><b>Lista de comunidades donde eres el Administrador.</b></h1>
                     </div>
                     <div class="panel-body">
-
+                        <ul>
+                            {% for c in admin %}
+                                <div class="panel panel-default list">
+                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
+                                        <div class="panel-body">
+                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                        </div>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info">No eres administrador de ninguna comunidad.</div>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -49,7 +83,19 @@
                         <h1><b>Lista de comunidades creadas recientemente.</b></h1>
                     </div>
                     <div class="panel-body">
-
+                        <ul>
+                            {% for c in last %}
+                                <div class="panel panel-default list">
+                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
+                                        <div class="panel-body">
+                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                        </div>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>

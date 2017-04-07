@@ -19,9 +19,49 @@ class CommunityController extends Controller
     public function communityListAction()
     {
         $user = $this->getUser();
+        $signup = [];
+
+        $communitiesUser = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy([
+            'user' => $user,
+            'isActive' => true,
+            'isDeleted' => false
+        ]);
+
+        foreach($communitiesUser as $community){
+            array_push($signup, $community->getCommunity());
+        }
+
+        $officials = $this->getDoctrine()->getRepository('AppBundle:Community')->findBy([
+            'privacy' => 'default',
+            'isSuspended' => false,
+            'isDeleted' => false,
+            'isBlock' => false
+        ]);
+
+        $admin = $this->getDoctrine()->getRepository('AppBundle:Community')->findBy([
+            'admin' => $user,
+            'isSuspended' => false,
+            'isDeleted' => false,
+            'isBlock' => false
+        ]);
+
+        $last = $this->getDoctrine()->getRepository('AppBundle:Community')->findBy([
+            'privacy' => [
+                'public', 'protected', 'default'
+            ],
+            'isBlock' => false,
+            'isDeleted' => false,
+            'isSuspended' => false
+        ],[
+            'creationDate' => 'DESC'
+        ], 15);
 
         return $this->render('Community/comunitiesList.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'signup' => $signup,
+            'officials' => $officials,
+            'admin' => $admin,
+            'last' => $last
         ]);
     }
 

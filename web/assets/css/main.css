@@ -2838,6 +2838,14 @@ li.dropdown ul li a span:before{
     background-color: white;
 }
 
+.list a{
+    text-decoration: none;
+}
+
+.list:hover{
+    background-color: #F5F5F5;
+}
+
 @media screen and (min-width: 1320px){
     li.dropdown ul li a{
         padding: 0 1.5em 0 1.5em!important;
