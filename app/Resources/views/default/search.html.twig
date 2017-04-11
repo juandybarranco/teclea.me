@@ -41,6 +41,15 @@
                                     {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
                                         {% set msg = msg + 1 %}
                                     {% endfor %}
+
+                                    {% if c.privacy == 'public' or c.privacy == 'default' %}
+                                        <small><span class="fa fa-unlock" title="Comunidad Pública"></span></small>
+                                    {% elseif c.privacy == 'protected' %}
+                                        <small><span class="fa fa-unlock-alt" title="Comunidad Protegida"></span></small>
+                                    {% elseif c.privacy == 'private' %}
+                                        <small><span class="fa fa-lock" title="Comunidad Privada"></span></small>
+                                    {% endif %}
+
                                     <small>Miembros: {{ members }}</small>
                                     <small> | </small>
                                     <small>Mensajes: {{ msg }}</small>
