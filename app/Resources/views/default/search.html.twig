@@ -1,0 +1,59 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="searchCommunity" class="container">
+        {% if status == 0 %}
+            <h2>Buscador de Comunidades</h2>
+            <p>¡Encuentra nuevas comunidades donde poder expresarte!</p>
+
+            <div class="input-group searchBox">
+                <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
+                <span class="input-group-btn">
+                <button id="buttonSearch" class="btn btn-default" type="button">Buscar</button>
+            </span>
+            </div>
+        {% elseif status == 1 %}
+            <h2>Resultados de la búsqueda</h2>
+            <hr/>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1><b>Número de Comunidades: {{ communities | length }}</b></h1>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        {% for c in communities %}
+                            <div class="panel panel-default list">
+                                <div class="panel-body input-group text-left">
+                                    <div>
+                                        <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                        <h1>{{ c.description }}</h1>
+                                    </div>
+                                    <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                </div>
+                                <div class="panel-footer text-left">
+                                    {% set members = 0 %}
+                                    {% set msg = 0 %}
+
+                                    {% for m in c.userCommunity if m.isActive == true and m.isDeleted == false %}
+                                        {% set members = members + 1 %}
+                                    {% endfor %}
+
+                                    {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                                        {% set msg = msg + 1 %}
+                                    {% endfor %}
+                                    <small>Miembros: {{ members }}</small>
+                                    <small> | </small>
+                                    <small>Mensajes: {{ msg }}</small>
+                                    <small> | </small>
+                                    <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">No se ha encontrado ninguna comunidad relacionada con tu búsqueda.</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

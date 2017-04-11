@@ -241,4 +241,31 @@ class DefaultController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/searchCommunity", name="searchCommunity")
+     */
+    public function searchCommunityAction(Request $request)
+    {
+        $user = $this->getUser();
+        $string = "";
+        $status = 0;
+        $communities = [];
+
+        if(isset($_GET['s'])){
+            $status = 1;
+            $string = $_GET['s'];
+
+            $communities = $this->getDoctrine()->getManager()->createQuery(
+                'SELECT p FROM AppBundle:Community p WHERE p.name like :string AND p.isBlock = FALSE AND p.isDeleted = FALSE AND p.isSuspended = FALSE'
+            )->setParameter('string', '%' . $string . '%')->getResult();
+        }
+
+        return $this->render('default/search.html.twig', [
+            'user' => $user,
+            'status' => $status,
+            'string' => $string,
+            'communities' => $communities
+        ]);
+    }
 }

@@ -56,12 +56,19 @@ class CommunityController extends Controller
             'creationDate' => 'DESC'
         ], 15);
 
+        $communityList = $this->getDoctrine()->getRepository('AppBundle:Community')->findBy([
+            'isBlock' => false,
+            'isSuspended' => false,
+            'isDeleted' => false
+        ]);
+
         return $this->render('Community/comunitiesList.html.twig', [
             'user' => $user,
             'signup' => $signup,
             'officials' => $officials,
             'admin' => $admin,
-            'last' => $last
+            'last' => $last,
+            'communityList' => $communityList
         ]);
     }
 
