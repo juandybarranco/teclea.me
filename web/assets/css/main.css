@@ -2840,10 +2840,19 @@ li.dropdown ul li a span:before{
 
 .list a{
     text-decoration: none;
+    border-bottom: none;
 }
 
 .list:hover{
     background-color: #F5F5F5;
+}
+
+.list .panel-footer{
+    padding: 0 15px;
+}
+
+.list small{
+	font-size: 16px;
 }
 
 @media screen and (min-width: 1320px){

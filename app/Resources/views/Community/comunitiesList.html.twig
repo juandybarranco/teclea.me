@@ -21,11 +21,20 @@
                     <div class="panel-body">
                         {% for c in signup %}
                             <div class="panel panel-default list">
-                                <a href="{{ path('viewCommunity', {'id': c.id }) }}">
-                                    <div class="panel-body">
-                                        <h2>{{ c.name }}</h2> {{ c.description }}
+                                <div class="panel-body input-group text-left">
+                                    <div>
+                                        <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                        <h1>{{ c.description }}</h1>
                                     </div>
-                                </a>
+                                    <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                </div>
+                                <div class="panel-footer text-left">
+                                    <small>Miembros: 0</small>
+                                    <small> | </small>
+                                    <small>Mensajes: 0</small>
+                                    <small> | </small>
+                                    <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
+                                </div>
                             </div>
                         {% else %}
                             <div class="alert alert-info" role="alert">No estás inscrito en ninguna comunidad.</div>
@@ -42,11 +51,20 @@
                         <ul>
                             {% for c in officials %}
                                 <div class="panel panel-default list">
-                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
-                                        <div class="panel-body">
-                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                    <div class="panel-body input-group text-left">
+                                        <div>
+                                            <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                            <h1>{{ c.description }}</h1>
                                         </div>
-                                    </a>
+                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                    </div>
+                                    <div class="panel-footer text-left">
+                                        <small>Miembros: 0</small>
+                                        <small> | </small>
+                                        <small>Mensajes: 0</small>
+                                        <small> | </small>
+                                        <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
@@ -64,11 +82,20 @@
                         <ul>
                             {% for c in admin %}
                                 <div class="panel panel-default list">
-                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
-                                        <div class="panel-body">
-                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                    <div class="panel-body input-group text-left">
+                                        <div>
+                                            <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                            <h1>{{ c.description }}</h1>
                                         </div>
-                                    </a>
+                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                    </div>
+                                    <div class="panel-footer text-left">
+                                        <small>Miembros: 0</small>
+                                        <small> | </small>
+                                        <small>Mensajes: 0</small>
+                                        <small> | </small>
+                                        <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="alert alert-info">No eres administrador de ninguna comunidad.</div>
@@ -86,11 +113,20 @@
                         <ul>
                             {% for c in last %}
                                 <div class="panel panel-default list">
-                                    <a href="{{ path('viewCommunity', {'id': c.id }) }}">
-                                        <div class="panel-body">
-                                            <h2>{{ c.name }}</h2> {{ c.description }}
+                                    <div class="panel-body input-group text-left">
+                                        <div>
+                                            <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                            <h1>{{ c.description }}</h1>
                                         </div>
-                                    </a>
+                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                    </div>
+                                    <div class="panel-footer text-left">
+                                        <small>Miembros: 0</small>
+                                        <small> | </small>
+                                        <small>Mensajes: 0</small>
+                                        <small> | </small>
+                                        <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
