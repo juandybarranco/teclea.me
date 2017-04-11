@@ -2861,7 +2861,13 @@ li.dropdown ul li a span:before{
 }
 
 #buttonSearch{
-    margin-top: -2px;
+    margin-top: -4px;
+}
+
+@media screen and (max-width: 1320px){
+    #buttonSearch{
+        margin-top: -2px;
+    }
 }
 
 @media screen and (min-width: 1320px){
@@ -2888,6 +2894,12 @@ li.dropdown ul li a span:before{
 	.editProfile .privacy{
 		display: inline-flex;
 	}
+}
+
+@media screen and (max-width: 736px) {
+    #buttonSearch{
+        margin-top: 0;
+    }
 }
 
 @media screen and (max-width: 670px){
