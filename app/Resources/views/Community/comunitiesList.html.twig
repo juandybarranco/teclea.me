@@ -29,9 +29,19 @@
                                     <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
                                 </div>
                                 <div class="panel-footer text-left">
-                                    <small>Miembros: 0</small>
+                                    {% set members = 0 %}
+                                    {% set msg = 0 %}
+
+                                    {% for m in c.userCommunity if m.isActive == true and m.isDeleted == false %}
+                                        {% set members = members + 1 %}
+                                    {% endfor %}
+
+                                    {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                                        {% set msg = msg + 1 %}
+                                    {% endfor %}
+                                    <small>Miembros: {{ members }}</small>
                                     <small> | </small>
-                                    <small>Mensajes: 0</small>
+                                    <small>Mensajes: {{ msg }}</small>
                                     <small> | </small>
                                     <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
                                 </div>
@@ -59,9 +69,19 @@
                                         <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
                                     </div>
                                     <div class="panel-footer text-left">
-                                        <small>Miembros: 0</small>
+                                        {% set members = 0 %}
+                                        {% set msg = 0 %}
+
+                                        {% for m in c.userCommunity if m.isActive == true and m.isDeleted == false %}
+                                            {% set members = members + 1 %}
+                                        {% endfor %}
+
+                                        {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                                            {% set msg = msg + 1 %}
+                                        {% endfor %}
+                                        <small>Miembros: {{ members }}</small>
                                         <small> | </small>
-                                        <small>Mensajes: 0</small>
+                                        <small>Mensajes: {{ msg }}</small>
                                         <small> | </small>
                                         <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
                                     </div>
@@ -90,9 +110,19 @@
                                         <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
                                     </div>
                                     <div class="panel-footer text-left">
-                                        <small>Miembros: 0</small>
+                                        {% set members = 0 %}
+                                        {% set msg = 0 %}
+
+                                        {% for m in c.userCommunity if m.isActive == true and m.isDeleted == false %}
+                                            {% set members = members + 1 %}
+                                        {% endfor %}
+
+                                        {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                                            {% set msg = msg + 1 %}
+                                        {% endfor %}
+                                        <small>Miembros: {{ members }}</small>
                                         <small> | </small>
-                                        <small>Mensajes: 0</small>
+                                        <small>Mensajes: {{ msg }}</small>
                                         <small> | </small>
                                         <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
                                     </div>
@@ -121,9 +151,19 @@
                                         <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
                                     </div>
                                     <div class="panel-footer text-left">
-                                        <small>Miembros: 0</small>
+                                        {% set members = 0 %}
+                                        {% set msg = 0 %}
+
+                                        {% for m in c.userCommunity if m.isActive == true and m.isDeleted == false %}
+                                            {% set members = members + 1 %}
+                                        {% endfor %}
+
+                                        {% for m in c.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                                            {% set msg = msg + 1 %}
+                                        {% endfor %}
+                                        <small>Miembros: {{ members }}</small>
                                         <small> | </small>
-                                        <small>Mensajes: 0</small>
+                                        <small>Mensajes: {{ msg }}</small>
                                         <small> | </small>
                                         <small>Creación: {{ c.creationDate | date('d-m-Y') }}</small>
                                     </div>
