@@ -57,6 +57,8 @@ class ProfileController extends Controller
             if($check == 0){
                 $em->persist($user);
                 $em->flush();
+
+                return $this->redirectToRoute('editProfile');
             }
         }
 
@@ -74,17 +76,32 @@ class ProfileController extends Controller
 
         if($img->isSubmitted() && $img->isValid()){
             $file = $img->get('image')->getData();
-            $fileName = 'img'.md5(uniqid()).'.'.$file->guessExtension();
 
-            $file->move(
-                $this->getParameter('profile_images'),
-                $fileName
-            );
+            if($file != null){
+                if(($file->guessExtension() == 'jpg') || ($file->guessExtension() == 'jpeg') || ($file->guessExtension() == 'png')){
+                    if($file->getClientSize() < 1048576){
+                        $fileName = 'img'.md5(uniqid()).'.'.$file->guessExtension();
 
-            $user->setImage($fileName);
+                        $file->move(
+                            $this->getParameter('profile_images'),
+                            $fileName
+                        );
 
-            $em->persist($user);
-            $em->flush();
+                        $user->setImage($fileName);
+
+                        $em->persist($user);
+                        $em->flush();
+                    }else{
+                        unlink($file);
+                        $check = 6;
+                    }
+                }else{
+                    unlink($file);
+                    $check = 5;
+                }
+            }else{
+                return $this->redirectToRoute('editProfile');
+            }
         }
 
         return $this->render('Profile/editProfile.html.twig', [

@@ -122,9 +122,10 @@
                     <div class="col-md-12">
                         {{ form_start(img)}}
 
-                        {% if form_errors((img.image)) %}
-                            <div class="alert alert-danger smaller" role="alert"><small>Se ha producido un error al subir la imagen. <br/>
-                                    La imagen debe .jpg, .jpeg o .png y no superar 1MB de tamaño.</small></div>
+                        {% if check == '5' %}
+                            <div class="alert alert-danger mb10" role="alert">Error: La imagen debe tener formato .jpg, .jpeg o .png</div>
+                        {% elseif check == '6' %}
+                            <div class="alert alert-danger mb10" role="alert">Error: La imagen no puede superar 1MB de tamaño.</div>
                         {% endif %}
 
                         <div class="col-md-10 col-xs-12 mr-30">
