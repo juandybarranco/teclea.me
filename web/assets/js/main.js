@@ -97,6 +97,12 @@
         window.location.href = '/searchCommunity?s='+search;
     });
 
+    $("#search").keydown(function(event){
+        if(event.keyCode == 13){
+            $("#buttonSearch").click();
+        }
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',
