@@ -87,11 +87,66 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/unfollow/{id}", name="unfollowUser")
+     */
+    public function unfollowUserAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+        $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+        if($user->getId() == $otherUser->getId()){
+            return $this->redirectToRoute('viewProfile');
+        }
+
+        if(count($otherUser) == 1){
+            $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                'isAccepted' => true,
+                'isDeleted' => false,
+                'follower' => $user,
+                'following' => $otherUser
+            ]);
+
+            if(count($follow) == 0){
+                $lastURL = $request->headers->get('referer');
+
+                if($lastURL == null){
+                    return $this->redirectToRoute('index');
+                }else{
+                    return $this->redirect($lastURL);
+                }
+            }else{
+                $follow->setIsDeleted(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($follow);
+                $em->flush();
+
+                $lastURL = $request->headers->get('referer');
+
+                if($lastURL == null){
+                    return $this->redirectToRoute('index');
+                }else{
+                    return $this->redirect($lastURL);
+                }
+            }
+        }else{
+            $lastURL = $request->headers->get('referer');
+
+            if($lastURL == null){
+                return $this->redirectToRoute('index');
+            }else{
+                return $this->redirect($lastURL);
+            }
+        }
+    }
+
+    /**
      * @Route("/{id}", name="viewUserProfile")
      */
     public function viewUserProfileAction(Request $request, $id){
         $user = $this->getUser();
         $status = 0;
+        $follow = 0;
 
         if($user->getId() == $id){
             return $this->redirectToRoute('viewProfile');
@@ -106,7 +161,6 @@ class UserController extends Controller
         }else{
             if($otherUser->getIsPublic()){
                 $status = 1;
-            }else{
                 $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
                     'follower' => $user,
                     'following' => $otherUser,
@@ -115,9 +169,34 @@ class UserController extends Controller
                 ]);
 
                 if(count($check) == 1){
-                    $status = 1;
+                    $follow = 1;
+                }
+            }else{
+                $status = 4;
+
+                $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                    'follower' => $user,
+                    'following' => $otherUser,
+                    'isAccepted' => true,
+                    'isDeleted' => false
+                ]);
+
+                if(count($check) == 1){
+                    $status = 6;
+                    $follow = 1;
                 }else{
-                    $status = 4;
+                    $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy([
+                        'follower' => $user,
+                        'following' => $otherUser,
+                        'isAccepted' => false,
+                        'isDeleted' => false
+                    ]);
+
+                    if(count($check) == 1){
+                        $follow = 2;
+                    }else{
+                        $follow = 0;
+                    }
                 }
             }
         }
@@ -125,7 +204,8 @@ class UserController extends Controller
         return $this->render('Users/viewUserProfile.html.twig', [
             'user' => $user,
             'otherUser' => $otherUser,
-            'status' => $status
+            'status' => $status,
+            'follow' => $follow
         ]);
     }
 }

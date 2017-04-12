@@ -2864,6 +2864,10 @@ li.dropdown ul li a span:before{
     margin-top: -4px;
 }
 
+.btnUsers{
+	margin-top: -2em;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;
