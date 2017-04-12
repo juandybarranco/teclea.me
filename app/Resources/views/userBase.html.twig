@@ -24,11 +24,13 @@
             <!-- Logo -->
             <div id="logo" class="text-center">
                 <span class="image avatar85">
-                    {% if user.image is null %}
-                        <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-circle" />
+                    <a href="{{ path('viewProfile') }}">
+                        {% if user.image is null %}
+                            <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-circle" />
                     {% else %}
-                        <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen de Perfil de {{ user.username }}" class="img-circle" />
-                    {% endif %}
+                            <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen de Perfil de {{ user.username }}" class="img-circle" />
+                        {% endif %}
+                    </a>
                 </span>
                 <h1 id="title">{{ user.username }}</h1>
             </div>

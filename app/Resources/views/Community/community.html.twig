@@ -31,11 +31,13 @@
                                 <div class="panel-body text-left flex">
                                     <div class="messageImage">
                                         <div class="image avatar95">
-                                            {% if msg.user.image %}
-                                                <img src="{{ asset('uploads/profileImages/' ~ msg.user.image) }}" alt="Imagen de {{ msg.user.username }}"/>
-                                            {% else %}
-                                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ msg.user.username }}"/>
-                                            {% endif %}
+                                            <a href="{{ path('viewUserProfile', {'id': msg.user.id }) }}" title="Perfil de {{ msg.user.username }}">
+                                                {% if msg.user.image %}
+                                                    <img src="{{ asset('uploads/profileImages/' ~ msg.user.image) }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                {% else %}
+                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                {% endif %}
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="col-md-12 message">
@@ -92,11 +94,13 @@
                                                 <div class="panel-body text-left flex">
                                                     <div class="messageImage">
                                                         <div class="image avatar48">
-                                                            {% if reply.user.image %}
-                                                                <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                            {% else %}
-                                                                <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                            {% endif %}
+                                                            <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
+                                                                {% if reply.user.image %}
+                                                                    <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                {% else %}
+                                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                {% endif %}
+                                                            </a>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 message">
@@ -171,11 +175,13 @@
                                     <div class="panel-body text-left flex">
                                         <div class="messageImage">
                                             <div class="image avatar95">
-                                                {% if msg.user.image %}
-                                                    <img src="{{ asset('uploads/profileImages/' ~ msg.user.image) }}" alt="Imagen de {{ msg.user.username }}"/>
-                                                {% else %}
-                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ msg.user.username }}"/>
-                                                {% endif %}
+                                                <a href="{{ path('viewUserProfile', {'id': msg.user.id }) }}" title="Perfil de {{ msg.user.username }}">
+                                                    {% if msg.user.image %}
+                                                        <img src="{{ asset('uploads/profileImages/' ~ msg.user.image) }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                    {% else %}
+                                                        <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ msg.user.username }}"/>
+                                                    {% endif %}
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-md-12 message">
@@ -236,11 +242,13 @@
                                                     <div class="panel-body text-left flex">
                                                         <div class="messageImage">
                                                             <div class="image avatar48">
-                                                                {% if reply.user.image %}
-                                                                    <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                                {% else %}
-                                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                                {% endif %}
+                                                                <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
+                                                                    {% if reply.user.image %}
+                                                                        <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                    {% else %}
+                                                                        <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                                    {% endif %}
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 message">

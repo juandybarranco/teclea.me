@@ -82,7 +82,11 @@
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.referred %}
-                            <label>{{ user.referred.username }}</label>
+                            <label>
+                                <a href="{{ path('viewUserProfile', {'id': user.referred.id }) }}" title="Perfil de {{ user.referred.username }}">
+                                    {{ user.referred.username }}
+                                </a>
+                            </label>
                         {% else %}
                             <label>No has sido referido por ningún usuario.</label>
                         {% endif %}
