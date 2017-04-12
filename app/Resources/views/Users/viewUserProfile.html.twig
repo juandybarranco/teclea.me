@@ -1,0 +1,81 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <header class="">
+            <div class="image avatar58">
+                <a href="{{ path('viewUserProfile', {'id': otherUser.id }) }}">
+                    {% if otherUser.image is null %}
+                        <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
+                    {% else %}
+                        <img src="{{ asset('uploads/profileImages/' ~ otherUser.image) }}" alt="Imagen de Perfil de {{ otherUser.username }}" class="img-responsive img-circle" />
+                    {% endif %}
+                </a>
+            </div>
+
+            <h2>{{ otherUser.username }}</h2>
+            <small>Usuario desde: {{ otherUser.signupdate | date('d-m-Y') }}</small>
+
+            <hr/>
+        </header>
+
+        {% if status == 1 %}
+            <div class="panel panel-info info">
+                <div class="panel-heading">
+                    <b><span class="fa fa-address-card-o"></span> Información sobre {{ otherUser.username }}</b>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-4 text-center fa-border bg-info">
+                            <b><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
+                        </div>
+                        <div class="col-md-8 text-left fa-border">
+                            <label>{{ otherUser.username }}</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-4 text-center fa-border bg-info">
+                            <b><span class="fa fa-globe"></span> País:</b>
+                        </div>
+                        <div class="col-md-8 text-left fa-border">
+                            <label>{{ otherUser.country }}</label>
+                        </div>
+                    </div>
+
+                    {% if otherUser.location %}
+                        <div class="col-md-12">
+                            <div class="col-md-4 text-center fa-border bg-info">
+                                <b><span class="fa fa-location-arrow"></span> Localización:</b>
+                            </div>
+                            <div class="col-md-8 text-left fa-border">
+                                <label>{{ otherUser.location }}</label>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if otherUser.personalMessage %}
+                        <div class="col-md-12">
+                            <div class="col-md-4 text-center fa-border bg-info">
+                                <b><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
+                            </div>
+                            <div class="col-md-8 text-left fa-border">
+                                <label>{{ otherUser.personalMessage }}</label>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        {% elseif status == 2 %}
+            <div class="alert alert-danger" role="alert">La cuenta de este usuario está bloqueada temporalmente debido a acumulación de reportes.</div>
+        {% elseif status == 3 %}
+            <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida.</div>
+        {% elseif status == 4 %}
+            <div class="alert alert-warning" role="alert">Este usuario es privado. Síguele para tener acceso.</div>
+        {% else %}
+
+        {% endif %}
+    </div>
+{% endblock %}
