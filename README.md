@@ -1,7 +1,8 @@
-En desarollo...
+# [tecleaME](https://www.teclea.me): New social network based in microblogging.
 
-[tecleaME](https://www.teclea.me), una nueva red social de microbloggin con código abierto, libre y gratis.
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/pedrojanula/teclea.me/master/LICENSE.md)
 
-Desarrollando utilizando **Symfony 3.2.6** (acompañado de Doctrine, Twig, Javascript...) para hacer de ésta una red social robusta y segura.
- 
-Sigue el proceso del desarrollo en este [Blog](https://blog.pedrojanula.xyz/tag/tecleame/).
+### Developed using Symfony 3.2.6 (with Doctrine, Twig, Javascript...)
+A secure, efficient and robust social network.
+
+**Follow the development process in this [blog](https://blog.pedrojanula.xyz/tag/tecleame/).**
