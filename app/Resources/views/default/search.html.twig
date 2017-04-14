@@ -3,8 +3,12 @@
 {% block body %}
     <div id="searchCommunity" class="container">
         {% if status == 0 %}
-            <h2>Buscador de Comunidades</h2>
-            <p>¡Encuentra nuevas comunidades donde poder expresarte!</p>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2>Buscador de Comunidades</h2>
+                    <p>¡Encuentra nuevas comunidades donde poder expresarte!</p>
+                </div>
+            </div>
 
             <div class="input-group searchBox">
                 <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
@@ -13,8 +17,12 @@
                 </span>
             </div>
         {% elseif status == 1 %}
-            <h2>Resultados de la búsqueda</h2>
-            <hr/>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2>Resultados de la búsqueda</h2>
+                </div>
+            </div>
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1><b>Número de Comunidades: {{ communities | length }}</b></h1>
