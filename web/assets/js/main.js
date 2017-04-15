@@ -99,7 +99,9 @@
 
     $("#search").keydown(function(event){
         if(event.keyCode == 13){
-            $("#buttonSearch").click();
+            if($("#search").val().length > 0){
+                $("#buttonSearch").click();
+            }
         }
     });
 

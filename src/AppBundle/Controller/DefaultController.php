@@ -256,9 +256,13 @@ class DefaultController extends Controller
             $status = 1;
             $string = $_GET['s'];
 
-            $communities = $this->getDoctrine()->getManager()->createQuery(
-                'SELECT p FROM AppBundle:Community p WHERE p.name like :string AND p.isBlock = FALSE AND p.isDeleted = FALSE AND p.isSuspended = FALSE'
-            )->setParameter('string', '%' . $string . '%')->getResult();
+            if(strlen($string) == 0){
+                return $this->redirectToRoute('searchCommunity');
+            }else{
+                $communities = $this->getDoctrine()->getManager()->createQuery(
+                    'SELECT p FROM AppBundle:Community p WHERE p.name like :string AND p.isBlock = FALSE AND p.isDeleted = FALSE AND p.isSuspended = FALSE'
+                )->setParameter('string', '%' . $string . '%')->getResult();
+            }
         }
 
         return $this->render('default/search.html.twig', [
