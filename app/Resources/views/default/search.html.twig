@@ -7,15 +7,17 @@
                 <div class="panel-heading">
                     <h2>Buscador de Comunidades</h2>
                     <p>¡Encuentra nuevas comunidades donde poder expresarte!</p>
+
+                    <div class="input-group searchBox">
+                        <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
+                        <span class="input-group-btn">
+                            <button id="buttonSearch" class="btn btn-default" type="button">Buscar</button>
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div class="input-group searchBox">
-                <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
-                <span class="input-group-btn">
-                    <button id="buttonSearch" class="btn btn-default" type="button">Buscar</button>
-                </span>
-            </div>
+
         {% elseif status == 1 %}
             <div class="panel panel-info">
                 <div class="panel-heading">
