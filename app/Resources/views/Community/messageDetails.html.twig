@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="col-md-12 message">
-                        {{ message.message }}
+                        {{ message.message | raw }}
                     </div>
                 </div>
 
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 message">
-                                    {{ reply.message }}
+                                    {{ reply.message | raw }}
                                 </div>
                             </div>
                             <div class="panel-footer">
@@ -145,7 +145,7 @@
                         </div>
 
                         <div class="col-md-12 message">
-                            {{ message.message }}
+                            {{ message.message | raw }}
                         </div>
                     </div>
 
@@ -225,7 +225,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 message">
-                                        {{ reply.message }}
+                                        {{ reply.message | raw }}
                                     </div>
                                 </div>
                                 <div class="panel-footer">
