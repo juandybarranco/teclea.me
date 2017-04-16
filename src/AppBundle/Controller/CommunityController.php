@@ -129,11 +129,11 @@ class CommunityController extends Controller
                 for($i=0; $i<$n; $i++){
                     $pos = strpos($message, $s);
 
-                    if($pos != false){
+                    if($pos !== false){
                         $message = substr($message, $pos);
                         $pos2 = strpos($message, ' ');
 
-                        if($pos2 == false){
+                        if($pos2 === false){
                             $pos2 = strlen($message);
                         }
 
