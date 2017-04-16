@@ -138,11 +138,14 @@ class CommunityController extends Controller
                         }
 
                         $link = substr($message, 0, $pos2);
-                        $replace = '<a href="'.$link.'">'.$link.'</a>';
-                        $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                        if(strlen($link) != strlen($s)){
+                            $replace = '<a href="'.$link.'">'.$link.'</a>';
+                            $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                        }
 
                         $message = substr($message, $pos2);
-
                     }
                 }
 
