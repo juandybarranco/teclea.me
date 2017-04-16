@@ -101,6 +101,55 @@ class CommunityController extends Controller
         ]);
 
         if($form->isSubmitted() && $form->isValid()){
+            $x = 1;
+
+            while($x < 3){
+                $message = $msg->getMessage();
+
+                switch($x){
+                    case 1: {
+                        $s = 'https://';
+                        $n = substr_count($message, $s);
+                        break;
+                    }
+
+                    case 2: {
+                        $s = 'http://';
+                        $n = substr_count($message, $s);
+                        break;
+                    }
+
+                    default: {
+                        $n = 0;
+                        $s = '';
+                        break;
+                    }
+                }
+
+                for($i=0; $i<$n; $i++){
+                    $pos = strpos($message, $s);
+
+                    if($pos != false){
+                        $message = substr($message, $pos);
+                        $pos2 = strpos($message, ' ');
+
+                        if($pos2 == false){
+                            $pos2 = strlen($message);
+                        }
+
+                        $link = substr($message, 0, $pos2);
+                        $replace = '<a href="'.$link.'">'.$link.'</a>';
+                        $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                        $message = substr($message, $pos2);
+
+                    }
+                }
+
+                $x++;
+
+            }
+
             $msg->setUser($user);
             $msg->setCommunity($community);
             $msg->setDate(new \DateTime("now"));
