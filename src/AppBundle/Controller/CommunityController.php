@@ -161,6 +161,7 @@ class CommunityController extends Controller
             $msg->setIsDeleted(0);
             $msg->setIsReply(0);
             $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+            $msg->setNotificationRead(1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($msg);
@@ -217,6 +218,7 @@ class CommunityController extends Controller
                     $msg->setIsDeleted(0);
                     $msg->setIsReply(1);
                     $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+                    $msg->setNotificationRead(0);
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($msg);
@@ -396,6 +398,7 @@ class CommunityController extends Controller
                             $msg->setIsDeleted(0);
                             $msg->setIsReply(0);
                             $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+                            $msg->setNotificationRead(1);
 
                             $em = $this->getDoctrine()->getManager();
                             $em->persist($msg);
@@ -532,6 +535,7 @@ class CommunityController extends Controller
                             $msg->setIsDeleted(0);
                             $msg->setIsReply(1);
                             $msg->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+                            $msg->setNotificationRead(0);
 
                             $em = $this->getDoctrine()->getManager();
                             $em->persist($msg);

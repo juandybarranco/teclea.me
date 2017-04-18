@@ -131,6 +131,29 @@ class Message
     protected $isReply;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $notificationRead = true;
+
+    /**
+     * @return mixed
+     */
+    public function getNotificationRead()
+    {
+        return $this->notificationRead;
+    }
+
+    /**
+     * @param mixed $notificationRead
+     */
+    public function setNotificationRead($notificationRead)
+    {
+        $this->notificationRead = $notificationRead;
+    }
+
+    /**
      * @return bool
      */
     public function isIsReply()
