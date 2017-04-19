@@ -195,7 +195,11 @@ class CommunityController extends Controller
             $message = null;
             $access = 'notFound';
         }else{
-
+            if($message->getCommunity()->getId() != 1 || $message->getCommunity()->getName() != 'General'){
+                return $this->redirectToRoute('messageDetails', [
+                    'id' => $message->getId()
+                ]);
+            }
             if($message->isIsDeleted()){
                 $access = 'deleted';
             }elseif ($message->isIsBlock()) {
