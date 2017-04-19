@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="col-md-12 message">
-                        {{ message.message | raw }}
+                        {{ message.message | striptags('<b><a>') | raw }}
                     </div>
                 </div>
 
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 message">
-                                    {{ reply.message | raw }}
+                                    {{ reply.message | striptags('<b><a>') | raw }}
                                 </div>
                             </div>
                             <div class="panel-footer">
@@ -145,7 +145,7 @@
                         </div>
 
                         <div class="col-md-12 message">
-                            {{ message.message | raw }}
+                            {{ message.message | striptags('<b><a>') | raw }}
                         </div>
                     </div>
 
@@ -225,7 +225,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 message">
-                                        {{ reply.message | raw }}
+                                        {{ reply.message | striptags('<b><a>') | raw }}
                                     </div>
                                 </div>
                                 <div class="panel-footer">
