@@ -209,6 +209,58 @@ class CommunityController extends Controller
                 $form->handleRequest($request);
 
                 if($form->isSubmitted() && $form->isValid()){
+                    $x = 1;
+
+                    while($x < 3){
+                        $messageTemp = $msg->getMessage();
+
+                        switch($x){
+                            case 1: {
+                                $s = 'https://';
+                                $n = substr_count($messageTemp, $s);
+                                break;
+                            }
+
+                            case 2: {
+                                $s = 'http://';
+                                $n = substr_count($messageTemp, $s);
+                                break;
+                            }
+
+                            default: {
+                                $n = 0;
+                                $s = '';
+                                break;
+                            }
+                        }
+
+                        for($i=0; $i<$n; $i++){
+                            $pos = strpos($messageTemp, $s);
+
+                            if($pos !== false){
+                                $messageTemp = substr($messageTemp, $pos);
+                                $pos2 = strpos($messageTemp, ' ');
+
+                                if($pos2 === false){
+                                    $pos2 = strlen($messageTemp);
+                                }
+
+                                $link = substr($messageTemp, 0, $pos2);
+
+                                if(strlen($link) != strlen($s)){
+                                    $replace = '<a href="'.$link.'">'.$link.'</a>';
+                                    $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                                }
+
+                                $messageTemp = substr($messageTemp, $pos2);
+                            }
+                        }
+
+                        $x++;
+
+                    }
+
                     $msg->setUser($user);
                     $msg->setReply($message);
                     $msg->setCommunity($message->getCommunity());
@@ -390,6 +442,58 @@ class CommunityController extends Controller
                         $form->handleRequest($request);
 
                         if($form->isSubmitted() && $form->isValid()){
+                            $x = 1;
+
+                            while($x < 3){
+                                $message = $msg->getMessage();
+
+                                switch($x){
+                                    case 1: {
+                                        $s = 'https://';
+                                        $n = substr_count($message, $s);
+                                        break;
+                                    }
+
+                                    case 2: {
+                                        $s = 'http://';
+                                        $n = substr_count($message, $s);
+                                        break;
+                                    }
+
+                                    default: {
+                                        $n = 0;
+                                        $s = '';
+                                        break;
+                                    }
+                                }
+
+                                for($i=0; $i<$n; $i++){
+                                    $pos = strpos($message, $s);
+
+                                    if($pos !== false){
+                                        $message = substr($message, $pos);
+                                        $pos2 = strpos($message, ' ');
+
+                                        if($pos2 === false){
+                                            $pos2 = strlen($message);
+                                        }
+
+                                        $link = substr($message, 0, $pos2);
+
+                                        if(strlen($link) != strlen($s)){
+                                            $replace = '<a href="'.$link.'">'.$link.'</a>';
+                                            $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                                        }
+
+                                        $message = substr($message, $pos2);
+                                    }
+                                }
+
+                                $x++;
+
+                            }
+
                             $msg->setUser($user);
                             $msg->setCommunity($community);
                             $msg->setDate(new \DateTime("now"));
@@ -526,6 +630,58 @@ class CommunityController extends Controller
                         $form->handleRequest($request);
 
                         if($form->isSubmitted() && $form->isValid()){
+                            $x = 1;
+
+                            while($x < 3){
+                                $messageTemp = $msg->getMessage();
+
+                                switch($x){
+                                    case 1: {
+                                        $s = 'https://';
+                                        $n = substr_count($messageTemp, $s);
+                                        break;
+                                    }
+
+                                    case 2: {
+                                        $s = 'http://';
+                                        $n = substr_count($messageTemp, $s);
+                                        break;
+                                    }
+
+                                    default: {
+                                        $n = 0;
+                                        $s = '';
+                                        break;
+                                    }
+                                }
+
+                                for($i=0; $i<$n; $i++){
+                                    $pos = strpos($messageTemp, $s);
+
+                                    if($pos !== false){
+                                        $messageTemp = substr($messageTemp, $pos);
+                                        $pos2 = strpos($messageTemp, ' ');
+
+                                        if($pos2 === false){
+                                            $pos2 = strlen($messageTemp);
+                                        }
+
+                                        $link = substr($messageTemp, 0, $pos2);
+
+                                        if(strlen($link) != strlen($s)){
+                                            $replace = '<a href="'.$link.'">'.$link.'</a>';
+                                            $msg->setMessage((str_replace($link, $replace, $msg->getMessage())));
+
+                                        }
+
+                                        $messageTemp = substr($messageTemp, $pos2);
+                                    }
+                                }
+
+                                $x++;
+
+                            }
+
                             $msg->setUser($user);
                             $msg->setReply($message);
                             $msg->setCommunity($message->getCommunity());
