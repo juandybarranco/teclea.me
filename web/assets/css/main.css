@@ -2691,8 +2691,8 @@ li.dropdown ul li a span:before{
     padding: 0;
 }
 
-.messages .message{
-    font-size: 19px;
+.messages .message, .replies .message{
+    font-size: 16px;
 }
 
 .messages .panel-footer a.btn, .messages .panel-footer button{
