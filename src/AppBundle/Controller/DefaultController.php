@@ -21,9 +21,58 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         if($this->isGranted('ROLE_USER')){
+            $user = $this->getUser();
+            $messages = [];
+            $replies = [];
+
+            $communities = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'user' => $user,
+                    'isActive' => true,
+                    'isDeleted' => false
+                )
+            );
+
+            foreach($communities as $community){
+                $msgs = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy(
+                    array(
+                        'community' => $community->getCommunity(),
+                        'isActive' => true,
+                        'isDeleted' => false,
+                        'isBlock' => false,
+                        'isReply' => false
+                    ),
+                    array(
+                        'date' => 'DESC'
+                    ), 30
+                );
+
+                $r = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy(
+                    array(
+                        'community' => $community->getCommunity(),
+                        'isActive' => true,
+                        'isDeleted' => false,
+                        'isBlock' => false,
+                        'isReply' => true
+                    ),
+                    array(
+                        'date' => 'DESC'
+                    ), 30
+                );
+
+                foreach($msgs as $msg){
+                    array_push($messages, $msg);
+                }
+
+                foreach($r as $reply){
+                    array_push($replies, $reply);
+                }
+            }
 
             return $this->render('userBase.html.twig', [
-                'user' => $this->getUser()
+                'user' => $user,
+                'messages' => $messages,
+                'replies' => $replies
             ]);
         }else{
             $auth = $this->get('security.authentication_utils');
