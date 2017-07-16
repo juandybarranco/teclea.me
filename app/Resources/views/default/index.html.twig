@@ -1,11 +1,129 @@
 {% extends app.user ? 'userBase.html.twig' : 'anonIndex.twig' %}
 
 {% block body %}
-
     {% if app.user %}
+        <div id="feed" class="container">
+            {% if messages|length == 0 and replies|length == 0 %}
+                <div class="alert alert-warning" role="alert">Tú Feed está vacío. <a href="{{ path('communityList') }}">¿Por qué no exploras las distintas comunidades?</a></div>
+            {% else %}
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        Últimos Mensajes
+                    </div>
+                    <div class="panel-body">
+                        {% for message in messages %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>] - {{ message.date | date('d-m-Y H:i') }}
+                                </div>
 
+                                <div class="panel-body text-left flex">
+                                    <div class="messageImage">
+                                        <div class="image avatar95">
+                                            <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
+                                                {% if message.user.image %}
+                                                    <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
+                                                {% else %}
+                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ message.user.username }}"/>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 message">
+                                        {{ message.message | striptags('<b>') | raw }}
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <div class="msgButtons">
+                                        {% if message.isReply == false %}
+                                            <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
+                                        {% endif %}
+                                        {% if message.user.id == user.id %}
+                                            <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                        {% endif %}
+                                        {% if message.user.id == user.id %}
+                                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                        {% endif %}
+                                        <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
+                                        <div class="btn-options-sm col-md-10">
+                                            {% if message.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                            {% endif %}
+                                            {% if message.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            {% endif %}
+                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        Últimas Respuestas
+                    </div>
+                    <div class="panel-body">
+                        {% for reply in replies %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="fa fa-reply"><a href="{{ path('messageDetails', {'id': reply.reply.id }) }}"> #{{ reply.reply.id }}</a></span><a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}"> {{ reply.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': reply.community.id }) }}">{{ reply.community.name }}</a>] - {{ reply.date | date('d-m-Y H:i') }}
+                                </div>
+
+                                <div class="panel-body text-left flex">
+                                    <div class="messageImage">
+                                        <div class="image avatar95">
+                                            <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
+                                                {% if reply.user.image %}
+                                                    <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                {% else %}
+                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 message">
+                                        {{ reply.message | striptags('<b>') | raw }}
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <div class="msgButtons">
+                                        {% if reply.isReply == false %}
+                                            <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
+                                        {% endif %}
+                                        {% if reply.user.id == user.id %}
+                                            <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
+                                        {% endif %}
+                                        {% if reply.user.id == user.id %}
+                                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                        {% endif %}
+                                        <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
+                                        <div class="btn-options-sm col-md-10">
+                                            {% if reply.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
+                                            {% endif %}
+                                            {% if reply.user.id == user.id %}
+                                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            {% endif %}
+                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     {% else %}
-
+        <div class="alert alert-danger" role="alert">Se ha producido un error. Por favor, contacte con el administrador.</div>
     {% endif %}
-
 {% endblock %}

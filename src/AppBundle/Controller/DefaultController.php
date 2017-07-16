@@ -68,8 +68,7 @@ class DefaultController extends Controller
                     array_push($replies, $reply);
                 }
             }
-
-            return $this->render('userBase.html.twig', [
+            return $this->render('default/index.html.twig', [
                 'user' => $user,
                 'messages' => $messages,
                 'replies' => $replies
