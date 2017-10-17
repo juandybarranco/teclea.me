@@ -1,0 +1,37 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="panel panel-info info">
+            <div class="panel-heading">
+                <b><span class="fa fa-envelope-o"></span> Bandeja de Entrada</b>
+            </div>
+
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <button class="btn btn-lg btn-default"><span class="fa fa-plus"></span> Nuevo Mensaje Privado</button>
+                        <button class="btn btn-lg btn-default"><span class="fa fa-envelope-open"></span> Bandeja de Salida</button>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+
+                        {% for pm in pmList %}
+                            <li class="list-group-item">
+                                <a href="#">{{ pm.message }}</a> - ({{ pm.date | date('d-m-Y h:m') }})
+                            </li>
+                        {% else %}
+                            <li class="list-group-item">
+                                <div>No tienes mensajes privados en tu bandeja de entrada.</div>
+                            </li>
+                        {% endfor %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
