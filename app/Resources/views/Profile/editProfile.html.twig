@@ -94,12 +94,12 @@
                     {% endif %}
 
                     <div class="col-md-12 input-group">
-                        <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
+                        <span class="input-group-addon"><span class="fa fa-2x fa-lock"></span></span>
                         {{ form_widget(form2.password.first) }}
                     </div>
 
                     <div class="col-md-12 input-group">
-                        <span class="input-group-addon"><span class="fa fa-2x fa-at"></span></span>
+                        <span class="input-group-addon"><span class="fa fa-2x fa-lock"></span></span>
                         {{ form_widget(form2.password.second) }}
                     </div>
 
@@ -128,11 +128,11 @@
                             <div class="alert alert-danger mb10" role="alert">Error: La imagen no puede superar 1MB de tamaño.</div>
                         {% endif %}
 
-                        <div class="col-md-10 col-xs-12 mr-30">
+                        <div class="col-md-12 col-xs-12 mr-30 mt20">
                             {{ form_widget(img.image) }}
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-12">
                             {{ form_widget(img.Enviar) }}
                         </div>
                         {{ form_end(img) }}
