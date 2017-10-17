@@ -44,7 +44,7 @@
                                             <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
                                         {% endif %}
                                         {% if message.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete-feed" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
                                         <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
@@ -53,7 +53,7 @@
                                                 <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
                                             {% if message.user.id == user.id %}
-                                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                <a class="btn btn-sm btn-default btn-delete-feed-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
                                             <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
@@ -102,7 +102,7 @@
                                             <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
                                         {% endif %}
                                         {% if reply.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete-feed" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
                                         <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
@@ -111,7 +111,7 @@
                                                 <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
                                             {% if reply.user.id == user.id %}
-                                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                <a class="btn btn-sm btn-default btn-delete-feed-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
                                             <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>

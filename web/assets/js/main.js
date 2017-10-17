@@ -88,6 +88,33 @@
             });
     });
 
+    $(".btn-delete-feed, .btn-delete-feed-sm").click(function(){
+        idMessage = $(this).attr('name');
+
+        swal({
+                title: "¿Estás seguro?",
+                text: "Este mensaje se borrará completamente",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Borrar",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function(){
+                $.ajax({
+                    method: 'POST',
+                    url: '../../community/deleteMessage/'+idMessage
+                })
+                    .done(function( status ){
+                        swal(status);
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    });
+            });
+    });
+
     $("#tabs").click(function(){
         $(this).tab('show');
     });
