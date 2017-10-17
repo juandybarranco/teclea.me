@@ -39,7 +39,7 @@
                                     <div class="msgButtons">
                                         <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.isReply == false %}
-                                            <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
+                                            <a class="btn btn-sm btn-default btn-replyMSG" href="{{ path('messageDetails', {'id': message.id }) }}"><span class="fa fa-reply"></span> Responder</a>
                                         {% endif %}
                                         {% if message.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
