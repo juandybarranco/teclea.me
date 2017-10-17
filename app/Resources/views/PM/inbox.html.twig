@@ -15,19 +15,31 @@
                     </div>
 
                     <div class="panel-body">
-                        <ul class="list-unstyled">
+                        {% if pmList | length > 0 %}
+                            <table class="table table-bordered">
+                                <thead class="bg-info">
+                                    <tr>
+                                        <th>Asunto: </th>
+                                        <th>Remitente: </th>
+                                        <th>Fecha: </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
 
-                        {% for pm in pmList %}
-                            <li class="list-group-item">
-                                <a href="#">{{ pm.message }}</a> - ({{ pm.date | date('d-m-Y h:m') }})
-                            </li>
+                                <tbody>
+                                    {% for pm in pmList %}
+                                    <tr>
+                                        <td><a href="#">{{ pm.subject }}</a></td>
+                                        <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
+                                        <td>{{ pm.date | date('d-m-Y h:m') }}</td>
+                                        <th><span class="fa fa-trash"></span><span class="fa fa-eye"></span></th>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         {% else %}
-                            <li class="list-group-item">
-                                <div>No tienes mensajes privados en tu bandeja de entrada.</div>
-                            </li>
-                        {% endfor %}
-
-                        </ul>
+                            <div>No tienes mensajes privados en tu bandeja de entrada.</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
