@@ -37,6 +37,7 @@
 
                                 <div class="panel-footer">
                                     <div class="msgButtons">
+                                        <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.isReply == false %}
                                             <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
                                         {% endif %}
@@ -95,6 +96,7 @@
 
                                 <div class="panel-footer">
                                     <div class="msgButtons">
+                                        <a href="{{ path('messageDetails', {'id': reply.reply.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Conversación</a>
                                         {% if reply.isReply == false %}
                                             <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
                                         {% endif %}
