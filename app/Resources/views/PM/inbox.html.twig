@@ -2,37 +2,47 @@
 
 {% block body %}
     <div class="container">
-        <div class="panel panel-info info">
-            <div class="panel-heading">
-                <b><span class="fa fa-envelope-o"></span> Bandeja de Entrada</b>
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-envelope-o"></span> Bandeja de Entrada ({{ notReaded }}/{{ pmList | length }})</b>
             </div>
 
-            <div class="panel-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <button class="btn btn-lg btn-default"><span class="fa fa-plus"></span> Nuevo Mensaje Privado</button>
-                        <button class="btn btn-lg btn-default"><span class="fa fa-envelope-open"></span> Bandeja de Salida</button>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <div class="col-md-12">
+                            <button class="btn btn-md btn-dark"><span class="fa fa-plus"></span> Nuevo Privado</button>
+                            <button class="btn btn-md btn-dark"><span class="fa fa-envelope-open"></span> Enviados</button>
+                        </div>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="card-body">
                         {% if pmList | length > 0 %}
-                            <table class="table table-bordered">
-                                <thead class="bg-info">
+                            <table class="table table-bordered table-striped table-hover table-sm table-responsive">
+                                <thead class="bg-dark cWhite">
                                     <tr>
-                                        <th>Asunto: </th>
-                                        <th>Remitente: </th>
-                                        <th>Fecha: </th>
-                                        <th>Opciones</th>
+                                        <th scope="row"></th>
+                                        <th class="text-center">Asunto: </th>
+                                        <th class="text-center">Remitente: </th>
+                                        <th class="text-center">Fecha: </th>
+                                        <th class="text-center">Opciones</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     {% for pm in pmList %}
                                     <tr>
+                                        <td scope="row">
+                                            {% if pm.isRead %}
+                                                <span class="fa fa-envelope-open-o"></span>
+                                            {% else %}
+                                                <span class="fa fa-envelope"></span>
+                                            {% endif %}
+                                        </td>
                                         <td><a href="#">{{ pm.subject }}</a></td>
                                         <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
                                         <td>{{ pm.date | date('d-m-Y h:m') }}</td>
-                                        <th><span class="fa fa-trash"></span><span class="fa fa-eye"></span></th>
+                                        <td><span class="fa fa-trash"></span><span class="fa fa-eye"></span></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

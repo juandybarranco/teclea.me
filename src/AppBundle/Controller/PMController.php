@@ -26,10 +26,22 @@ class PMController extends Controller
             )
         );
 
+        $notReaded = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+            array(
+                'recipient' => $user,
+                'reply' => null,
+                'isDeletedByRecipient' => false,
+                'isRead' => false
+            )
+        );
+
+        $notReaded = count($notReaded);
+
         return $this->render('PM/inbox.html.twig',
             array(
                 'user' => $user,
-                'pmList' => $PM
+                'pmList' => $PM,
+                'notReaded' => $notReaded
             )
         );
     }
