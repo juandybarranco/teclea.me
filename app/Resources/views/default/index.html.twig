@@ -37,26 +37,26 @@
 
                                 <div class="card-footer">
                                     <div class="msgButtons">
-                                        <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-secondary"><span class="fa fa-eye"></span> Detalles</a>
+                                        <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.isReply == false %}
-                                            <a class="btn btn-sm btn-secondary btn-reply" href="{{ path('messageDetails', {'id': message.id }) }}"><span class="fa fa-reply"></span> Responder</a>
+                                            <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', {'id': message.id }) }}"><span class="fa fa-reply"></span> Responder</a>
                                         {% endif %}
                                         {% if message.user.id == user.id %}
-                                            <a class="btn btn-sm btn-secondary btn-edit" href="#"><span class="fa fa-edit"></span> Editar</a>
+                                            <a class="btn btn-sm btn-default btn-edit" href="#"><span class="fa fa-edit"></span> Editar</a>
                                         {% endif %}
                                         {% if message.user.id == user.id %}
-                                            <a class="btn btn-sm btn-secondary btn-delete cWhite" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
-                                        <a class="btn btn-sm btn-secondary btn-report" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
-                                        <a class="btn btn-sm btn-secondary btn-options cWhite">Opciones <span class="caret"></span></a>
+                                        <a class="btn btn-sm btn-default btn-report" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                                         <div class="btn-options-sm col-md-10">
                                             {% if message.user.id == user.id %}
-                                                <a class="btn btn-sm btn-secondary cWhite"><span class="fa fa-edit"></span> Editar</a>
+                                                <a class="btn btn-sm btn-default "><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
                                             {% if message.user.id == user.id %}
-                                                <a class="btn btn-sm btn-secondary btn-delete-feed-sm cWhite" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                <a class="btn btn-sm btn-default btn-delete-feed-sm " name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
-                                            <a class="btn btn-sm btn-secondary cWhite"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -96,23 +96,23 @@
 
                                 <div class="card-footer">
                                     <div class="msgButtons">
-                                        <a href="{{ path('messageDetails', {'id': reply.reply.id } ) }}" class="btn btn-sm btn-secondary"><span class="fa fa-eye"></span> Conversación</a>
+                                        <a href="{{ path('messageDetails', {'id': reply.reply.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Conversación</a>
                                         {% if reply.user.id == user.id %}
-                                            <a class="btn btn-sm btn-secondary btn-edit cWhite"><span class="fa fa-edit"></span> Editar</a>
+                                            <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
                                         {% endif %}
                                         {% if reply.user.id == user.id %}
-                                            <a class="btn btn-sm btn-secondary btn-delete-feed cWhite" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete-feed" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
-                                        <a class="btn btn-sm btn-secondary btn-report" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
-                                        <a class="btn btn-sm btn-secondary btn-options cWhite">Opciones <span class="caret"></span></a>
+                                        <a class="btn btn-sm btn-default btn-report" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                                         <div class="btn-options-sm col-md-10">
                                             {% if reply.user.id == user.id %}
-                                                <a class="btn btn-sm btn-secondary" href="#"><span class="fa fa-edit"></span> Editar</a>
+                                                <a class="btn btn-sm btn-default" href="#"><span class="fa fa-edit"></span> Editar</a>
                                             {% endif %}
                                             {% if reply.user.id == user.id %}
-                                                <a class="btn btn-sm btn-secondary btn-delete-feed-sm cWhite" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                                <a class="btn btn-sm btn-default btn-delete-feed-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
-                                            <a class="btn btn-sm btn-secondary" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                            <a class="btn btn-sm btn-default" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
                                     </div>
                                 </div>
