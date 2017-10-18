@@ -39,7 +39,7 @@
                                                 <span class="fa fa-envelope" title="No Leído"></span>
                                             {% endif %}
                                         </td>
-                                        <td><a href="#">{{ pm.subject }}</a></td>
+                                        <td><a href="{{ path('readPrivate', {'id': pm.id }) }}">{{ pm.subject }}</a></td>
                                         <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
                                         <td>{{ pm.date | date('d-m-Y h:m') }}</td>
                                         <td>

@@ -47,6 +47,61 @@ class PMController extends Controller
     }
 
     /**
+     * @Route("/{id}", name="readPrivate")
+     */
+    public function readPrivateAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+        $rs = 0;
+
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+            array(
+                'recipient' => $user,
+                'isDeletedByRecipient' => false,
+                'id' => $id
+            )
+        );
+
+        if(count($PM) == 1){
+            $PM = $PM[0];
+            $rs = 1;
+
+            $PM->setIsRead(1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($PM);
+            $em->flush();
+        }else{
+            $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+                array(
+                    'sender' => $user,
+                    'isDeletedBySender' => false,
+                    'id' => $id
+                )
+            );
+
+            if(count($PM) == 1){
+                $PM = $PM[0];
+                $rs = 2;
+
+                $PM->setIsRead(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($PM);
+                $em->flush();
+            }else{
+                return $this->redirectToRoute('inbox');
+            }
+        }
+
+        return $this->render('PM/readPM.html.twig', array(
+            'user' => $user,
+            'PM' => $PM,
+            'rs' => $rs
+        ));
+    }
+
+    /**
     * @Route("/markAsRead/{id}", name="markPMAsRead")
     */
     public function markAsRead(Request $request, $id)

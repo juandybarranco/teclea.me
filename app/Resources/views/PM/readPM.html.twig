@@ -1,0 +1,31 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-envelope-open-o"></span> {{ PM.subject }}</b>
+            </div>
+
+            <div class="card-body text-left">
+                <p>{{ PM.message | striptags('<b>') | raw }}</p>
+            </div>
+
+            <div class="card-footer dflexblock">
+                <div class="col-md-6 text-left">
+                    {% if rs == 1 %}
+                        <b>Enviado por: </b><a href="{{ path('viewUserProfile', {'id': PM.sender.username }) }}">{{ PM.sender.username }}</a>
+                    {% elseif rs == 2 %}
+                        <b>Enviado a: </b><a href="{{ path('viewUserProfile', {'id': PM.recipient.username }) }}">{{ PM.recipient.username }}</a>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 text-right">
+                    {{ PM.date | date('d-m-Y h:m') }}
+                </div>
+            </div>
+        </div>
+
+        <a href="{{ path('inbox') }}" class="btn btn-lg btn-dark mt-lg-5"><span class="fa fa-chevron-left"> Volver</span></a>
+    </div>
+{% endblock %}
