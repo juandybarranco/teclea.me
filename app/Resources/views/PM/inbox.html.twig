@@ -43,7 +43,7 @@
                                         <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
                                         <td>{{ pm.date | date('d-m-Y h:m') }}</td>
                                         <td>
-                                            <span class="fa fa-trash" title="Eliminar"></span>
+                                            <a href="{{ path('deletePM', {'id': pm.id }) }}"><span class="fa fa-trash" title="Eliminar"></span></a>
                                             {% if pm.isRead %}
                                                 <a href="{{ path('markPMAsNotRead', {'id': pm.id }) }}"><span class="fa fa-eye-slash" title="Marcar como no leído"></span></a>
                                             {% else %}
