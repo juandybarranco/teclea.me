@@ -47,8 +47,8 @@ class PMController extends Controller
     }
 
     /**
- * @Route("/markAsRead/{id}", name="markPMAsRead")
- */
+    * @Route("/markAsRead/{id}", name="markPMAsRead")
+    */
     public function markAsRead(Request $request, $id)
     {
         $user = $this->getUser();
@@ -70,6 +70,14 @@ class PMController extends Controller
             $em->flush();
         }
 
+        return $this->redirectToRoute('inbox');
+    }
+
+    /**
+     * @Route("/markAsRead", name="000markAsRead")
+     */
+    public function markAsRead000(Request $request, $id)
+    {
         return $this->redirectToRoute('inbox');
     }
 
@@ -97,6 +105,14 @@ class PMController extends Controller
             $em->flush();
         }
 
+        return $this->redirectToRoute('inbox');
+    }
+
+    /**
+     * @Route("/markAsNotRead", name="000markAsNotRead")
+     */
+    public function markAsNotRead000(Request $request, $id)
+    {
         return $this->redirectToRoute('inbox');
     }
 }
