@@ -34,15 +34,22 @@
                                     <tr>
                                         <td scope="row">
                                             {% if pm.isRead %}
-                                                <span class="fa fa-envelope-open-o"></span>
+                                                <span class="fa fa-envelope-open-o" title="Leído"></span>
                                             {% else %}
-                                                <span class="fa fa-envelope"></span>
+                                                <span class="fa fa-envelope" title="No Leído"></span>
                                             {% endif %}
                                         </td>
                                         <td><a href="#">{{ pm.subject }}</a></td>
                                         <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
                                         <td>{{ pm.date | date('d-m-Y h:m') }}</td>
-                                        <td><span class="fa fa-trash"></span><span class="fa fa-eye"></span></td>
+                                        <td>
+                                            <span class="fa fa-trash" title="Eliminar"></span>
+                                            {% if pm.isRead %}
+                                                <a href="{{ path('markPMAsNotRead', {'id': pm.id }) }}"><span class="fa fa-eye-slash" title="Marcar como no leído"></span></a>
+                                            {% else %}
+                                                <a href="{{ path('markPMAsRead', {'id': pm.id }) }}"><span class="fa fa-eye" title="Marcar como leído"></span></a>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
