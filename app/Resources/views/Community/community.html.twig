@@ -3,15 +3,15 @@
 {% block body %}
     <div id="community" class="container">
         {% if access == 'default' %}
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="card">
+                <div class="card-header bg-primary">
                     <header>
-                        <h2>{{ community.name }}</h2>
+                        <h2 class="cWhite">{{ community.name }}</h2>
                         <hr/>
                     </header>
-                    <h1>{{ community.description }}</h1>
+                    <h1 class="cWhite">{{ community.description }}</h1>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="col-md-12">
                         {{ form_start(msg) }}
                         <div id="newMessage" class="col-md-12 input-group">
@@ -24,11 +24,11 @@
 
                     <div class="col-md-12">
                         {% for msg in messages %}
-                            <div class="panel panel-default messages">
-                                <div class="panel-heading smaller">
+                            <div class="card messages mb-lg-5">
+                                <div class="card-header smaller">
                                     <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                 </div>
-                                <div class="panel-body text-left flex">
+                                <div class="card-body text-left flex">
                                     <div class="messageImage">
                                         <div class="image avatar95">
                                             <a href="{{ path('viewUserProfile', {'id': msg.user.id }) }}" title="Perfil de {{ msg.user.username }}">
@@ -44,9 +44,9 @@
                                         {{ msg.message | striptags('<b>') | raw }}
                                     </div>
                                 </div>
-                                <div class="panel-footer">
-                                    <div class="msgAnswers">
-                                        <button class="btn btn-sm btn-default">
+                                <div class="card-footer dflexblock rCenter">
+                                    <div class="col-md-1 msgAnswers text-left">
+                                        <button class="btn btn-sm btn-dark">
                                             {% set cont = 0 %}
 
                                             {% for r in msg.messageReply %}
@@ -63,12 +63,9 @@
                                         </button>
                                     </div>
 
-                                    <div class="msgButtons">
+                                    <div class="col-md-11 msgButtons text-right">
                                         <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
                                         <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                        {% if msg.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
-                                        {% endif %}
                                         {% if msg.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-delete" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
@@ -76,9 +73,6 @@
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                                         <div class="btn-options-sm col-md-10">
                                             <a class="btn btn-sm btn-default" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                            {% if msg.user.id == user.id %}
-                                                <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                            {% endif %}
                                             {% if msg.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete-sm" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
@@ -88,10 +82,10 @@
                                 </div>
 
                                 {% if msg.messageReply | length > 0 %}
-                                    <div class="panel-body replies">
+                                    <div class="card-body replies">
                                         {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
-                                            <div class="panel panel-default">
-                                                <div class="panel-body text-left flex">
+                                            <div class="card mb-lg-3">
+                                                <div class="card-body text-left flex">
                                                     <div class="messageImage">
                                                         <div class="image avatar48">
                                                             <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
@@ -107,18 +101,18 @@
                                                         {{ reply.message | striptags('<b>') | raw }}
                                                     </div>
                                                 </div>
-                                                <div class="panel-footer">
+                                                <div class="card-footer dflexblock">
                                                     <div class="replyInfo small">
                                                         <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                     </div>
                                                     <div class="replyButtons">
                                                         {% if reply.user.id == user.id %}
-                                                            <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                            <a class="btn btn-sm btn-default" href="#"><span class="fa fa-edit"></span> Editar</a>
                                                         {% endif %}
                                                         {% if reply.user.id == user.id %}
-                                                            <button class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                                            <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                         {% endif %}
-                                                        <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                                        <a class="btn btn-sm btn-default" href="#"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,17 +137,17 @@
         {% elseif access == 'deleted' %}
             <div class="alert alert-danger" role="alert">Esta comunidad ha sido eliminada por su administrador.</div>
         {% elseif access == 'active' %}
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="card ">
+                <div class="card-header bg-primary">
                     <header>
-                        <h2>{{ community.name }}</h2>
+                        <h2 class="cWhite">{{ community.name }}</h2>
                         <hr/>
                     </header>
-                    <h1>{{ community.description }}</h1>
+                    <h1 class="cWhite">{{ community.description }}</h1>
                 </div>
 
                 {% if userAccess %}
-                    <div class="panel-body">
+                    <div class="card-body">
                         {% if status == 'protectedAllow' or status == 'full' %}
                             <div class="col-md-12">
                                 {{ form_start(msg) }}
@@ -168,11 +162,11 @@
 
                         <div class="col-md-12">
                             {% for msg in messages %}
-                                <div class="panel panel-default messages">
-                                    <div class="panel-heading smaller">
+                                <div class="card messages">
+                                    <div class="card-header smaller">
                                         <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                     </div>
-                                    <div class="panel-body text-left flex">
+                                    <div class="card-body text-left flex">
                                         <div class="messageImage">
                                             <div class="image avatar95">
                                                 <a href="{{ path('viewUserProfile', {'id': msg.user.id }) }}" title="Perfil de {{ msg.user.username }}">
@@ -188,9 +182,9 @@
                                             {{ msg.message | striptags('<b>') | raw }}
                                         </div>
                                     </div>
-                                    <div class="panel-footer">
-                                        <div class="msgAnswers">
-                                            <button class="btn btn-sm btn-default">
+                                    <div class="card-footer dflexblock rCenter">
+                                        <div class="col-md-1 msgAnswers text-left">
+                                            <button class="btn btn-sm btn-dark">
                                                 {% set cont = 0 %}
 
                                                 {% for r in msg.messageReply %}
@@ -207,13 +201,10 @@
                                             </button>
                                         </div>
 
-                                        <div class="msgButtons">
+                                        <div class="col-md-11 msgButtons text-right">
                                             <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
                                             {% if status == 'protectedAllow' or status == 'full' %}
                                                 <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                                {% if msg.user.id == user.id %}
-                                                    <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
-                                                {% endif %}
                                             {% endif %}
                                             {% if msg.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -223,9 +214,6 @@
                                             <div class="btn-options-sm col-md-10">
                                                 {% if status == 'protectedAllow' or status == 'full' %}
                                                     <a class="btn btn-sm btn-default" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
-                                                    {% if msg.user.id == user.id %}
-                                                        <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                                    {% endif %}
                                                 {% endif %}
                                                 {% if msg.user.id == user.id %}
                                                     <a class="btn btn-sm btn-default btn-delete-sm" name="{{ msg.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -236,10 +224,10 @@
                                     </div>
 
                                     {% if msg.messageReply | length > 0 %}
-                                        <div class="panel-body replies">
+                                        <div class="card-body replies">
                                             {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body text-left flex">
+                                                <div class="card mb-lg-3">
+                                                    <div class="card-body text-left flex">
                                                         <div class="messageImage">
                                                             <div class="image avatar48">
                                                                 <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
@@ -255,20 +243,20 @@
                                                             {{ reply.message | striptags('<b>') | raw }}
                                                         </div>
                                                     </div>
-                                                    <div class="panel-footer">
+                                                    <div class="card-footer dflexblock">
                                                         <div class="replyInfo small">
                                                             <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                         </div>
                                                         <div class="replyButtons">
                                                             {% if status == 'protectedAllow' or status == 'full' %}
                                                                 {% if reply.user.id == user.id %}
-                                                                    <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                                                 {% endif %}
                                                             {% endif %}
                                                             {% if reply.user.id == user.id %}
-                                                                <button class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                                                <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                             {% endif %}
-                                                            <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                                         </div>
                                                     </div>
                                                 </div>

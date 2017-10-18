@@ -2,23 +2,21 @@
 
 {% block body %}
     <div id="communitiesList" class="container">
-        <div class="panel panel-heading">
-            <div class="panel-heading">
+        <div class="card mb-lg-5">
+            <div class="card-header">
                 <h2>Comunidades</h2>
                 <p>¡Descubre y gestiona las distintas comunidades!</p>
 
                 <div class="input-group searchBox">
                     <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
                     <span class="input-group-btn">
-                        <button id="buttonSearch" class="btn btn-default" type="button">Buscar</button>
+                        <button id="buttonSearch" class="btn btn-primary" type="button">Buscar</button>
                     </span>
                 </div>
             </div>
         </div>
 
-
-
-        <ul id="tabs" class="nav nav-tabs" role="tablist">
+        <ul id="tabs" class="nav nav-tabs bg-light dflexblock" role="tablist">
             <li role="presentation" class="active"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Inscrito</a></li>
             <li role="presentation"><a href="#official" aria-controls="official" role="tab" data-toggle="tab">Oficiales</a></li>
             <li role="presentation"><a href="#own" aria-controls="own" role="tab" data-toggle="tab">Propias</a></li>
@@ -27,21 +25,24 @@
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="signUp">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card">
+                    <div class="card-header">
                         <h1><b>Lista de comunidades donde estás inscrito.</b></h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         {% for c in signup %}
-                            <div class="panel panel-default list">
-                                <div class="panel-body input-group text-left">
-                                    <div>
+                            <div class="card list mb-lg-3">
+                                <div class="card-body input-group dflexblock text-left">
+                                    <div class="col-md-10">
                                         <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
                                         <h1>{{ c.description }}</h1>
                                     </div>
-                                    <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                    <div class="col-md-2">
+                                        <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                        <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                    </div>
                                 </div>
-                                <div class="panel-footer text-left">
+                                <div class="card-footer text-left">
                                     {% set members = 0 %}
                                     {% set msg = 0 %}
 
@@ -75,22 +76,27 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="official">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card">
+                    <div class="card-header">
                         <h1><b>Lista de comunidades oficiales.</b></h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <ul>
                             {% for c in officials %}
-                                <div class="panel panel-default list">
-                                    <div class="panel-body input-group text-left">
-                                        <div>
-                                            <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
-                                            <h1>{{ c.description }}</h1>
+                                <div class="card list mb-lg-3">
+                                    <div class="card-body input-group dflexblock text-left">
+                                        <div class="col-md-10">
+                                            <div>
+                                                <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
+                                                <h1>{{ c.description }}</h1>
+                                            </div>
                                         </div>
-                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                        <div class="col-md-2">
+                                            <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        </div>
                                     </div>
-                                    <div class="panel-footer text-left">
+                                    <div class="card-footer text-left">
                                         {% set members = 0 %}
                                         {% set msg = 0 %}
 
@@ -125,22 +131,25 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="own">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card">
+                    <div class="card-header">
                         <h1><b>Lista de comunidades donde eres el Administrador.</b></h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <ul>
                             {% for c in admin %}
-                                <div class="panel panel-default list">
-                                    <div class="panel-body input-group text-left">
-                                        <div>
+                                <div class="card list mb-lg-3">
+                                    <div class="card-body input-group dflexblock text-left">
+                                        <div class="col-md-10">
                                             <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
                                             <h1>{{ c.description }}</h1>
                                         </div>
-                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                        <div class="col-md-2">
+                                            <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                            <span><a href="#" class="btn btn-success"><span class="fa fa-trash"> Eliminar</span></a></span>
+                                        </div>
                                     </div>
-                                    <div class="panel-footer text-left">
+                                    <div class="card-footer text-left">
                                         {% set members = 0 %}
                                         {% set msg = 0 %}
 
@@ -175,22 +184,25 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="lastCreated">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="card">
+                    <div class="card-header">
                         <h1><b>Lista de comunidades creadas recientemente.</b></h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <ul>
                             {% for c in last %}
-                                <div class="panel panel-default list">
-                                    <div class="panel-body input-group text-left">
-                                        <div>
+                                <div class="card list mb-lg-3">
+                                    <div class="card-body input-group dflexblock text-left">
+                                        <div class="col-md-10">
                                             <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
                                             <h1>{{ c.description }}</h1>
                                         </div>
-                                        <span class="input-group-addon"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                        <div class="col-md-2">
+                                            <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right">Visitar</span></a></span>
+                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        </div>
                                     </div>
-                                    <div class="panel-footer text-left">
+                                    <div class="card-footer text-left">
                                         {% set members = 0 %}
                                         {% set msg = 0 %}
 

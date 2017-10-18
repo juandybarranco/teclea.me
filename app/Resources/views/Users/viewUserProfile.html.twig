@@ -24,29 +24,29 @@
                 {% if follow == '1' %}
                     <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-danger"><span class="fa fa-minus"></span> No Seguir</a>
                 {% elseif follow == '0' %}
-                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-info"><span class="fa fa-plus"></span> Seguir</a>
+                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
                 {% endif %}
-                <button class="btn btn-default"><span class="fa fa-envelope-o"></span> Enviar MP</button>
+                <button class="btn btn-primary ml-2"><span class="fa fa-envelope-o"></span> Enviar MP</button>
             </div>
 
-            <div class="panel panel-info info">
-                <div class="panel-heading">
-                    <b><span class="fa fa-address-card-o"></span> Información sobre {{ otherUser.username }}</b>
+            <div class="card info">
+                <div class="card-header bg-primary">
+                    <b class="cWhite"><span class="fa fa-address-card-o"></span> Información sobre {{ otherUser.username }}</b>
                 </div>
 
-                <div class="panel-body">
-                    <div class="col-md-12">
+                <div class="card-body">
+                    <div class="col-md-12 dflexblock">
                         <div class="col-md-4 text-center fa-border bg-info">
-                            <b><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
+                            <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
                         </div>
                         <div class="col-md-8 text-left fa-border">
                             <label>{{ otherUser.username }}</label>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 dflexblock">
                         <div class="col-md-4 text-center fa-border bg-info">
-                            <b><span class="fa fa-globe"></span> País:</b>
+                            <b class="cWhite"><span class="fa fa-globe"></span> País:</b>
                         </div>
                         <div class="col-md-8 text-left fa-border">
                             <label>{{ otherUser.country }}</label>
@@ -54,9 +54,9 @@
                     </div>
 
                     {% if otherUser.location %}
-                        <div class="col-md-12">
+                        <div class="col-md-12 dflexblock">
                             <div class="col-md-4 text-center fa-border bg-info">
-                                <b><span class="fa fa-location-arrow"></span> Localización:</b>
+                                <b class="cWhite"><span class="fa fa-location-arrow"></span> Localización:</b>
                             </div>
                             <div class="col-md-8 text-left fa-border">
                                 <label>{{ otherUser.location }}</label>
@@ -65,9 +65,9 @@
                     {% endif %}
 
                     {% if otherUser.personalMessage %}
-                        <div class="col-md-12">
+                        <div class="col-md-12 dflexblock">
                             <div class="col-md-4 text-center fa-border bg-info">
-                                <b><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
+                                <b class="cWhite"><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
                             </div>
                             <div class="col-md-8 text-left fa-border">
                                 <label>{{ otherUser.personalMessage }}</label>

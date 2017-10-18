@@ -17,12 +17,12 @@
             <hr/>
         </header>
 
-        <div class="panel panel-info info">
-            <div class="panel-heading">
-                <b><span class="fa fa-edit"></span> Información Principal</b>
+        <div class="card">
+            <div class="card-header bg-primary ">
+                <b class="cWhite"><span class="fa fa-edit"></span> Información Principal</b>
             </div>
 
-            <div class="panel-body editProfile">
+            <div class="card-body editProfile">
 
                 {% if check == '1' %}
                     <div class="alert alert-danger mb10" role="alert">El nombre de usuario no puede estar vacío.</div>
@@ -31,7 +31,7 @@
                 {% endif %}
 
                 {{ form_start(form) }}
-                <div class="col-md-12 privacy">
+                <div class="col-md-12 privacy flex">
                     <div class="col-md-5 ">
                         <label>Privado</label>
                     </div>
@@ -80,12 +80,12 @@
 
         </div>
 
-        <div class="panel panel-info info">
-            <div class="panel-heading">
-                <b><span class="fa fa-edit"></span> Cambiar Contraseña</b>
+        <div class="card info mt-lg-5">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-edit"></span> Cambiar Contraseña</b>
             </div>
 
-            <div class="panel-body editProfile">
+            <div class="card-body editProfile">
                 {{ form_start(form2) }}
                     {% if form_errors(form2.password.first) %}
                         <div class="alert alert-danger mb10" role="alert">{{ form_errors(form2.password.first) }}</div>
@@ -110,12 +110,12 @@
             </div>
         </div>
 
-        <div class="panel panel-info info">
-            <div class="panel-heading">
-                <b><span class="fa fa-edit"></span> Imagen de Perfil</b>
+        <div class="card info mt-lg-5">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-edit"></span> Imagen de Perfil</b>
             </div>
 
-            <div class="panel-body imageProfile">
+            <div class="card-body imageProfile">
                 <div class="col-md-12">
                     <h1>Sube tu Propia Imagen: </h1>
 

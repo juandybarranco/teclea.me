@@ -63,7 +63,7 @@ class editUserType extends AbstractType
             ])
             ->add('Editar Perfil', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-info btn-lg'
+                    'class' => 'btn btn-secondary btn-lg'
                 ]
             ]);
     }

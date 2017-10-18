@@ -17,42 +17,42 @@
             <hr/>
         </header>
 
-        <div class="panel panel-info info">
-            <div class="panel-heading">
-                <b><span class="fa fa-address-card-o"></span> Información sobre tu perfil</b>
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-address-card-o"></span> Información sobre tu perfil</b>
             </div>
 
-            <div class="panel-body">
-                <div class="col-md-12">
+            <div class="card-body ">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
+                        <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.username }}</label>
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-envelope-o"></span> Correo Electrónico:</b>
+                        <b class="cWhite"><span class="fa fa-envelope-o"></span> Correo Electrónico:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.email }}</label>
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-globe"></span> País:</b>
+                        <b class="cWhite"><span class="fa fa-globe"></span> País:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.country }}</label>
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-location-arrow"></span> Localización:</b>
+                        <b class="cWhite"><span class="fa fa-location-arrow"></span> Localización:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.location %}
@@ -63,9 +63,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
+                        <b class="cWhite"><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.personalMessage %}
@@ -76,9 +76,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-user-plus"></span> Referido:</b>
+                        <b class="cWhite"><span class="fa fa-user-plus"></span> Referido:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.referred %}
@@ -93,9 +93,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
-                        <b><span class="fa fa-shield"></span> Privacidad de Perfil:</b>
+                        <b class="cWhite"><span class="fa fa-shield"></span> Privacidad de Perfil:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.isPublic %}
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="col-md-12 mt20">
-                    <a href="{{ path('editProfile') }}" class="btn btn-info btn-lg">Editar Perfil</a>
+                    <a href="{{ path('editProfile') }}" class="btn btn-secondary btn-lg">Editar Perfil</a>
                 </div>
             </div>
 

@@ -28,7 +28,7 @@ class ChangeImage extends AbstractType
             ])
             ->add('Enviar', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-lg btn-info mt20'
+                    'class' => 'btn btn-lg btn-secondary mt20'
                 ]
             ]);
     }

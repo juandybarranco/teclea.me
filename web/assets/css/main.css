@@ -1726,6 +1726,9 @@
 			.image.avatar58 img {
 				width: 150px;
 				height: 150px;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                border-radius: 50%;
 			}
 
 		.image.fit {
@@ -2572,6 +2575,10 @@
 
 /* Personal Config */
 
+a{
+    border-bottom: 0;
+}
+
 .smaller small{
 	font-size: 85%!important;
 }
@@ -2820,6 +2827,9 @@ li.dropdown ul li a span:before{
     width: 85px;
     height: 85px;
     border: 2px solid white;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
 }
 
 .btn-default{
@@ -2855,12 +2865,41 @@ li.dropdown ul li a span:before{
 	font-size: 16px;
 }
 
-#buttonSearch{
-    margin-top: -4px;
-}
-
 .btnUsers{
 	margin-top: -2em;
+}
+
+.cWhite{
+    color: white!important;
+}
+
+.dflexblock{
+    display: flex;
+}
+
+.editProfile form input[type="password"]{
+    height: 55px;
+}
+
+#tabs li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#tabs li a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+#tabs .active{
+    background-color: #007BFF;
+    color: white;
+}
+
+#tabs .active a:hover{
+    color: white;
 }
 
 @media screen and (max-width: 1320px){
@@ -2893,6 +2932,26 @@ li.dropdown ul li a span:before{
 	.editProfile .privacy{
 		display: inline-flex;
 	}
+}
+
+@media screen and (max-width: 750px) {
+    .dflexblock{
+        display: block;
+    }
+
+    .dflexblock li{
+        width: 100%!important;
+        padding-top: 10px;
+        padding-right: 10px;
+    }
+
+    #tabs{
+        margin-top: 30px;
+    }
+    
+    .rCenter .text-left, .rCenter .text-right {
+        text-align: center!important;
+    }
 }
 
 @media screen and (max-width: 736px) {

@@ -42,7 +42,7 @@ class ChangePasswordType extends AbstractType
             ->add('Cambiar Contraseña', SubmitType::class, [
                 'label' => 'Cambiar Contraseña',
                 'attr' => [
-                    'class' => 'btn btn-info btn-lg'
+                    'class' => 'btn btn-secondary btn-lg'
                 ]
             ]);
     }
