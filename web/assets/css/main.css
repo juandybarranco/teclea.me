@@ -2873,6 +2873,10 @@ li.dropdown ul li a span:before{
     color: white!important;
 }
 
+.cGold{
+	color: gold!important;
+}
+
 .dflexblock{
     display: flex;
 }

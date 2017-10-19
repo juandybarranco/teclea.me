@@ -50,7 +50,7 @@
                     </li>
                     <li>
                         <a href="#" id="about-link" class="skel-layers-ignoreHref">
-                            <span class="icon fa-bell">Notificaciones
+                            <span class="icon fa-bell {% if user.notification | length > 0 %}cGold{% endif %}">Notificaciones
                                 <small>(
                                     {{ user.notification | length }}
                                     )</small>
