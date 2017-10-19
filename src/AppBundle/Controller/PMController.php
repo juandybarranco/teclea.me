@@ -67,7 +67,9 @@ class PMController extends Controller
             $PM = $PM[0];
             $rs = 1;
 
-            $PM->setIsRead(1);
+            if($PM->getRecipient() == $user){
+                $PM->setIsRead(1);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($PM);
@@ -85,7 +87,9 @@ class PMController extends Controller
                 $PM = $PM[0];
                 $rs = 2;
 
-                $PM->setIsRead(1);
+                if($PM->getRecipient() == $user){
+                    $PM->setIsRead(1);
+                }
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($PM);
