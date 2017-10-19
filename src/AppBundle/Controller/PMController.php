@@ -6,6 +6,7 @@ use AppBundle\Entity\Notification;
 use AppBundle\Entity\PM;
 use AppBundle\Form\newPMToUserType;
 use AppBundle\Form\newPMType;
+use AppBundle\Form\newReplyPMType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -372,5 +373,60 @@ class PMController extends Controller
                 'notReaded' => $notReaded
             )
         );
+    }
+
+    /**
+     * @Route("/reply/", name="replyNull")
+     */
+    public function replyNullAction(Request $request, $id)
+    {
+        return $this->redirectToRoute('inbox');
+    }
+
+    /**
+     * @Route("/reply/{id}", name="replyPM")
+     */
+    public function replyPMAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+        $error = 0;
+
+        $reply = new PM();
+        $form = $this->createForm(newReplyPMType::class, $reply);
+        $form->handleRequest($request);
+
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
+
+        if($PM){
+            if($form->isSubmitted() && $form->isValid()){
+                if(($PM->getSender() == $user) || ($PM->getRecipient() == $user)){
+                    $reply->setDate(new \DateTime("now"));
+                    $reply->setReply($PM);
+                    $reply->setSender($user);
+                    $reply->setRecipient($PM->getSender());
+                    $reply->setIsDeletedByRecipient(0);
+                    $reply->setIsDeletedBySender(0);
+                    $reply->setIsRead(0);
+                    $reply->setSubject("RE: ".$PM->getSubject());
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($reply);
+                    $em->flush();
+
+                    $error = 100;
+                }else{
+                    return $this->redirectToRoute('inbox');
+                }
+            }
+        }else{
+            return $this->redirectToRoute('inbox');
+        }
+
+        return $this->render('PM/newReplyPM.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+            'recipient' => $PM->getSender()->getUsername(),
+            'error' => $error
+        ]);
     }
 }
