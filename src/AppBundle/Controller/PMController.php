@@ -24,7 +24,6 @@ class PMController extends Controller
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(
                 'recipient' => $user,
-                'reply' => null,
                 'isDeletedByRecipient' => false
             )
         );
@@ -32,7 +31,6 @@ class PMController extends Controller
         $notReaded = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(
                 'recipient' => $user,
-                'reply' => null,
                 'isDeletedByRecipient' => false,
                 'isRead' => false
             )
@@ -318,5 +316,38 @@ class PMController extends Controller
             'form' => $form->createView(),
             'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/outbox", name="outbox")
+     */
+    public function outboxAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+            array(
+                'sender' => $user,
+                'isDeletedBySender' => false
+            )
+        );
+
+        $notReaded = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+            array(
+                'sender' => $user,
+                'isDeletedBySender' => false,
+                'isRead' => false
+            )
+        );
+
+        $notReaded = count($notReaded);
+
+        return $this->render('PM/outbox.html.twig',
+            array(
+                'user' => $user,
+                'pmList' => $PM,
+                'notReaded' => $notReaded
+            )
+        );
     }
 }

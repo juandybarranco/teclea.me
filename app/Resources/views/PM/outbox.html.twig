@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card info">
             <div class="card-header bg-primary">
-                <b class="cWhite"><span class="fa fa-envelope-o"></span> Bandeja de Entrada ({{ notReaded }}/{{ pmList | length }})</b>
+                <b class="cWhite"><span class="fa fa-envelope-o"></span> Enviados ({{ pmList | length }})</b>
             </div>
 
             <div class="card-body">
@@ -12,7 +12,7 @@
                     <div class="card-header bg-white">
                         <div class="col-md-12">
                             <a class="btn btn-md btn-dark" href="{{ path('newPM') }}"><span class="fa fa-plus"></span> Nuevo Privado</a>
-                            <a class="btn btn-md btn-dark" href="{{ path('outbox') }}"><span class="fa fa-envelope-open"></span> Enviados</a>
+                            <a class="btn btn-md btn-dark" href="{{ path('inbox') }}"><span class="fa fa-envelope-open"></span> Recibidos</a>
                         </div>
                     </div>
 
@@ -23,7 +23,7 @@
                                     <tr>
                                         <th scope="row"></th>
                                         <th class="text-center">Asunto: </th>
-                                        <th class="text-center">Remitente: </th>
+                                        <th class="text-center">Destinatario: </th>
                                         <th class="text-center">Fecha: </th>
                                         <th class="text-center">Opciones</th>
                                     </tr>
@@ -33,22 +33,13 @@
                                     {% for pm in pmList %}
                                     <tr>
                                         <td scope="row">
-                                            {% if pm.isRead %}
-                                                <span class="fa fa-envelope-open-o" title="Leído"></span>
-                                            {% else %}
-                                                <span class="fa fa-envelope" title="No Leído"></span>
-                                            {% endif %}
+                                            <span class="fa fa-envelope-open-o" title="Leído"></span>
                                         </td>
                                         <td><a href="{{ path('readPrivate', {'id': pm.id }) }}">{{ pm.subject }}</a></td>
-                                        <td><a href="{{ path('viewUserProfile', {'id': pm.sender.id }) }}">{{ pm.sender.username }}</a></td>
+                                        <td><a href="{{ path('viewUserProfile', {'id': pm.recipient.id }) }}">{{ pm.recipient.username }}</a></td>
                                         <td>{{ pm.date | date('d-m-Y h:m') }}</td>
                                         <td>
                                             <a href="{{ path('deletePM', {'id': pm.id }) }}"><span class="fa fa-trash" title="Eliminar"></span></a>
-                                            {% if pm.isRead %}
-                                                <a href="{{ path('markPMAsNotRead', {'id': pm.id }) }}"><span class="fa fa-eye-slash" title="Marcar como no leído"></span></a>
-                                            {% else %}
-                                                <a href="{{ path('markPMAsRead', {'id': pm.id }) }}"><span class="fa fa-eye" title="Marcar como leído"></span></a>
-                                            {% endif %}
                                         </td>
                                     </tr>
                                     {% endfor %}
