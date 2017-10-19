@@ -25,7 +25,7 @@
                     <div class="col-md-12">
                         {% for msg in messages %}
                             <div class="card messages mb-lg-5">
-                                <div class="card-header smaller">
+                                <div class="card-header small bg-gray">
                                     <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                 </div>
                                 <div class="card-body text-left flex">
@@ -101,7 +101,7 @@
                                                         {{ reply.message | striptags('<b>') | raw }}
                                                     </div>
                                                 </div>
-                                                <div class="card-footer dflexblock">
+                                                <div class="card-footer dflexblock bg-gray small">
                                                     <div class="replyInfo small">
                                                         <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                     </div>
@@ -163,7 +163,7 @@
                         <div class="col-md-12">
                             {% for msg in messages %}
                                 <div class="card messages">
-                                    <div class="card-header smaller">
+                                    <div class="card-header small bg-gray">
                                         <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                     </div>
                                     <div class="card-body text-left flex">
@@ -243,7 +243,7 @@
                                                             {{ reply.message | striptags('<b>') | raw }}
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer dflexblock">
+                                                    <div class="card-footer dflexblock small bg-gray">
                                                         <div class="replyInfo small">
                                                             <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                         </div>

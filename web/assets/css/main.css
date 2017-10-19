@@ -2906,6 +2906,10 @@ li.dropdown ul li a span:before{
     color: white;
 }
 
+.bg-gray{
+    background-color: #E6E6E6!important;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;
@@ -2947,6 +2951,11 @@ li.dropdown ul li a span:before{
         width: 100%!important;
         padding-top: 10px;
         padding-right: 10px;
+    }
+
+    .btnReply a{
+        width: 100%!important;
+        margin-top: 10px;
     }
 
     #tabs{

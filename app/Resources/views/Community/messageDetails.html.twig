@@ -84,8 +84,8 @@
                 <div class="col-md-12 replies mt-lg-5">
                     {% if message.messageReply | length > 0 %}
                         {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
-                            <div class="card">
-                                <div class="card-header small">
+                            <div class="card mb-5">
+                                <div class="card-header small bg-gray">
                                     <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                 </div>
                                 <div class="card-body text-left flex">
