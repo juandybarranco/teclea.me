@@ -26,7 +26,7 @@
                 {% elseif follow == '0' %}
                     <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
                 {% endif %}
-                <button class="btn btn-primary ml-2"><span class="fa fa-envelope-o"></span> Enviar MP</button>
+                <a class="btn btn-primary ml-2" href="{{ path('newPMToUser', {'id': otherUser.id }) }}"><span class="fa fa-envelope-o"></span> Enviar MP</a>
             </div>
 
             <div class="card info">

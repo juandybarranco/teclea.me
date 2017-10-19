@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class newPMType extends AbstractType
+class newPMToUserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,14 +19,6 @@ class newPMType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', TextType::class, [
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control mb-lg-3',
-                    'placeholder' => 'Destinatario: '
-                ]
-            ])
             ->add('subject', TextType::class, [
                 'label' => false,
                 'required' => true,

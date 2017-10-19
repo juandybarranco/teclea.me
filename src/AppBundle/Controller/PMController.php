@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\PM;
+use AppBundle\Form\newPMToUserType;
 use AppBundle\Form\newPMType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -224,8 +225,8 @@ class PMController extends Controller
     }
 
     /**
-     * @Route("/new", name="newPM")
-     */
+ * @Route("/new", name="newPM")
+ */
     public function newPMAction(Request $request)
     {
         $user = $this->getUser();
@@ -268,6 +269,52 @@ class PMController extends Controller
 
         return $this->render('PM/newPM.html.twig', [
             'user' => $user,
+            'form' => $form->createView(),
+            'error' => $error
+        ]);
+    }
+
+    /**
+     * @Route("/new/{id}", name="newPMToUser")
+     */
+    public function newPMToUserAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+        $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+        $error = 0;
+
+        $PM = new PM();
+        $form = $this->createForm(newPMToUserType::class, $PM);
+        $form->handleRequest($request);
+
+        if($recipient){
+            if($form->isSubmitted() && $form->isValid()){
+                if($recipient->isIsSuspended()){
+                    $error = 2;
+                }else{
+                    $PM->setIsRead(0);
+                    $PM->setIsDeletedBySender(0);
+                    $PM->setIsDeletedByRecipient(0);
+                    $PM->setDate(new \DateTime("now"));
+                    $PM->setRecipient($recipient);
+                    $PM->setSender($user);
+                    $PM->setReply(null);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($PM);
+                    $em->flush();
+
+                    $error = 100;
+                }
+            }
+        }else{
+            return $this->redirectToRoute('newPM');
+        }
+
+        return $this->render('PM/newPMToUser.html.twig', [
+            'user' => $user,
+            'recipient' => $recipient->getUsername(),
             'form' => $form->createView(),
             'error' => $error
         ]);

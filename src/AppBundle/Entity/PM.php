@@ -44,7 +44,7 @@ class PM
      *
      * @var string
      */
-    protected $subject = 'Sin asunto';
+    protected $subject;
 
     /**
      * @ORM\Column(type="string", nullable=false)
