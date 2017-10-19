@@ -413,6 +413,15 @@ class PMController extends Controller
                     $em->persist($reply);
                     $em->flush();
 
+                    $notification = new Notification();
+                    $notification->setDate(new \DateTime("now"));
+                    $notification->setDescription("El usuario ".$PM->getSender()->getUsername(). " te ha enviado un mensaje privado.");
+                    $notification->setType("PM");
+                    $notification->setUser($PM->getRecipient());
+
+                    $em->persist($notification);
+                    $em->flush();
+
                     $error = 100;
                 }else{
                     return $this->redirectToRoute('inbox');
