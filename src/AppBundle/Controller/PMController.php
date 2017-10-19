@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\PM;
+use AppBundle\Form\newPMType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +49,7 @@ class PMController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="readPrivate")
+     * @Route("/p{id}", name="readPrivate")
      */
     public function readPrivateAction(Request $request, $id)
     {
@@ -172,7 +174,7 @@ class PMController extends Controller
     }
 
     /**
-     * @Route("/deletePM/{id}", name="deletePM")
+     * @Route("/delete/{id}", name="deletePM")
      */
     public function deletePMAction(Request $request, $id)
     {
@@ -214,10 +216,60 @@ class PMController extends Controller
     }
 
     /**
-     * @Route("/deletePM", name="000deletePM")
+     * @Route("/delete", name="000deletePM")
      */
     public function deletePMAction000(Request $request)
     {
         return $this->redirectToRoute('inbox');
+    }
+
+    /**
+     * @Route("/new", name="newPM")
+     */
+    public function newPMAction(Request $request)
+    {
+        $user = $this->getUser();
+        $error = 0;
+
+        $PM = new PM();
+        $form = $this->createForm(newPMType::class, $PM);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(
+                array(
+                    'username' => $PM->getRecipient()
+                )
+            );
+
+            if(count($recipient) == 1){
+                $recipient = $recipient[0];
+                if($recipient->isIsSuspended()){
+                    $error = 2;
+                }else{
+                    $PM->setIsRead(0);
+                    $PM->setIsDeletedBySender(0);
+                    $PM->setIsDeletedByRecipient(0);
+                    $PM->setDate(new \DateTime("now"));
+                    $PM->setRecipient($recipient);
+                    $PM->setSender($user);
+                    $PM->setReply(null);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($PM);
+                    $em->flush();
+
+                    $error = 100;
+                }
+            }else{
+                $error = 1;
+            }
+        }
+
+        return $this->render('PM/newPM.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+            'error' => $error
+        ]);
     }
 }

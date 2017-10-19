@@ -1,0 +1,35 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-envelope-open-o"></span> Nuevo Mensaje Privado</b>
+            </div>
+            {{ form_start(form) }}
+
+            <div class="card-body text-left">
+
+                {% if error == 1 %}
+                    <div class="alert alert-warning" role="alert">Este nombre de Usuario no existe.</div>
+                {% elseif error == 2 %}
+                    <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida. Mensaje no enviado.</div>
+                {% elseif error == 100 %}
+                    <div class="alert alert-success" role="alert">Mensaje enviado correctamente.</div>
+                {% endif %}
+
+                {{ form_widget(form.recipient) }}
+                {{ form_widget(form.subject) }}
+                {{ form_widget(form.message) }}
+            </div>
+
+            <div class="card-footer d-block">
+                {{ form_widget(form.Enviar) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+
+        <a href="{{ path('inbox') }}" class="btn btn-lg btn-dark mt-lg-5"><span class="fa fa-chevron-left"> Volver</span></a>
+    </div>
+{% endblock %}
