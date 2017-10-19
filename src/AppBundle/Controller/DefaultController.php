@@ -320,23 +320,4 @@ class DefaultController extends Controller
             'communities' => $communities
         ]);
     }
-
-    /**
-     * @Route("/notifications", name="notifications")
-     */
-    public function notificationsAction(Request $request)
-    {
-        $user = $this->getUser();
-
-        $notifications = $this->getDoctrine()->getRepository('AppBundle:Notification')->findBy(
-            array(
-                'user' => $user
-            )
-        );
-
-        return $this->render('default/notifications.html.twig', [
-            'user' => $user,
-            'notification' => $notifications
-        ]);
-    }
 }

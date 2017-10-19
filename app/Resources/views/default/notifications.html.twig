@@ -31,13 +31,13 @@
                                     </td>
                                     <td class="text-left small">{{ n.description }}</td>
                                     <td class="small">{{ n.date | date('d-m-Y h:m') }}</td>
-                                    <td><a href="#"><span class="fa fa-trash" title="Eliminar Notificación"></span></a></td>
+                                    <td><a href="{{ path('deleteNotification', {'id': n.id }) }}"><span class="fa fa-trash" title="Eliminar Notificación"></span></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
 
-                    <a href="#" class="btn btn-lg btn-danger">Eliminar todas las Notificaciones</a>
+                    <a href="{{ path('deleteAllNotifications') }}" class="btn btn-lg btn-danger">Eliminar todas las Notificaciones</a>
                 {% endif %}
             </div>
         </div>
