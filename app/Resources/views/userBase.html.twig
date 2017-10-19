@@ -49,7 +49,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-bell">Notificaciones</span></a>
+                        <a href="#" id="about-link" class="skel-layers-ignoreHref">
+                            <span class="icon fa-bell">Notificaciones
+                                <small>(
+                                    {{ user.notification | length }}
+                                    )</small>
+                            </span>
+                        </a>
                     </li>
                     <li class="dropdown">
                         <a href="#" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-users">Comunidades</span></a>

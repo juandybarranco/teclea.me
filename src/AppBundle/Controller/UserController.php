@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Follow;
+use AppBundle\Entity\Notification;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +66,15 @@ class UserController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($follow);
+                $em->flush();
+
+                $notification = new Notification();
+                $notification->setDate(new \DateTime("now"));
+                $notification->setDescription("El usuario ".$user->getUsername(). " ha comenzado a seguirte.");
+                $notification->setType("Follow");
+                $notification->setUser($follow->getFollowing());
+
+                $em->persist($notification);
                 $em->flush();
 
                 $lastURL = $request->headers->get('referer');

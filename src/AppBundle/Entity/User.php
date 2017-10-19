@@ -221,6 +221,29 @@ class User implements UserInterface
     protected $PMRecipient;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notification", mappedBy="user")
+     *
+     * @var Notification
+     */
+    protected $notification;
+
+    /**
+     * @return mixed
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param mixed $notification
+     */
+    public function setNotification($notification)
+    {
+        $this->notification = $notification;
+    }
+
+    /**
      * @return mixed
      */
     public function getIsAdmin()
