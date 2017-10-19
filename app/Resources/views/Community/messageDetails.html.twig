@@ -132,12 +132,12 @@
             {% if status == 'userRelationNotFound' or status == 'notAccepted' %}
                 <div class="alert alert-danger" role="alert">No tienes permisos para ver este mensaje.</div>
             {% elseif status == 'full' %}
-                <div class="panel panel-primary messages">
-                    <div class="panel-heading">
+                <div class="card messages">
+                    <div class="card-header bg-primary cWhite">
                         {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                     </div>
 
-                    <div class="panel-body text-left flex">
+                    <div class="card-body text-left flex">
                         <div class="messageImage">
                             <div class="image avatar95">
                                 <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
@@ -155,8 +155,8 @@
                         </div>
                     </div>
 
-                    <div class="panel-footer">
-                        <div class="backToCommunity">
+                    <div class="card-footer dflexblock">
+                        <div class="backToCommunity text-left">
                             {% if isGeneral %}
                                 <a href="{{ path('generalCommunity') }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> General</a>
                             {% else %}
@@ -164,10 +164,10 @@
                             {% endif %}
                         </div>
 
-                        <div class="msgButtons">
+                        <div class="msgButtons text-right">
                             {% if status == 'protectedAllow' or status == 'full' %}
                                 {% if message.isReply == false %}
-                                    <button class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</button>
+                                    <a class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</a>
                                 {% endif %}
                                 {% if message.user.id == user.id %}
                                     <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
@@ -195,8 +195,8 @@
 
                 {% if message.isReply == false %}
                     {% if status == 'protectedAllow' or status == 'full' %}
-                        <div class="card newReply">
-                            <div class="card-header">
+                        <div class="card newReply mt-lg-5">
+                            <div class="card-header bg-primary cWhite">
                                 ¡Escribe tu respuesta!
                             </div>
 
@@ -217,8 +217,8 @@
                     <div class="col-md-12 replies">
                         {% if message.messageReply | length > 0 %}
                             {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
-                                <div class="card">
-                                    <div class="card-header small">
+                                <div class="card mt-lg-5">
+                                    <div class="card-header small bg-gray">
                                         <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                     </div>
                                     <div class="card-body text-left flex">
@@ -241,13 +241,13 @@
                                         <div class="replyButtons">
                                             {% if status == 'protectedAllow' or status == 'full' %}
                                                 {% if reply.user.id == user.id %}
-                                                    <button class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</button>
+                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
                                                 {% endif %}
                                             {% endif %}
                                             {% if reply.user.id == user.id %}
-                                                <button class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</button>
+                                                <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
-                                            <button class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</button>
+                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
                                     </div>
                                 </div>
