@@ -300,6 +300,14 @@ class DefaultController extends Controller
         $status = 0;
         $communities = [];
 
+        $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+            array(
+                'user' => $user,
+                'isActive' => true,
+                'isDeleted' => false
+            )
+        );
+
         if(isset($_GET['s'])){
             $status = 1;
             $string = $_GET['s'];
@@ -317,7 +325,8 @@ class DefaultController extends Controller
             'user' => $user,
             'status' => $status,
             'string' => $string,
-            'communities' => $communities
+            'communities' => $communities,
+            'joined' => $joined
         ]);
     }
 }

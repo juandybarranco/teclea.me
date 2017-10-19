@@ -38,8 +38,22 @@
                                         <h1>{{ c.description }}</h1>
                                     </div>
                                     <div class="col-md-2">
+                                        {% set x = 0 %}
+
+                                        {% for j in joined %}
+                                            {% if j.community.id == c.id %}
+                                                {% set x = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+
                                         <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
-                                        <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        {% if x == 0 %}
+                                            <span><a href="{{ path('joinCommunity', {'id': c.id }) }}" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        {% else %}
+                                            <span><a href="{{ path('leaveCommunity', {'id': c.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                        {% endif %}
+
+
                                     </div>
                                 </div>
                                 <div class="card-footer text-left bg-gray">
@@ -92,8 +106,20 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
+                                            {% set x = 0 %}
+
+                                            {% for j in joined %}
+                                                {% if j.community.id == c.id %}
+                                                    {% set x = 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+
                                             <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
-                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            {% if x == 0 %}
+                                                <span><a href="{{ path('joinCommunity', {'id': c.id }) }}" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            {% else %}
+                                                <span><a href="{{ path('leaveCommunity', {'id': c.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="card-footer text-left bg-gray">
@@ -145,8 +171,20 @@
                                             <h1>{{ c.description }}</h1>
                                         </div>
                                         <div class="col-md-2">
+                                            {% set x = 0 %}
+
+                                            {% for j in joined %}
+                                                {% if j.community.id == c.id %}
+                                                    {% set x = 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+
                                             <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
-                                            <span><a href="#" class="btn btn-success"><span class="fa fa-trash"> Eliminar</span></a></span>
+                                            {% if x == 0 %}
+                                                <span><a href="{{ path('joinCommunity', {'id': c.id }) }}" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            {% else %}
+                                                <span><a href="{{ path('leaveCommunity', {'id': c.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="card-footer text-left bg-gray">
@@ -198,8 +236,20 @@
                                             <h1>{{ c.description }}</h1>
                                         </div>
                                         <div class="col-md-2">
-                                            <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right">Visitar</span></a></span>
-                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            {% set x = 0 %}
+
+                                            {% for j in joined %}
+                                                {% if j.community.id == c.id %}
+                                                    {% set x = 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                            {% if x == 0 %}
+                                                <span><a href="{{ path('joinCommunity', {'id': c.id }) }}" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            {% else %}
+                                                <span><a href="{{ path('leaveCommunity', {'id': c.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="card-footer text-left bg-gray">

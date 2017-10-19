@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\UserCommunity;
 use AppBundle\Form\newMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,6 +21,14 @@ class CommunityController extends Controller
     {
         $user = $this->getUser();
         $signup = [];
+
+        $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+            array(
+                'user' => $user,
+                'isActive' => true,
+                'isDeleted' => false
+            )
+        );
 
         $communitiesUser = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy([
             'user' => $user,
@@ -68,7 +77,8 @@ class CommunityController extends Controller
             'officials' => $officials,
             'admin' => $admin,
             'last' => $last,
-            'communityList' => $communityList
+            'communityList' => $communityList,
+            'joined' => $joined
         ]);
     }
 
@@ -720,5 +730,98 @@ class CommunityController extends Controller
             'status' => $status,
             'form' => $form
         ]);
+    }
+
+    /**
+     * @Route("/leave", name="leaveNULLCommunity")
+     */
+    public function leaveCommunityNullAction(Request $request)
+    {
+        return $this->redirectToRoute('communityList');
+    }
+
+    /**
+     * @Route("/leave/{id}", name="leaveCommunity")
+     */
+    public function leaveCommunityAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            $isJoin = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'community' => $community,
+                    'user' => $user,
+                    'isDeleted' => false,
+                    'isActive' => true
+                )
+            );
+
+            if(count($isJoin) == 1){
+                $isJoin = $isJoin[0];
+
+                $isJoin->setIsDeleted(1);
+                $isJoin->setIsActive(0);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($isJoin);
+                $em->flush();
+
+            }
+        }
+
+        return $this->redirectToRoute('communityList');
+    }
+
+    /**
+     * @Route("/join", name="joinNULLCommunity")
+     */
+    public function joinCommunityNULLAction(Request $request)
+    {
+        return $this->redirectToRoute('communityList');
+    }
+
+    /**
+     * @Route("/join/{id}", name="joinCommunity")
+     */
+    public function joinCommunityAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            $isJoined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'community' => $community,
+                    'user' => $user
+                )
+            );
+
+            if(count($isJoined) > 0){
+                for($i=0; $i<count($isJoined); $i++){
+                    if($isJoined[$i]->getIsActive()){
+                        return $this->redirectToRoute('communityList');
+                    }
+                }
+            }
+
+            if($community->getPrivacy() == 'public' || $community->getPrivacy() == 'default') {
+                $join = new UserCommunity();
+                $join->setIsActive(1);
+                $join->setIsDeleted(0);
+                $join->setDate(new \DateTime("now"));
+                $join->setUser($user);
+                $join->setCommunity($community);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($join);
+                $em->flush();
+            }
+        }
+
+        return $this->redirectToRoute('communityList');
     }
 }

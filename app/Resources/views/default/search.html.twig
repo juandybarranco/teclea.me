@@ -13,7 +13,7 @@
                     <div class="input-group searchBox">
                         <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
                         <span class="input-group-btn">
-                            <button id="buttonSearch" class="btn btn-md btn-default mt1" type="button">Buscar</button>
+                            <button id="buttonSearch" class="btn btn-md btn-primary mt1" type="button">Buscar</button>
                         </span>
                     </div>
                 </div>
@@ -41,8 +41,20 @@
                                         <h1>{{ c.description }}</h1>
                                     </div>
                                     <div class="col-md-2">
-                                        <span class="btn btn-primary"><a href="{{ path('viewCommunity', { 'id': c.id }) }}"><span class="fa fa-arrow-right"> Visitar</span></a></span>
-                                        <span class="btn btn-success"><a href="#"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        {% set x = 0 %}
+
+                                        {% for j in joined %}
+                                            {% if j.id == c.id %}
+                                                {% set x = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                        {% if x == 0 %}
+                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                        {% else %}
+                                            <span><a href="#" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="card-footer text-left">
