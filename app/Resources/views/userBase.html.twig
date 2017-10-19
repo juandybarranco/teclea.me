@@ -49,7 +49,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" id="about-link" class="skel-layers-ignoreHref">
+                        <a href="{{ path('notifications') }}" id="about-link" class="skel-layers-ignoreHref">
                             <span class="icon fa-bell {% if user.notification | length > 0 %}cGold{% endif %}">Avisos
                                 <small>(
                                     {{ user.notification | length }}

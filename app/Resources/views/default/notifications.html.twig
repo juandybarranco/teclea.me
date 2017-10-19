@@ -1,0 +1,45 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-bell-o"></span> Avisos</b>
+            </div>
+
+            <div class="card-body">
+                {% if notification | length == 0 %}
+                    No tienes notificaciones pendientes.
+                {% else %}
+                    <table class="table table-bordered table-striped table-hover table-responsive small">
+                        <thead class="bg-dark cWhite">
+                            <tr>
+                                <th class="text-center" scope="row"></th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center"><span class="fa fa-cog"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for n in notification %}
+                                <tr>
+                                    <td scope="row">{% if n.type == 'PM' %}
+                                            <span class="fa fa-envelope-o"></span>
+                                        {% elseif n.type == 'Follow' %}
+                                            <span class="fa fa-user-plus"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-left small">{{ n.description }}</td>
+                                    <td class="small">{{ n.date | date('d-m-Y h:m') }}</td>
+                                    <td><a href="#"><span class="fa fa-trash" title="Eliminar Notificación"></span></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <a href="#" class="btn btn-lg btn-danger">Eliminar todas las Notificaciones</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
