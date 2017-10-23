@@ -19,7 +19,7 @@ class PMController extends Controller
     /**
      * @Route("/", name="inbox")
      */
-    public function inboxAction(Request $request)
+    public function inboxAction()
     {
         $user = $this->getUser();
 
@@ -51,8 +51,10 @@ class PMController extends Controller
 
     /**
      * @Route("/p{id}", name="readPrivate")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function readPrivateAction(Request $request, $id)
+    public function readPrivateAction($id)
     {
         $user = $this->getUser();
         $rs = 0;
@@ -109,9 +111,11 @@ class PMController extends Controller
     }
 
     /**
-    * @Route("/markAsRead/{id}", name="markPMAsRead")
-    */
-    public function markAsRead(Request $request, $id)
+     * @Route("/markAsRead/{id}", name="markPMAsRead")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function markAsRead($id)
     {
         $user = $this->getUser();
 
@@ -138,15 +142,17 @@ class PMController extends Controller
     /**
      * @Route("/markAsRead", name="000markAsRead")
      */
-    public function markAsRead000(Request $request)
+    public function markAsRead000()
     {
         return $this->redirectToRoute('inbox');
     }
 
     /**
      * @Route("/markAsNotRead/{id}", name="markPMAsNotRead")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function markAsNotRead(Request $request, $id)
+    public function markAsNotRead($id)
     {
         $user = $this->getUser();
 
@@ -173,15 +179,17 @@ class PMController extends Controller
     /**
      * @Route("/markAsNotRead", name="000markAsNotRead")
      */
-    public function markAsNotRead000(Request $request)
+    public function markAsNotRead000()
     {
         return $this->redirectToRoute('inbox');
     }
 
     /**
      * @Route("/delete/{id}", name="deletePM")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deletePMAction(Request $request, $id)
+    public function deletePMAction($id)
     {
         $user = $this->getUser();
 
@@ -223,14 +231,16 @@ class PMController extends Controller
     /**
      * @Route("/delete", name="000deletePM")
      */
-    public function deletePMAction000(Request $request)
+    public function deletePMAction000()
     {
         return $this->redirectToRoute('inbox');
     }
 
     /**
- * @Route("/new", name="newPM")
- */
+     * @Route("/new", name="newPM")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function newPMAction(Request $request)
     {
         $user = $this->getUser();
@@ -289,6 +299,9 @@ class PMController extends Controller
 
     /**
      * @Route("/new/{id}", name="newPMToUser")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newPMToUserAction(Request $request, $id)
     {
@@ -345,7 +358,7 @@ class PMController extends Controller
     /**
      * @Route("/outbox", name="outbox")
      */
-    public function outboxAction(Request $request)
+    public function outboxAction()
     {
         $user = $this->getUser();
 
@@ -378,13 +391,16 @@ class PMController extends Controller
     /**
      * @Route("/reply/", name="replyNull")
      */
-    public function replyNullAction(Request $request, $id)
+    public function replyNullAction()
     {
         return $this->redirectToRoute('inbox');
     }
 
     /**
      * @Route("/reply/{id}", name="replyPM")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function replyPMAction(Request $request, $id)
     {

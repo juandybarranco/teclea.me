@@ -16,13 +16,16 @@ class UserController extends Controller
     /**
      * @Route("/", name="")
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         return $this->redirectToRoute('viewProfile');
     }
 
     /**
      * @Route("/follow/{id}", name="followUser")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function followUserAction(Request $request, $id)
     {
@@ -33,14 +36,14 @@ class UserController extends Controller
             return $this->redirectToRoute('viewProfile');
         }
 
-        if(count($otherUser) == 1 && $otherUser->isIsBlock() == false && $otherUser->isIsSuspended() == false){
+        if($otherUser && $otherUser->isIsBlock() == false && $otherUser->isIsSuspended() == false){
             $exist = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
                 'isDeleted' => false,
                 'follower' => $user,
                 'following' => $otherUser
             ]);
 
-            if(count($exist) == 1){
+            if($exist){
                 $lastURL = $request->headers->get('referer');
 
                 if($lastURL == null){
@@ -98,6 +101,9 @@ class UserController extends Controller
 
     /**
      * @Route("/unfollow/{id}", name="unfollowUser")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function unfollowUserAction(Request $request, $id)
     {
@@ -108,7 +114,7 @@ class UserController extends Controller
             return $this->redirectToRoute('viewProfile');
         }
 
-        if(count($otherUser) == 1){
+        if($otherUser){
             $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
                 'isAccepted' => true,
                 'isDeleted' => false,
@@ -116,7 +122,7 @@ class UserController extends Controller
                 'following' => $otherUser
             ]);
 
-            if(count($follow) == 0){
+            if(!$follow){
                 $lastURL = $request->headers->get('referer');
 
                 if($lastURL == null){
@@ -152,8 +158,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="viewUserProfile")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewUserProfileAction(Request $request, $id){
+    public function viewUserProfileAction($id){
         $user = $this->getUser();
         $status = 0;
         $follow = 0;
@@ -183,7 +191,7 @@ class UserController extends Controller
                     'isDeleted' => false
                 ]);
 
-                if(count($check) == 1){
+                if($check){
                     $follow = 1;
                 }
             }else{
@@ -196,7 +204,7 @@ class UserController extends Controller
                     'isDeleted' => false
                 ]);
 
-                if(count($check) == 1){
+                if($check){
                     $otherUser->setVisits($otherUser->getVisits()+1);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($otherUser);

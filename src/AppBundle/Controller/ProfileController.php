@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\ChangeImage;
-use AppBundle\Form\ChangeImageURL;
 use AppBundle\Form\ChangePasswordType;
 use AppBundle\Form\editUserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,7 +19,6 @@ class ProfileController extends Controller
      */
     public function viewProfileAction()
     {
-
         return $this->render('Profile/viewProfile.html.twig', [
             'user' => $this->getUser()
         ]);
@@ -28,6 +26,8 @@ class ProfileController extends Controller
 
     /**
      * @Route("/edit", name="editProfile")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editProfileAction(Request $request)
     {

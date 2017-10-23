@@ -17,6 +17,8 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -97,7 +99,7 @@ class DefaultController extends Controller
                         'username' => $form->get('referred')->getData()
                     ]);
 
-                    if(count($userReferred) == 1){
+                    if($userReferred){
                         $user->setReferred($userReferred);
                     }
                 }
@@ -173,7 +175,7 @@ class DefaultController extends Controller
     /**
      * @Route("/newPassword", name="newPassword")
      */
-    public function newPasswordAction(Request $request)
+    public function newPasswordAction()
     {
         $pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 
@@ -244,6 +246,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/new", name="newCommunity")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newCommunityAction(Request $request)
     {
@@ -293,7 +297,7 @@ class DefaultController extends Controller
     /**
      * @Route("/searchCommunity", name="searchCommunity")
      */
-    public function searchCommunityAction(Request $request)
+    public function searchCommunityAction()
     {
         $user = $this->getUser();
         $string = "";

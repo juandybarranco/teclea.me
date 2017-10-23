@@ -84,6 +84,8 @@ class CommunityController extends Controller
 
     /**
      * @Route("/general", name="generalCommunity")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function generalCommunityAction(Request $request)
     {
@@ -191,6 +193,9 @@ class CommunityController extends Controller
 
     /**
      * @Route("/general/{id}", name="messageDetailsGeneral")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function messageDetailsGeneralAction($id, Request $request)
     {
@@ -200,8 +205,7 @@ class CommunityController extends Controller
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
         $form = null;
 
-
-        if(count($message) == 0){
+        if(!$message){
             $message = null;
             $access = 'notFound';
         }else{
@@ -310,6 +314,8 @@ class CommunityController extends Controller
 
     /**
      * @Route("/deleteMessage/{id}", name="deleteMessage")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteMessageAction($id)
     {
@@ -319,7 +325,7 @@ class CommunityController extends Controller
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
 
         if(($message->getUser() == $user) && ($message->isIsActive() == true) && ($message->isIsDeleted() == false) && ($message->isIsBlock() == false)){
-            if(count($message) == 1){
+            if($message){
                 $em = $this->getDoctrine()->getManager();
 
                 $replies = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
@@ -355,6 +361,9 @@ class CommunityController extends Controller
 
     /**
      * @Route("/{id}", name="viewCommunity")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function viewCommunityAction($id, Request $request)
     {
@@ -366,7 +375,7 @@ class CommunityController extends Controller
         $messages = '';
         $form = '';
 
-        if(count($community) == 1){
+        if($community){
             if($community->getPrivacy() == 'default' && $community->getName() == 'General'){
                 return $this->redirectToRoute('generalCommunity');
             }
@@ -395,7 +404,7 @@ class CommunityController extends Controller
                             'isDeleted' => false
                         ]);
 
-                        if(count($check) == 1){
+                        if($check){
                             if($check->getIsActive()){
                                 $userAccess = true;
                                 $status = 'full';
@@ -419,7 +428,7 @@ class CommunityController extends Controller
                             'isDeleted' => false
                         ]);
 
-                        if(count($check) == 1){
+                        if($check){
                             if($check->getIsActive()){
                                 $status = 'protectedAllow';
                             }else{
@@ -549,6 +558,9 @@ class CommunityController extends Controller
 
     /**
      * @Route("/message/{id}", name="messageDetails")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function messageDetailsAction($id, Request $request)
     {
@@ -562,7 +574,7 @@ class CommunityController extends Controller
         $form = null;
 
 
-        if(count($message) == 0){
+        if(!$message){
             $message = null;
             $access = 'notFound';
         }else{
@@ -594,7 +606,7 @@ class CommunityController extends Controller
                             'isDeleted' => false
                         ]);
 
-                        if(count($check) == 1){
+                        if($check){
                             if($check->getIsActive()){
                                 $userAccess = true;
                                 $status = 'full';
@@ -618,7 +630,7 @@ class CommunityController extends Controller
                             'isDeleted' => false
                         ]);
 
-                        if(count($check) == 1){
+                        if($check){
                             if($check->getIsActive()){
                                 $status = 'protectedAllow';
                             }else{
@@ -734,16 +746,19 @@ class CommunityController extends Controller
 
     /**
      * @Route("/leave", name="leaveNULLCommunity")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function leaveCommunityNullAction(Request $request)
+    public function leaveCommunityNullAction()
     {
         return $this->redirectToRoute('communityList');
     }
 
     /**
      * @Route("/leave/{id}", name="leaveCommunity")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function leaveCommunityAction(Request $request, $id)
+    public function leaveCommunityAction($id)
     {
         $user = $this->getUser();
 
@@ -778,15 +793,17 @@ class CommunityController extends Controller
     /**
      * @Route("/join", name="joinNULLCommunity")
      */
-    public function joinCommunityNULLAction(Request $request)
+    public function joinCommunityNULLAction()
     {
         return $this->redirectToRoute('communityList');
     }
 
     /**
      * @Route("/join/{id}", name="joinCommunity")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function joinCommunityAction(Request $request, $id)
+    public function joinCommunityAction($id)
     {
         $user = $this->getUser();
 

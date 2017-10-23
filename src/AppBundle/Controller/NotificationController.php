@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/notifications")
@@ -14,7 +13,7 @@ class NotificationController extends Controller
     /**
      * @Route("/", name="notifications")
      */
-    public function notificationsAction(Request $request)
+    public function notificationsAction()
     {
         $user = $this->getUser();
 
@@ -33,7 +32,7 @@ class NotificationController extends Controller
     /**
      * @Route("/delete", name="deleteAllNotifications")
      */
-    public function deleteAllAction(Request $request)
+    public function deleteAllAction()
     {
         $user = $this->getUser();
 
@@ -59,8 +58,10 @@ class NotificationController extends Controller
 
     /**
      * @Route("/delete/{id}", name="deleteNotification")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteNotificationAction(Request $request, $id)
+    public function deleteNotificationAction($id)
     {
         $user = $this->getUser();
 
