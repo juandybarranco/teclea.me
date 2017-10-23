@@ -10,8 +10,9 @@
                         <hr/>
                     </header>
                     <h1 class="cWhite">{{ community.description }}</h1>
-                </div>
-                <div class="card-body">
+                    <div class="col-md-6 m-auto">
+                        <hr/>
+                    </div>
                     <div class="col-md-12 mb-lg-4">
                         {% if joined == true %}
                             <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
@@ -19,6 +20,8 @@
                             <a href="{{ path('joinCommunity', {'id': community.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Unirse</a>
                         {% endif %}
                     </div>
+                </div>
+                <div class="card-body">
                     <div class="col-md-12">
                         {{ form_start(msg) }}
                         <div id="newMessage" class="col-md-12 input-group">
@@ -151,16 +154,18 @@
                         <hr/>
                     </header>
                     <h1 class="cWhite">{{ community.description }}</h1>
-                </div>
-
-                <div class="col-md-12 mb-lg-2 mt-lg-3">
-                    {% if joined == 1 %}
-                        <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
-                    {% elseif joined == 2 %}
-                        <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</a>
-                    {% elseif joined == 3 %}
-                        <a href="{{ path('joinCommunity', {'id': community.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Unirse</a>
-                    {% endif %}
+                    <div class="col-md-6 m-auto">
+                        <hr/>
+                    </div>
+                    <div class="col-md-12 mb-lg-2 mt-lg-3">
+                        {% if joined == 1 %}
+                            <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
+                        {% elseif joined == 2 %}
+                            <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</a>
+                        {% elseif joined == 3 %}
+                            <a href="{{ path('joinCommunity', {'id': community.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Unirse</a>
+                        {% endif %}
+                    </div>
                 </div>
 
                 {% if userAccess %}
