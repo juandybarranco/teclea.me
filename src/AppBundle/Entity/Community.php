@@ -89,13 +89,6 @@ class Community
     protected $userCommunity;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommunityInvitations", mappedBy="community")
-     *
-     * @var CommunityInvitations
-     */
-    protected $CI;
-
-    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="community")
      *
      * @var Message
@@ -108,6 +101,29 @@ class Community
      * @var ReportsAdmin
      */
     protected $communityReportsAdmin;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invitation", mappedBy="community")
+     *
+     * @var Invitation
+     */
+    protected $invitation;
+
+    /**
+     * @return mixed
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
+    /**
+     * @param mixed $invitation
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+    }
 
     /**
      * @return mixed

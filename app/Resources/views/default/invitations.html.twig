@@ -1,0 +1,41 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-id-card-o"></span> Invitaciones Recibidas</b>
+            </div>
+
+            <div class="card-body">
+                {% if invitations | length > 0 %}
+                    <table class="table table-bordered table-responsive table-hover table-wrapper">
+                        <thead class="bg-dark">
+                            <tr>
+                                <th scope="row" class="text-center cWhite">#</th>
+                                <th class="text-center cWhite">Comunidad</th>
+                                <th class="text-center cWhite">Fecha</th>
+                                <th class="text-center cWhite">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for inv in invitations %}
+                            <tr>
+                                <td scope="row">{{ inv.id }}</td>
+                                <td><a href="{{ path('viewCommunity', {'id': inv.community.id }) }}">{{ inv.community.name }}</a></td>
+                                <td>{{ inv.date | date('d-m-Y H:i') }}</td>
+                                <td>
+                                    <a href="{{ path('acceptInvitation', {'id': inv.id }) }}" class="btn btn-success"><span class="fa fa-check"> Aceptar</span></a>
+                                    <a href="{{ path('declineInvitation', {'id': inv.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Rechazar</span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div>No tienes invitaciones pendientes.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

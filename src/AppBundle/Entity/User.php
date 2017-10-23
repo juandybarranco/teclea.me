@@ -144,20 +144,6 @@ class User implements UserInterface
     protected $userCommunity;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommunityInvitations", mappedBy="sender")
-     *
-     * @var CommunityInvitations
-     */
-    protected $CISender;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommunityInvitations", mappedBy="recipient")
-     *
-     * @var CommunityInvitations
-     */
-    protected $CIRecipient;
-
-    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="user")
      *
      * @var Message
@@ -233,6 +219,29 @@ class User implements UserInterface
      * @var int
      */
     protected $visits = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invitation", mappedBy="user")
+     *
+     * @var Invitation
+     */
+    protected $invitation;
+
+    /**
+     * @return mixed
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
+    /**
+     * @param mixed $invitation
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+    }
 
     /**
      * @return mixed
@@ -504,22 +513,6 @@ class User implements UserInterface
     public function setCISender($CISender)
     {
         $this->CISender = $CISender;
-    }
-
-    /**
-     * @return CommunityInvitations
-     */
-    public function getCIRecipient()
-    {
-        return $this->CIRecipient;
-    }
-
-    /**
-     * @param CommunityInvitations $CIRecipient
-     */
-    public function setCIRecipient($CIRecipient)
-    {
-        $this->CIRecipient = $CIRecipient;
     }
 
     /**
