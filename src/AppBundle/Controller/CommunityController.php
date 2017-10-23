@@ -958,4 +958,41 @@ class CommunityController extends Controller
             return $this->redirectToRoute('communityList');
         }
     }
+
+    /**
+     * @Route("/{id}/info", name="communityInfo")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function infoAction($id)
+    {
+        $user = $this->getUser();
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            $isJoined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'user' => $user,
+                    'community' => $community,
+                    'isActive' => true,
+                    'isDeleted' => false
+                )
+            );
+
+            if(count($isJoined) == 1){
+                $isJoined = true;
+            }else{
+                $isJoined = false;
+            }
+        }else{
+            return $this->redirectToRoute('communityList');
+        }
+
+        return $this->render('Community/communityInfo.html.twig', [
+            'user' => $user,
+            'community' => $community,
+            'isJoined' => $isJoined
+        ]);
+    }
 }

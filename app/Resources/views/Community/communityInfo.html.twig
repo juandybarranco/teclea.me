@@ -1,0 +1,115 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="community" class="container">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <header>
+                    <h2 class="cWhite">{{ community.name }}</h2>
+                    <div class="col-md-10 m-auto">
+                        <hr/>
+                    </div>
+                </header>
+                <h1 class="cWhite">{{ community.description }}</h1>
+                <div class="col-md-6 m-auto">
+                    <hr/>
+                </div>
+                <div class="col-md-12 mb-lg-2">
+                    {% if user.isAdmin == true %}
+                        <a href="#" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
+                    {% endif %}
+                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-commenting-o"></span> Mensajes</a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if isJoined == false %}
+                    <div>No perteneces a esta comunidad</div>
+
+                    <div class="col-md-6 m-auto">
+                        <hr/>
+                    </div>
+                {% endif %}
+                <div class="col-md-12 text-left">
+                    {% set members = 0 %}
+                    {% set msg = 0 %}
+
+                    {% for m in community.userCommunity if m.isActive == true and m.isDeleted == false %}
+                        {% set members = members + 1 %}
+                    {% endfor %}
+
+                    {% for m in community.message if m.isActive == true and m.isBlock == false and m.isDeleted == false %}
+                        {% set msg = msg + 1 %}
+                    {% endfor %}
+
+                    <div class="dflexblock">
+                        <div class="col-md-4 text-center">
+                            <h4>Creación: </h4>{{ community.creationDate | date('d-m-Y') }}
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                            <h4>Número de Miembros: </h4>{{ members }}
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                            <h4>Mensajes: </h4>{{ msg }}
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="col-md-10 m-auto">
+                        <div class="col-md-12 dflexblock">
+                            <div class="col-md-4 text-center fa-border bg-info">
+                                <b class="cWhite"><span class="fa fa-tag"></span> Nombre:</b>
+                            </div>
+                            <div class="col-md-8 text-left fa-border">
+                                <label>{{ community.name }}</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 dflexblock">
+                            <div class="col-md-4 text-center fa-border bg-info">
+                                <b class="cWhite"><span class="fa fa-comment"></span> Descripción:</b>
+                            </div>
+                            <div class="col-md-8 text-left fa-border">
+                                <label>{{ community.description }}</label>
+                            </div>
+                        </div>
+
+                        {% if community.privacy != 'default' %}
+                            <div class="col-md-12 dflexblock">
+                                <div class="col-md-4 text-center fa-border bg-info">
+                                    <b class="cWhite"><span class="fa fa-user-md"></span> Administrador:</b>
+                                </div>
+                                <div class="col-md-8 text-left fa-border">
+                                    <label><a href="{{ path('viewUserProfile', {'id': community.admin.id }) }}">{{ community.admin.username }}</a></label>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="col-md-12 dflexblock">
+                            <div class="col-md-4 text-center fa-border bg-info">
+                                <b class="cWhite"><span class="fa fa-lock"></span> Privacidad:</b>
+                            </div>
+                            <div class="col-md-8 text-left fa-border">
+                                <label>
+                                    {% if community.privacy == 'public' %}
+                                        Público
+                                    {% elseif community.privacy == 'protected' %}
+                                        Protegido
+                                    {% elseif community.privacy == 'private' %}
+                                        Privado
+                                    {% elseif community.privacy == 'default' %}
+                                        Predeterminado
+                                    {% else %}
+                                        Error
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
