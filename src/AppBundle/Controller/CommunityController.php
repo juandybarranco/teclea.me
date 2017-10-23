@@ -98,6 +98,21 @@ class CommunityController extends Controller
             'admin' => null
         ]);
 
+        $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+            array(
+                'user' => $user,
+                'isActive' => true,
+                'isDeleted' => false,
+                'community' => $community
+            )
+        );
+
+        if($joined){
+            $joined = true;
+        }else{
+            $joined = false;
+        }
+
         $msg = new Message();
         $form = $this->createForm(newMessageType::class, $msg);
         $form->handleRequest($request);
@@ -187,7 +202,8 @@ class CommunityController extends Controller
             'access' => 'default',
             'community' => $community,
             'msg' => $form->createView(),
-            'messages' => $messages
+            'messages' => $messages,
+            'joined' => $joined
         ]);
     }
 
@@ -374,8 +390,37 @@ class CommunityController extends Controller
         $status = '';
         $messages = '';
         $form = '';
+        $joined = 0;
 
         if($community){
+            $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'community' => $community,
+                    'isDeleted' => false,
+                    'isActive' => true,
+                    'user' => $user
+                )
+            );
+
+            if($joined){
+                $joined = 1;
+            }else{
+                $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                    array(
+                        'community' => $community,
+                        'user' => $user,
+                        'isActive' => false,
+                        'isDeleted' => false
+                    )
+                );
+
+                if($joined){
+                    $joined = 2;
+                }else{
+                    $joined = 3;
+                }
+            }
+
             if($community->getPrivacy() == 'default' && $community->getName() == 'General'){
                 return $this->redirectToRoute('generalCommunity');
             }
@@ -552,7 +597,8 @@ class CommunityController extends Controller
             'status' => $status,
             'messages' => $messages,
             'msg' => $form,
-            'userAccess' => $userAccess
+            'userAccess' => $userAccess,
+            'joined' => $joined
         ]);
     }
 
@@ -784,10 +830,33 @@ class CommunityController extends Controller
                 $em->persist($isJoin);
                 $em->flush();
 
-            }
-        }
+            }else{
+                $isJoin = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                    array(
+                        'community' => $community,
+                        'user' => $user,
+                        'isDeleted' => false,
+                        'isActive' => false
+                    )
+                );
 
-        return $this->redirectToRoute('communityList');
+                if(count($isJoin) == 1){
+                    $isJoin = $isJoin[0];
+
+                    $isJoin->setIsDeleted(1);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($isJoin);
+                    $em->flush();
+                }
+            }
+
+            return $this->redirectToRoute('viewCommunity', [
+                'id' => $community->getId()
+            ]);
+        }else{
+            return $this->redirectToRoute('communityList');
+        }
     }
 
     /**
@@ -820,25 +889,47 @@ class CommunityController extends Controller
             if(count($isJoined) > 0){
                 for($i=0; $i<count($isJoined); $i++){
                     if($isJoined[$i]->getIsActive()){
-                        return $this->redirectToRoute('communityList');
+                        return $this->redirectToRoute('viewCommunity', [
+                            'id' => $community->getId()
+                        ]);
                     }
                 }
             }
 
-            if($community->getPrivacy() == 'public' || $community->getPrivacy() == 'default') {
-                $join = new UserCommunity();
-                $join->setIsActive(1);
-                $join->setIsDeleted(0);
-                $join->setDate(new \DateTime("now"));
-                $join->setUser($user);
-                $join->setCommunity($community);
+            $isPending = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                array(
+                    'community' => $community,
+                    'user' => $user,
+                    'isActive' => false,
+                    'isDeleted' => false
+                )
+            );
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($join);
-                $em->flush();
+            if(count($isPending) == 1){
+                return $this->redirectToRoute('viewCommunity', ['id' => $community->getId()]);
             }
-        }
 
-        return $this->redirectToRoute('communityList');
+            $join = new UserCommunity();
+            $join->setIsDeleted(0);
+            $join->setDate(new \DateTime("now"));
+            $join->setUser($user);
+            $join->setCommunity($community);
+
+            if($community->getPrivacy() == 'public' || $community->getPrivacy() == 'default') {
+                $join->setIsActive(1);
+            }else{
+                $join->setIsActive(0);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($join);
+            $em->flush();
+
+            return $this->redirectToRoute('viewCommunity', [
+                'id' => $community->getId()
+            ]);
+        }else{
+            return $this->redirectToRoute('communityList');
+        }
     }
 }
