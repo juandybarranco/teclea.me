@@ -99,6 +99,12 @@ class CommunityController extends Controller
             'admin' => null
         ]);
 
+        $community->setVisits($community->getVisits()+1);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($community);
+        $em->flush();
+
         $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
             array(
                 'user' => $user,
@@ -394,6 +400,12 @@ class CommunityController extends Controller
         $joined = 0;
 
         if($community){
+            $community->setVisits($community->getVisits()+1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($community);
+            $em->flush();
+
             $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
                 array(
                     'community' => $community,

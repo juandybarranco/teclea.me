@@ -110,6 +110,29 @@ class Community
     protected $invitation;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var integer
+     */
+    protected $visits = 0;
+
+    /**
+     * @return mixed
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * @param mixed $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
      * @return mixed
      */
     public function getInvitation()
