@@ -23,14 +23,17 @@
                         <tbody>
                             {% for n in notification %}
                                 <tr>
-                                    <td scope="row">{% if n.type == 'PM' %}
+                                    <td scope="row">
+                                        {% if n.type == 'PM' %}
                                             <span class="fa fa-envelope-o"></span>
                                         {% elseif n.type == 'Follow' %}
                                             <span class="fa fa-user-plus"></span>
+                                        {% elseif n.type == 'com_request' %}
+                                            <span class="fa fa-users"></span>
                                         {% endif %}
                                     </td>
                                     <td class="text-left small">{{ n.description }}</td>
-                                    <td class="small">{{ n.date | date('d-m-Y h:m') }}</td>
+                                    <td class="small">{{ n.date | date('d-m-Y H:m') }}</td>
                                     <td><a href="{{ path('deleteNotification', {'id': n.id }) }}"><span class="fa fa-trash" title="Eliminar Notificación"></span></a></td>
                                 </tr>
                             {% endfor %}

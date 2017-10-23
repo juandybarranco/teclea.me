@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\Notification;
 use AppBundle\Entity\UserCommunity;
 use AppBundle\Form\newMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -919,6 +920,16 @@ class CommunityController extends Controller
                 $join->setIsActive(1);
             }else{
                 $join->setIsActive(0);
+
+                $notification = new Notification();
+                $notification->setUser($community->getAdmin());
+                $notification->setDate(new \DateTime("now"));
+                $notification->setType("com_request");
+                $notification->setDescription("El usuario " . $user->getUsername() . " quiere acceder a tu comunidad: " . $community->getName() . ".");
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($notification);
+                $em->flush();
             }
 
             $em = $this->getDoctrine()->getManager();
