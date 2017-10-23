@@ -33,6 +33,7 @@
                     </a>
                 </span>
                 <h1 id="title">{{ user.username }}</h1>
+                <p>{{ user.visits }} {% if user.visits == 1 %}visita{% else %}visitas{% endif %} al perfil</p>
             </div>
 
             <!-- Nav -->

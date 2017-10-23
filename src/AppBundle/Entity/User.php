@@ -228,6 +228,29 @@ class User implements UserInterface
     protected $notification;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
+     */
+    protected $visits = 0;
+
+    /**
+     * @return mixed
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * @param mixed $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = $visits;
+    }
+
+    /**
      * @return mixed
      */
     public function getNotification()

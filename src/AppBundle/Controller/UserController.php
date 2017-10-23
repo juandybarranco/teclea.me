@@ -170,6 +170,11 @@ class UserController extends Controller
             $status = 3;
         }else{
             if($otherUser->getIsPublic()){
+                $otherUser->setVisits($otherUser->getVisits()+1);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($otherUser);
+                $em->flush();
+
                 $status = 1;
                 $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
                     'follower' => $user,
@@ -192,6 +197,11 @@ class UserController extends Controller
                 ]);
 
                 if(count($check) == 1){
+                    $otherUser->setVisits($otherUser->getVisits()+1);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($otherUser);
+                    $em->flush();
+
                     $status = 6;
                     $follow = 1;
                 }else{
