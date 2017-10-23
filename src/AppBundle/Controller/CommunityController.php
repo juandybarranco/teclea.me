@@ -880,6 +880,21 @@ class CommunityController extends Controller
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
+            if($community->getAdmin() == $user){
+                $join = new UserCommunity();
+                $join->setIsDeleted(0);
+                $join->setDate(new \DateTime("now"));
+                $join->setUser($user);
+                $join->setCommunity($community);
+                $join->setIsActive(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($join);
+                $em->flush();
+
+                return $this->redirectToRoute('viewCommunity', ['id' => $join->getCommunity()->getId()]);
+            }
+
             $isJoined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
                 array(
                     'community' => $community,
