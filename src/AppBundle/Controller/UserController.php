@@ -32,70 +32,62 @@ class UserController extends Controller
         $user = $this->getUser();
         $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
-        if($user->getId() == $otherUser->getId()){
-            return $this->redirectToRoute('viewProfile');
+        if($otherUser){
+            if($user == $otherUser){
+                return $this->redirectToRoute('viewProfile');
+            }else{
+                if(!$otherUser->isIsBlock() && !$otherUser->isIsSuspended()){
+                    $exist = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                        'isDeleted' => false,
+                        'follower' => $user,
+                        'following' => $otherUser
+                    ]);
+
+                    if(!$exist){
+                        $follow = new Follow();
+                        $follow->setFollower($user);
+                        $follow->setFollowing($otherUser);
+                        $follow->setFollowDate(new \DateTime("now"));
+
+                        if($otherUser->getIsPublic()){
+                            $follow->setAcceptedDate(new \DateTime("now"));
+                            $follow->setIsAccepted(1);
+
+                            $notification = new Notification();
+                            $notification->setDate(new \DateTime("now"));
+                            $notification->setDescription("El usuario ".$user->getUsername(). " ha comenzado a seguirte.");
+                            $notification->setType("Follow");
+                            $notification->setUser($follow->getFollowing());
+                        }else{
+                            $follow->setAcceptedDate(null);
+                            $follow->setIsAccepted(0);
+
+                            $notification = new Notification();
+                            $notification->setDate(new \DateTime("now"));
+                            $notification->setDescription("El usuario ".$user->getUsername(). " ha solicitado seguirte.");
+                            $notification->setType("Follow");
+                            $notification->setUser($follow->getFollowing());
+                        }
+
+                        $follow->setIsDeleted(0);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($follow);
+                        $em->flush();
+
+                        $em->persist($notification);
+                        $em->flush();
+                    }
+                }
+            }
         }
 
-        if($otherUser && $otherUser->isIsBlock() == false && $otherUser->isIsSuspended() == false){
-            $exist = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
-                'isDeleted' => false,
-                'follower' => $user,
-                'following' => $otherUser
-            ]);
+        $lastURL = $request->headers->get('referer');
 
-            if($exist){
-                $lastURL = $request->headers->get('referer');
-
-                if($lastURL == null){
-                    return $this->redirectToRoute('index');
-                }else{
-                    return $this->redirect($lastURL);
-                }
-            }else{
-                $follow = new Follow();
-                $follow->setFollower($user);
-                $follow->setFollowing($otherUser);
-                $follow->setFollowDate(new \DateTime("now"));
-
-                if($otherUser->getIsPublic()){
-                    $follow->setAcceptedDate(new \DateTime("now"));
-                    $follow->setIsAccepted(1);
-                }else{
-                    $follow->setAcceptedDate(null);
-                    $follow->setIsAccepted(0);
-                }
-
-                $follow->setIsDeleted(0);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($follow);
-                $em->flush();
-
-                $notification = new Notification();
-                $notification->setDate(new \DateTime("now"));
-                $notification->setDescription("El usuario ".$user->getUsername(). " ha comenzado a seguirte.");
-                $notification->setType("Follow");
-                $notification->setUser($follow->getFollowing());
-
-                $em->persist($notification);
-                $em->flush();
-
-                $lastURL = $request->headers->get('referer');
-
-                if($lastURL == null){
-                    return $this->redirectToRoute('index');
-                }else{
-                    return $this->redirect($lastURL);
-                }
-            }
+        if($lastURL == null){
+            return $this->redirectToRoute('index');
         }else{
-            $lastURL = $request->headers->get('referer');
-
-            if($lastURL == null){
-                return $this->redirectToRoute('index');
-            }else{
-                return $this->redirect($lastURL);
-            }
+            return $this->redirect($lastURL);
         }
     }
 
@@ -110,43 +102,42 @@ class UserController extends Controller
         $user = $this->getUser();
         $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
-        if($user->getId() == $otherUser->getId()){
-            return $this->redirectToRoute('viewProfile');
-        }
-
         if($otherUser){
-            $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
-                'isAccepted' => true,
-                'isDeleted' => false,
-                'follower' => $user,
-                'following' => $otherUser
-            ]);
+            if($user == $otherUser){
+                return $this->redirectToRoute('viewProfile');
+            }else{
+                $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                    'isAccepted' => true,
+                    'isDeleted' => false,
+                    'follower' => $user,
+                    'following' => $otherUser
+                ]);
 
-            if(!$follow){
-                $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy(
-                    array(
-                        'follower' => $user,
-                        'following' => $otherUser,
-                        'isAccepted' => false,
-                        'isDeleted' => false
-                    )
-                );
+                if(!$follow){
+                    $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy(
+                        array(
+                            'follower' => $user,
+                            'following' => $otherUser,
+                            'isAccepted' => false,
+                            'isDeleted' => false
+                        )
+                    );
 
-                if($check){
-                    $check->setIsDeleted(1);
+                    if($check){
+                        $check->setIsDeleted(1);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($check);
+                        $em->flush();
+                    }
+                }else{
+                    $follow->setIsDeleted(1);
 
                     $em = $this->getDoctrine()->getManager();
-                    $em->persist($check);
+                    $em->persist($follow);
                     $em->flush();
                 }
-            }else{
-                $follow->setIsDeleted(1);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($follow);
-                $em->flush();
             }
-
         }
 
         $lastURL = $request->headers->get('referer');
