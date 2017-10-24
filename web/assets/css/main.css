@@ -2877,6 +2877,14 @@ li.dropdown ul li a span:before{
 	color: gold!important;
 }
 
+.cRed{
+    color: red!important;
+}
+
+.bg-gray{
+    background-color: #E6E6E6!important;
+}
+
 .dflexblock{
     display: flex;
 }
@@ -2906,8 +2914,8 @@ li.dropdown ul li a span:before{
     color: white;
 }
 
-.bg-gray{
-    background-color: #E6E6E6!important;
+.list-users:hover{
+    background-color: #F7F7F7;
 }
 
 @media screen and (max-width: 1320px){
@@ -2952,6 +2960,10 @@ li.dropdown ul li a span:before{
         padding-top: 10px;
         padding-right: 10px;
     }
+
+	.dflexblock .list-username, .dflexblock .list-options{
+		text-align: center!important;
+	}
 
     .btnReply a{
         width: 100%!important;

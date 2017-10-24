@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\UserCommunity;
+use AppBundle\Form\ChangeCommunityAdmin;
+use AppBundle\Form\EditCommunityType;
 use AppBundle\Form\newMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -1005,6 +1007,177 @@ class CommunityController extends Controller
             'user' => $user,
             'community' => $community,
             'isJoined' => $isJoined
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/admin", name="adminCommunity")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function adminCommunityAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            if($community->getAdmin() == $user){
+                $em = $this->getDoctrine()->getManager();
+
+                $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                    array(
+                        'community' => $community,
+                        'isDeleted' => false,
+                        'isActive' => true
+                    )
+                );
+
+                $info = $this->createForm(EditCommunityType::class, $community);
+                $info->handleRequest($request);
+
+
+
+                if($info->isSubmitted() && $info->isValid()){
+                    $em->persist($community);
+                    $em->flush();
+                }
+            }else{
+                return $this->redirectToRoute('viewCommunity', ['id' => $community->getId()]);
+            }
+        }else{
+            return $this->redirectToRoute('communityList');
+        }
+
+        return $this->render('Community/communityAdmin.html.twig', [
+            'user' => $user,
+            'community' => $community,
+            'joined' => $joined,
+            'info' => $info->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/kick/", name="NULLKickUser")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function KickNULLUserAction($id){
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/{id}/kick/{idUser}", name="KickUser")
+     * @param $id
+     * @param $idUser
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function kickUserAction($id, $idUser){
+        $user = $this->getUser();
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            $em = $this->getDoctrine()->getManager();
+
+            if($community->getAdmin() == $user){
+                $userToKick = $this->getDoctrine()->getRepository('AppBundle:User')->find($idUser);
+
+                if($userToKick){
+                    $users = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                        array(
+                            'user' => $userToKick,
+                            'community' => $community,
+                            'isActive' => true,
+                            'isDeleted' => false
+                        )
+                    );
+
+                    for($i=0; $i<count($users); $i++){
+                        $users[$i]->setIsActive(0);
+                        $users[$i]->setIsDeleted(1);
+
+                        $em->persist($users[$i]);
+                        $em->flush();
+                    }
+
+                    return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+                }else{
+                    return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+                }
+            }else{
+                return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+            }
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/{id}/changeAdmin", name="changeAdministrator")
+     */
+    public function changeAdministratorAction(Request $request, $id)
+    {
+        $user = $this->getUser();
+        $error = 0;
+
+        if(isset($_POST['username'])){
+            $username = $_POST['username'];
+        }else{
+            $username = null;
+        }
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            if($community->getAdmin() == $user){
+                if($username){
+                    $admin = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(
+                        array(
+                            'username' => $username
+                        )
+                    );
+
+                    if($admin){
+                        if($admin == $user){
+                            $error = 2;
+                        }else{
+                            if($admin->isIsSuspended()){
+                                $error = 3;
+                            }elseif($admin->isIsBlock()){
+                                $error = 4;
+                            }else{
+                                $community->setAdmin($admin);
+
+                                $em = $this->getDoctrine()->getManager();
+                                $em->persist($community);
+                                $em->flush();
+
+                                $error = 5;
+                            }
+                        }
+                    }else{
+                        $error = 1;
+                    }
+                }
+            }else{
+                return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+            }
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('Community/communityChangeAdmin.html.twig', [
+            'user' => $user,
+            'community' => $community,
+            'error' => $error
         ]);
     }
 }

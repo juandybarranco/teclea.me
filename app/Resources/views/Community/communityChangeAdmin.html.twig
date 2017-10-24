@@ -1,0 +1,52 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="community" class="container">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <header>
+                    <h2 class="cWhite">{{ community.name }}</h2>
+                    <div class="col-md-10 m-auto">
+                        <hr/>
+                    </div>
+                </header>
+                <h1 class="cWhite">{{ community.description }}</h1>
+                <div class="col-md-6 m-auto">
+                    <hr/>
+                </div>
+                <div class="col-md-12 mb-lg-2">
+                    <a  href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
+                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
+                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-commenting-o"></span> Mensajes</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning" role="alert"> A continación, podrás cambiar el actual administrador de esta comunidad. Una vez realizado el cambio, tú dejarás de ser Administrador.</div>
+                <div class="col-md-6 m-auto">
+                    <hr/>
+                </div>
+
+                <div class="col-md-10 m-auto">
+                    {% if error == 1 %}
+                        <div class="alert alert-danger" role="alert">Este usuario no existe.</div>
+                    {% elseif error == 2 %}
+                        <div class="alert alert-danger" role="alert">Este usuario ya es administrador.</div>
+                    {% elseif error == 3 %}
+                        <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida. No puede ser administrador.</div>
+                    {% elseif error == 4 %}
+                        <div class="alert alert-danger" role="alert">La cuenta de este usuario está temporalmente bloqueada.</div>
+                    {% elseif error == 5 %}
+                        <div class="alert alert-success" role="alert">El administrador ha sido cambiado correctamente.</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-12">
+                    <form action="{{ path('changeAdministrator', {'id': community.id }) }}" method="post">
+                        <input type="text" class="form-control" name="username" placeholder="Nuevo Nombre de Usuario: "/>
+                        <button type="submit" class="btn btn-dark">Cambiar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

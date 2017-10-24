@@ -168,7 +168,7 @@
                     <div class="col-md-12 mb-lg-2 mt-lg-3">
                         <div class="col-md-12 mb-lg-2">
                             {% if community.admin.id == user.id %}
-                                <a href="#" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
+                                <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
                             {% endif %}
                             <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
                             {% if joined == 1 %}

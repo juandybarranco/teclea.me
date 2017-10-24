@@ -1,0 +1,77 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div id="community" class="container">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <header>
+                    <h2 class="cWhite">{{ community.name }}</h2>
+                    <div class="col-md-10 m-auto">
+                        <hr/>
+                    </div>
+                </header>
+                <h1 class="cWhite">{{ community.description }}</h1>
+                <div class="col-md-6 m-auto">
+                    <hr/>
+                </div>
+                <div class="col-md-12 mb-lg-2">
+                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
+                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-commenting-o"></span> Mensajes</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-header">
+                        Información Básica
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(info) }}
+                            <div class="mb-lg-3">
+                                <h4 class="text-left">Nuevo Nombre: </h4>
+                                {{ form_widget(info.name) }}
+                            </div>
+
+                            <div class="mb-lg-3">
+                                <h4 class="text-left">Nueva Descripción: </h4>
+                                {{ form_widget(info.description) }}
+                            </div>
+
+                            {{ form_widget(info.Editar) }}
+                        {{ form_end(info) }}
+                    </div>
+                </div>
+
+                <div class="card mt-lg-5">
+                    <div class="card-header">
+                        Usuarios Inscritos ({{ joined | length }})
+                    </div>
+                    <div class="card-body">
+                        {% if joined | length == 0 %}
+                            <div>Esta comunidad no tiene usuarios inscritos.</div>
+                        {% else %}
+                            <ul class="list-group">
+                                {% for j in joined %}
+                                    <li class="list-group-item dflexblock list-users">
+                                        <div class="col-md-8 text-left list-username">
+                                            <a href="{{ path('viewUserProfile', {'id': j.user.id }) }}">{{ j.user.username }}</a>
+                                        </div>
+
+                                        <div class="col-md-4 text-right list-options">
+                                            <a href="{{ path('viewUserProfile', {'id': j.user.id }) }}" title="Ver perfil de {{ j.user.username }}"><span class="fa fa-eye"></span></a>
+                                            <a href="{{ path('newPMToUser', {'id': j.user.id }) }}" title="Enviar Mensaje Privado"><span class="fa fa-envelope"></span></a>
+                                            <a href="{{ path('KickUser', {'idUser': j.user.id, 'id': j.community.id }) }}" title="Expulsar de la comunidad" class="cRed"><span class="fa fa-times"></span></a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-12 m-auto mt-lg-5">
+                    <a href="{{ path('changeAdministrator', {'id': community.id }) }}" class="btn btn-lg btn-danger"><span class="fa fa-user-md"></span> Cambiar Administrador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
