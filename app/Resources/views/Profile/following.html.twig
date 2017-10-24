@@ -1,0 +1,51 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <header class="">
+            <div class="image avatar58">
+                {% if user.image is null %}
+                    <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
+                {% else %}
+                    <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen de Perfil de {{ user.username }}" class="img-responsive img-circle" />
+                {% endif %}
+            </div>
+
+            <h2>{{ user.username }}</h2>
+            <small>Usuario desde: {{ user.signupdate | date('d-m-Y') }}</small>
+
+            <hr/>
+        </header>
+
+        <div class="col-md-12 m-auto">
+            <a href="{{ path('viewProfile') }}" title="Volver al Perfil" class="btn btn-dark mt-2 mb-3"><span class="fa fa-arrow-left"></span> Volver al Perfil</a>
+        </div>
+
+        <div class="card info">
+            <div class="card-header bg-primary">
+                <b class="cWhite"><span class="fa fa-address-card-o"></span> Siguiendo ({{ following | length }})</b>
+            </div>
+
+            <div class="card-body ">
+                {% if following | length == 0 %}
+                    <div>Todavía no sigues a ningún usuario.</div>
+                {% else %}
+                    <ul class="list-group">
+                        {% for f in following %}
+                            <li class="list-group-item dflexblock list-users">
+                                <div class="col-md-10 text-left">
+                                    <a href="{{ path('viewUserProfile', {'id': f.following.id }) }}" title="Ver Perfil de {{ f.following.username }}"><span class="fa fa-user"></span> {{ f.following.username }}</a>
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <a href="{{ path('viewUserProfile', {'id': f.following.id }) }}" title="Ver Perfil de {{ f.following.username }}"><span class="fa fa-eye"></span></a>
+                                    <a href="{{ path('newPMToUser', {'id': f.following.id }) }}" title="Enviar Mensaje Privado a {{ f.following.username }}"><span class="fa fa-envelope"></span></a>
+                                    <a href="#" title="Eliminar de tus seguidores" class="cRed"><span class="fa fa-times"></span></a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

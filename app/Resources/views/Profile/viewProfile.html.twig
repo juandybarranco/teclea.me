@@ -25,11 +25,11 @@
             <div class="card-body ">
                 <div class="col-md-12 dflexblock">
                     <div class="col-md-6">
-                        <a href="#" title="Usuarios que te siguen."><label>Seguidores: {{ followers | length }}</label></a>
+                        <a href="{{ path('followers') }}" title="Usuarios que te siguen.">Seguidores: {{ followers | length }}</a>
                     </div>
 
                     <div class="col-md-6">
-                        <a href="#" title="Usuarios a los que sigues."><label>Siguiendo: {{ following | length }}</label></a>
+                        <a href="{{ path('following') }}" title="Usuarios a los que sigues.">Siguiendo: {{ following | length }}</a>
                     </div>
                 </div>
 

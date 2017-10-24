@@ -45,6 +45,48 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route("/followers", name="followers")
+     */
+    public function followersAction()
+    {
+        $user = $this->getUser();
+
+        $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'following' => $user,
+                'isAccepted' => true,
+                'isDeleted' => false
+            )
+        );
+
+        return $this->render('Profile/followers.html.twig', [
+            'user' => $user,
+            'followers' => $followers
+        ]);
+    }
+
+    /**
+     * @Route("/following", name="following")
+     */
+    public function following()
+    {
+        $user = $this->getUser();
+
+        $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'follower' => $user,
+                'isAccepted' => true,
+                'isDeleted' => false
+            )
+        );
+
+        return $this->render('Profile/following.html.twig', [
+            'user' => $user,
+            'following' => $following
+        ]);
+    }
+
+    /**
      * @Route("/edit", name="editProfile")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
