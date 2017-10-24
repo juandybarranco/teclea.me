@@ -110,9 +110,9 @@ class ProfileController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if($form->isSubmitted() && $form->isValid()){
-            if($form->get('username')->getData() == null){
+            if(!$form->get('username')->getData()){
                 $check = 1;
-            }elseif($form->get('email')->getData() == null){
+            }elseif(!$form->get('email')->getData()){
                 $check = 2;
             }
 

@@ -6,7 +6,6 @@ use AppBundle\Entity\Invitation;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\UserCommunity;
-use AppBundle\Form\ChangeCommunityAdmin;
 use AppBundle\Form\EditCommunityType;
 use AppBundle\Form\newMessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -226,10 +225,9 @@ class CommunityController extends Controller
     public function messageDetailsGeneralAction($id, Request $request)
     {
         $user = $this->getUser();
-        $access = "";
+        $form = null;
 
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
-        $form = null;
 
         if(!$message){
             $message = null;
@@ -345,13 +343,14 @@ class CommunityController extends Controller
      */
     public function deleteMessageAction($id)
     {
-        $status = 'Se ha producido un error desconocido.';
         $user = $this->getUser();
 
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
 
-        if(($message->getUser() == $user) && ($message->isIsActive() == true) && ($message->isIsDeleted() == false) && ($message->isIsBlock() == false)){
-            if($message){
+        if(!$message){
+            $status = 'Este mensaje no existe.';
+        }else{
+            if($message->getUser() == $user && $message->isIsActive() && !$message->isIsDeleted() && !$message->isIsBlock()){
                 $em = $this->getDoctrine()->getManager();
 
                 $replies = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
@@ -376,8 +375,6 @@ class CommunityController extends Controller
             }else{
                 $status = 'No tienes permisos para borrar este mensaje.';
             }
-        }else{
-            $status = 'No tienes permisos para borrar este mensaje.';
         }
 
         return $this->render('Community/deleteMessage.html.twig', [
@@ -393,14 +390,14 @@ class CommunityController extends Controller
      */
     public function viewCommunityAction($id, Request $request)
     {
-        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
-
         $user = $this->getUser();
         $userAccess = false;
         $status = '';
         $messages = '';
         $form = '';
         $joined = 0;
+
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
             $community->setVisits($community->getVisits()+1);
@@ -627,14 +624,11 @@ class CommunityController extends Controller
     public function messageDetailsAction($id, Request $request)
     {
         $user = $this->getUser();
-        $access = "";
         $userAccess = false;
         $status = "";
-
-        $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
-
         $form = null;
 
+        $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
 
         if(!$message){
             $message = null;
@@ -648,7 +642,7 @@ class CommunityController extends Controller
                 $access = 'deleted';
             }elseif ($message->isIsBlock()) {
                 $access = 'block';
-            }elseif ($message->isIsActive() == false){
+            }elseif(!$message->isIsActive()){
                 $access = 'inactive';
             }else{
                 $access = 'active';

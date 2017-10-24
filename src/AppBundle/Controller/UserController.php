@@ -156,87 +156,94 @@ class UserController extends Controller
      */
     public function viewUserProfileAction($id){
         $user = $this->getUser();
-        $status = 0;
+        $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
         $follow = 0;
+        $followers = null;
+        $following = null;
 
-        if($user->getId() == $id){
-            return $this->redirectToRoute('viewProfile');
-        }else{
-            $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
-        }
+        if($otherUser){
+            if($otherUser == $user){
+                return $this->redirectToRoute('viewProfile');
+            }
 
-        if($otherUser->isIsBlock()){
-            $status = 2;
-        }elseif($otherUser->isIsSuspended()){
-            $status = 3;
-        }else{
-            if($otherUser->getIsPublic()){
-                $otherUser->setVisits($otherUser->getVisits()+1);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($otherUser);
-                $em->flush();
+            $em = $this->getDoctrine()->getManager();
 
-                $status = 1;
-                $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
-                    'follower' => $user,
-                    'following' => $otherUser,
-                    'isAccepted' => true,
-                    'isDeleted' => false
-                ]);
-
-                if($check){
-                    $follow = 1;
-                }
+            if($otherUser->isIsBlock()){
+                $status = 2;
+            }elseif($otherUser->isIsSuspended()){
+                $status = 3;
             }else{
-                $status = 4;
-
-                $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
-                    'follower' => $user,
-                    'following' => $otherUser,
-                    'isAccepted' => true,
-                    'isDeleted' => false
-                ]);
-
-                if($check){
+                if($otherUser->getIsPublic()){
                     $otherUser->setVisits($otherUser->getVisits()+1);
-                    $em = $this->getDoctrine()->getManager();
+
                     $em->persist($otherUser);
                     $em->flush();
 
-                    $status = 6;
-                    $follow = 1;
-                }else{
-                    $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy([
+                    $status = 1;
+
+                    $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
                         'follower' => $user,
                         'following' => $otherUser,
-                        'isAccepted' => false,
+                        'isAccepted' => true,
                         'isDeleted' => false
                     ]);
 
-                    if(count($check) == 1){
-                        $follow = 2;
+                    if($check){
+                        $follow = 1;
+                    }
+                }else{
+                    $status = 4;
+
+                    $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                        'follower' => $user,
+                        'following' => $otherUser,
+                        'isAccepted' => true,
+                        'isDeleted' => false
+                    ]);
+
+                    if($check){
+                        $otherUser->setVisits($otherUser->getVisits()+1);
+
+                        $em->persist($otherUser);
+                        $em->flush();
+
+                        $status = 6;
+                        $follow = 1;
                     }else{
-                        $follow = 0;
+                        $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy([
+                            'follower' => $user,
+                            'following' => $otherUser,
+                            'isAccepted' => false,
+                            'isDeleted' => false
+                        ]);
+
+                        if($check){
+                            $follow = 2;
+                        }else{
+                            $follow = 0;
+                        }
                     }
                 }
             }
+
+            $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+                array(
+                    'following' => $otherUser,
+                    'isDeleted' => false,
+                    'isAccepted' => true
+                )
+            );
+
+            $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+                array(
+                    'follower' => $otherUser,
+                    'isDeleted' => false,
+                    'isAccepted' => true
+                )
+            );
+        }else{
+            $status = 404;
         }
-
-        $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
-            array(
-                'following' => $otherUser,
-                'isDeleted' => false,
-                'isAccepted' => true
-            )
-        );
-
-        $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
-            array(
-                'follower' => $otherUser,
-                'isDeleted' => false,
-                'isAccepted' => true
-            )
-        );
 
         return $this->render('Users/viewUserProfile.html.twig', [
             'user' => $user,

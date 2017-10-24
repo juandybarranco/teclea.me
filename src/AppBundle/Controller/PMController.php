@@ -38,13 +38,11 @@ class PMController extends Controller
             )
         );
 
-        $notReaded = count($notReaded);
-
         return $this->render('PM/inbox.html.twig',
             array(
                 'user' => $user,
                 'pmList' => $PM,
-                'notReaded' => $notReaded
+                'notReaded' => count($notReaded)
             )
         );
     }
@@ -57,7 +55,6 @@ class PMController extends Controller
     public function readPrivateAction($id)
     {
         $user = $this->getUser();
-        $rs = 0;
 
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(
@@ -67,6 +64,8 @@ class PMController extends Controller
             )
         );
 
+        $em = $this->getDoctrine()->getManager();
+
         if(count($PM) == 1){
             $PM = $PM[0];
             $rs = 1;
@@ -75,7 +74,6 @@ class PMController extends Controller
                 $PM->setIsRead(1);
             }
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($PM);
             $em->flush();
         }else{
@@ -95,7 +93,6 @@ class PMController extends Controller
                     $PM->setIsRead(1);
                 }
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($PM);
                 $em->flush();
             }else{
@@ -119,21 +116,16 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
-        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-            array(
-                'recipient' => $user,
-                'isDeletedByRecipient' => false,
-                'isRead' => false,
-                'id' => $id
-            )
-        );
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
-        if(count($PM) == 1){
-            $PM[0]->setIsRead(1);
+        if($PM){
+            if($PM->getRecipient() == $user && !$PM->isIsDeletedByRecipient() && !$PM->isIsRead()){
+                $PM->setIsRead(1);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($PM[0]);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($PM);
+                $em->flush();
+            }
         }
 
         return $this->redirectToRoute('inbox');
@@ -156,21 +148,16 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
-        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-            array(
-                'recipient' => $user,
-                'isDeletedByRecipient' => false,
-                'isRead' => true,
-                'id' => $id
-            )
-        );
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
-        if(count($PM) == 1){
-            $PM[0]->setIsRead(0);
+        if($PM){
+            if($PM->getRecipient() == $user && !$PM->isIsDeletedByRecipient() && $PM->isIsRead()){
+                $PM->setIsRead(0);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($PM[0]);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($PM);
+                $em->flush();
+            }
         }
 
         return $this->redirectToRoute('inbox');
@@ -193,34 +180,20 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
-        $PM1 = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-            array(
-                'recipient' => $user,
-                'isDeletedByRecipient' => false,
-                'id' => $id
-            )
-        );
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
-        if(count($PM1) == 1){
-            $PM1[0]->setIsDeletedByRecipient(1);
-
+        if($PM){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($PM1[0]);
-            $em->flush();
-        }else{
-            $PM2 = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-                array(
-                    'sender' => $user,
-                    'isDeletedBySender' => false,
-                    'id' => $id
-                )
-            );
 
-            if(count($PM2) == 1){
-                $PM2[0]->setIsDeletedBySender(1);
+            if($PM->getRecipient() == $user && !$PM->isIsDeletedByRecipient()){
+                $PM->setIsDeletedByRecipient(1);
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($PM2[0]);
+                $em->persist($PM);
+                $em->flush();
+            }elseif($PM->getSender() == $user && !$PM->isIsDeletedBySender()){
+                $PM->setIsDeletedBySender(1);
+
+                $em->persist($PM);
                 $em->flush();
             }
         }
@@ -251,14 +224,13 @@ class PMController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(
+            $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(
                 array(
                     'username' => $PM->getRecipient()
                 )
             );
 
-            if(count($recipient) == 1){
-                $recipient = $recipient[0];
+            if($recipient){
                 if($recipient->isIsSuspended()){
                     $error = 2;
                 }else{
@@ -306,13 +278,13 @@ class PMController extends Controller
     public function newPMToUserAction(Request $request, $id)
     {
         $user = $this->getUser();
-        $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
-
         $error = 0;
 
         $PM = new PM();
         $form = $this->createForm(newPMToUserType::class, $PM);
         $form->handleRequest($request);
+
+        $recipient = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
         if($recipient){
             if($form->isSubmitted() && $form->isValid()){
@@ -377,13 +349,11 @@ class PMController extends Controller
             )
         );
 
-        $notReaded = count($notReaded);
-
         return $this->render('PM/outbox.html.twig',
             array(
                 'user' => $user,
                 'pmList' => $PM,
-                'notReaded' => $notReaded
+                'notReaded' => count($notReaded)
             )
         );
     }
@@ -415,7 +385,7 @@ class PMController extends Controller
 
         if($PM){
             if($form->isSubmitted() && $form->isValid()){
-                if(($PM->getSender() == $user) || ($PM->getRecipient() == $user)){
+                if($PM->getSender() == $user || $PM->getRecipient() == $user){
                     $reply->setDate(new \DateTime("now"));
                     $reply->setReply($PM);
                     $reply->setSender($user);

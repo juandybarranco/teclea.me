@@ -2,111 +2,115 @@
 
 {% block body %}
     <div class="container">
-        <header class="">
-            <div class="image avatar58">
-                <a href="{{ path('viewUserProfile', {'id': otherUser.id }) }}">
-                    {% if otherUser.image is null %}
-                        <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
-                    {% else %}
-                        <img src="{{ asset('uploads/profileImages/' ~ otherUser.image) }}" alt="Imagen de Perfil de {{ otherUser.username }}" class="img-responsive img-circle" />
-                    {% endif %}
-                </a>
-            </div>
-
-            <h2>{{ otherUser.username }}</h2>
-            <small>Usuario desde: {{ otherUser.signupdate | date('d-m-Y') }}</small>
-
-            <hr/>
-        </header>
-
-        {% if status == '1' or status == '6' %}
-            <div class="btn-group btnUsers mt-2 mb-4">
-                {% if follow == '1' %}
-                    <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-danger"><span class="fa fa-minus"></span> No Seguir</a>
-                {% elseif follow == '0' %}
-                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
-                {% endif %}
-                <a class="btn btn-primary ml-2" href="{{ path('newPMToUser', {'id': otherUser.id }) }}"><span class="fa fa-envelope-o"></span> Enviar MP</a>
-            </div>
-
-            <div class="card info">
-                <div class="card-header bg-primary">
-                    <b class="cWhite"><span class="fa fa-address-card-o"></span> Información sobre {{ otherUser.username }}</b>
-                </div>
-
-                <div class="card-body">
-                    <div class="col-md-12 dflexblock">
-                        <div class="col-md-6">
-                            <a title="Usuarios que siguen a {{ otherUser.username }}."><label>Seguidores: {{ followers | length }}</label></a>
-                        </div>
-
-                        <div class="col-md-6">
-                            <a title="Usuarios a los que sigue {{ otherUser.username }}."><label>Siguiendo: {{ following | length }}</label></a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-10 m-auto">
-                        <hr/>
-                    </div>
-
-                    <div class="col-md-12 dflexblock">
-                        <div class="col-md-4 text-center fa-border bg-info">
-                            <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
-                        </div>
-                        <div class="col-md-8 text-left fa-border">
-                            <label>{{ otherUser.username }}</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 dflexblock">
-                        <div class="col-md-4 text-center fa-border bg-info">
-                            <b class="cWhite"><span class="fa fa-globe"></span> País:</b>
-                        </div>
-                        <div class="col-md-8 text-left fa-border">
-                            <label>{{ otherUser.country }}</label>
-                        </div>
-                    </div>
-
-                    {% if otherUser.location %}
-                        <div class="col-md-12 dflexblock">
-                            <div class="col-md-4 text-center fa-border bg-info">
-                                <b class="cWhite"><span class="fa fa-location-arrow"></span> Localización:</b>
-                            </div>
-                            <div class="col-md-8 text-left fa-border">
-                                <label>{{ otherUser.location }}</label>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    {% if otherUser.personalMessage %}
-                        <div class="col-md-12 dflexblock">
-                            <div class="col-md-4 text-center fa-border bg-info">
-                                <b class="cWhite"><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
-                            </div>
-                            <div class="col-md-8 text-left fa-border">
-                                <label>{{ otherUser.personalMessage }}</label>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-
-            </div>
-        {% elseif status == '2' %}
-            <div class="alert alert-danger" role="alert">La cuenta de este usuario está bloqueada temporalmente debido a acumulación de reportes.</div>
-        {% elseif status == '3' %}
-            <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida.</div>
-        {% elseif status == '4' %}
-            <div class="btn-group btnUsers mt-2 mb-3">
-                {% if follow == '2' %}
-                    <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</a>
-                {% elseif follow == '0' %}
-                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
-                {% endif %}
-            </div>
-
-            <div class="alert alert-warning" role="alert">Este usuario es privado. Síguele para tener acceso.</div>
+        {% if status == '404' %}
+            <div class="alert alert-danger" role="alert">Este usuario no existe.</div>
         {% else %}
-            <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
+                <header class="">
+                    <div class="image avatar58">
+                        <a href="{{ path('viewUserProfile', {'id': otherUser.id }) }}">
+                            {% if otherUser.image is null %}
+                                <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-responsive img-circle" />
+                            {% else %}
+                                <img src="{{ asset('uploads/profileImages/' ~ otherUser.image) }}" alt="Imagen de Perfil de {{ otherUser.username }}" class="img-responsive img-circle" />
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <h2>{{ otherUser.username }}</h2>
+                    <small>Usuario desde: {{ otherUser.signupdate | date('d-m-Y') }}</small>
+
+                    <hr/>
+                </header>
+
+                {% if status == '1' or status == '6' %}
+                    <div class="btn-group btnUsers mt-2 mb-4">
+                        {% if follow == '1' %}
+                            <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-danger"><span class="fa fa-minus"></span> No Seguir</a>
+                        {% elseif follow == '0' %}
+                            <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
+                        {% endif %}
+                        <a class="btn btn-primary ml-2" href="{{ path('newPMToUser', {'id': otherUser.id }) }}"><span class="fa fa-envelope-o"></span> Enviar MP</a>
+                    </div>
+
+                    <div class="card info">
+                        <div class="card-header bg-primary">
+                            <b class="cWhite"><span class="fa fa-address-card-o"></span> Información sobre {{ otherUser.username }}</b>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="col-md-12 dflexblock">
+                                <div class="col-md-6">
+                                    <a title="Usuarios que siguen a {{ otherUser.username }}."><label>Seguidores: {{ followers | length }}</label></a>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <a title="Usuarios a los que sigues."><label>Siguiendo: {{ following | length }}</label></a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-10 m-auto">
+                                <hr/>
+                            </div>
+
+                            <div class="col-md-12 dflexblock">
+                                <div class="col-md-4 text-center fa-border bg-info">
+                                    <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
+                                </div>
+                                <div class="col-md-8 text-left fa-border">
+                                    <label>{{ otherUser.username }}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 dflexblock">
+                                <div class="col-md-4 text-center fa-border bg-info">
+                                    <b class="cWhite"><span class="fa fa-globe"></span> País:</b>
+                                </div>
+                                <div class="col-md-8 text-left fa-border">
+                                    <label>{{ otherUser.country }}</label>
+                                </div>
+                            </div>
+
+                            {% if otherUser.location %}
+                                <div class="col-md-12 dflexblock">
+                                    <div class="col-md-4 text-center fa-border bg-info">
+                                        <b class="cWhite"><span class="fa fa-location-arrow"></span> Localización:</b>
+                                    </div>
+                                    <div class="col-md-8 text-left fa-border">
+                                        <label>{{ otherUser.location }}</label>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if otherUser.personalMessage %}
+                                <div class="col-md-12 dflexblock">
+                                    <div class="col-md-4 text-center fa-border bg-info">
+                                        <b class="cWhite"><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
+                                    </div>
+                                    <div class="col-md-8 text-left fa-border">
+                                        <label>{{ otherUser.personalMessage }}</label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                {% elseif status == '2' %}
+                    <div class="alert alert-danger" role="alert">La cuenta de este usuario está bloqueada temporalmente debido a acumulación de reportes.</div>
+                {% elseif status == '3' %}
+                    <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida.</div>
+                {% elseif status == '4' %}
+                    <div class="btn-group btnUsers mt-2 mb-3">
+                        {% if follow == '2' %}
+                            <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</a>
+                        {% elseif follow == '0' %}
+                            <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="alert alert-warning" role="alert">Este usuario es privado. Síguele para tener acceso.</div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">Se ha producido un error.</div>
+                {% endif %}
         {% endif %}
     </div>
 {% endblock %}

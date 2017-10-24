@@ -49,8 +49,6 @@ class NotificationController extends Controller
                 $em->remove($notifications[$i]);
                 $em->flush();
             }
-
-            return $this->redirectToRoute('notifications');
         }
 
         return $this->redirectToRoute('notifications');
@@ -76,8 +74,6 @@ class NotificationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($notification[0]);
             $em->flush();
-
-            return $this->redirectToRoute('notifications');
         }
 
         return $this->redirectToRoute('notifications');
