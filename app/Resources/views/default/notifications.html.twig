@@ -32,6 +32,8 @@
                                             <span class="fa fa-users"></span>
                                         {% elseif n.type == 'com_invitation' %}
                                             <span class="fa fa-plus-circle"></span>
+                                        {% elseif n.type == 'new_admin' %}
+                                            <span class="fa fa-user-md"></span>
                                         {% endif %}
                                     </td>
                                     <td class="text-left small">{{ n.description }}</td>

@@ -1226,6 +1226,15 @@ class CommunityController extends Controller
                                 $em->persist($community);
                                 $em->flush();
 
+                                $notification = new Notification();
+                                $notification->setType('new_admin');
+                                $notification->setDescription('Eres el nuevo administrador de la comunidad: ' .$community->getName());
+                                $notification->setUser($admin);
+                                $notification->setDate(new \DateTime("now"));
+
+                                $em->persist($notification);
+                                $em->flush();
+
                                 $error = 5;
                             }
                         }
