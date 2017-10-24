@@ -20,7 +20,7 @@
         </header>
 
         {% if status == '1' or status == '6' %}
-            <div class="btn-group btnUsers">
+            <div class="btn-group btnUsers mt-2 mb-4">
                 {% if follow == '1' %}
                     <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-danger"><span class="fa fa-minus"></span> No Seguir</a>
                 {% elseif follow == '0' %}
@@ -35,6 +35,20 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="col-md-12 dflexblock">
+                        <div class="col-md-6">
+                            <a title="Usuarios que siguen a {{ otherUser.username }}."><label>Seguidores: {{ followers | length }}</label></a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a title="Usuarios a los que sigue {{ otherUser.username }}."><label>Siguiendo: {{ following | length }}</label></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 m-auto">
+                        <hr/>
+                    </div>
+
                     <div class="col-md-12 dflexblock">
                         <div class="col-md-4 text-center fa-border bg-info">
                             <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
@@ -82,11 +96,11 @@
         {% elseif status == '3' %}
             <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida.</div>
         {% elseif status == '4' %}
-            <div class="btn-group btnUsers">
+            <div class="btn-group btnUsers mt-2 mb-3">
                 {% if follow == '2' %}
-                    <button class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</button>
+                    <a href="{{ path('unfollowUser', {'id': otherUser.id }) }}" class="btn btn-warning"><span class="fa fa-clock-o"></span> Pendiente</a>
                 {% elseif follow == '0' %}
-                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-info"><span class="fa fa-plus"></span> Seguir</a>
+                    <a href="{{ path('followUser', {'id': otherUser.id }) }}" class="btn btn-success"><span class="fa fa-plus"></span> Seguir</a>
                 {% endif %}
             </div>
 

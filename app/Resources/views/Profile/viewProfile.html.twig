@@ -24,6 +24,20 @@
 
             <div class="card-body ">
                 <div class="col-md-12 dflexblock">
+                    <div class="col-md-6">
+                        <a href="#" title="Usuarios que te siguen."><label>Seguidores: {{ followers | length }}</label></a>
+                    </div>
+
+                    <div class="col-md-6">
+                        <a href="#" title="Usuarios a los que sigues."><label>Siguiendo: {{ following | length }}</label></a>
+                    </div>
+                </div>
+
+                <div class="col-md-10 m-auto">
+                    <hr/>
+                </div>
+
+                <div class="col-md-12 dflexblock">
                     <div class="col-md-4 text-center fa-border bg-info">
                         <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
                     </div>

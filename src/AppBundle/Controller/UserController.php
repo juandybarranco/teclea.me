@@ -229,11 +229,29 @@ class UserController extends Controller
             }
         }
 
+        $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'following' => $otherUser,
+                'isDeleted' => false,
+                'isAccepted' => true
+            )
+        );
+
+        $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'follower' => $otherUser,
+                'isDeleted' => false,
+                'isAccepted' => true
+            )
+        );
+
         return $this->render('Users/viewUserProfile.html.twig', [
             'user' => $user,
             'otherUser' => $otherUser,
             'status' => $status,
-            'follow' => $follow
+            'follow' => $follow,
+            'followers' => $followers,
+            'following' => $following
         ]);
     }
 }

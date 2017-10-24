@@ -19,8 +19,28 @@ class ProfileController extends Controller
      */
     public function viewProfileAction()
     {
+        $user = $this->getUser();
+
+        $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'following' => $user,
+                'isDeleted' => false,
+                'isAccepted' => true
+            )
+        );
+
+        $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'follower' => $user,
+                'isDeleted' => false,
+                'isAccepted' => true
+            )
+        );
+
         return $this->render('Profile/viewProfile.html.twig', [
-            'user' => $this->getUser()
+            'user' => $user,
+            'followers' => $followers,
+            'following' => $following
         ]);
     }
 
