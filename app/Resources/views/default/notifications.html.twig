@@ -30,6 +30,8 @@
                                             <span class="fa fa-user-plus"></span>
                                         {% elseif n.type == 'com_request' %}
                                             <span class="fa fa-users"></span>
+                                        {% elseif n.type == 'com_invitation' %}
+                                            <span class="fa fa-plus-circle"></span>
                                         {% endif %}
                                     </td>
                                     <td class="text-left small">{{ n.description }}</td>

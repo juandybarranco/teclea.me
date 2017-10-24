@@ -33,7 +33,7 @@ class Invitation
     protected $date;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
      */

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Invitation;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\UserCommunity;
@@ -1019,11 +1020,18 @@ class CommunityController extends Controller
     public function adminCommunityAction(Request $request, $id)
     {
         $user = $this->getUser();
+        $error = 0;
+
+        if(isset($_POST['newUser'])){
+            $username = $_POST['newUser'];
+        }else{
+            $username = null;
+        }
 
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
-            if($community->getAdmin() == $user){
+            if($community->getAdmin() == $user || $user->getIsAdmin()){
                 $em = $this->getDoctrine()->getManager();
 
                 $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
@@ -1034,10 +1042,64 @@ class CommunityController extends Controller
                     )
                 );
 
+                if($username){
+                    $newUser = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(
+                        array(
+                            'username' => $username
+                        )
+                    );
+
+                    if($newUser){
+                        $isJoined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findOneBy(
+                            array(
+                                'user' => $newUser,
+                                'community' => $community,
+                                'isDeleted' => false,
+                                'isActive' => true
+                            )
+                        );
+
+                        if(!$isJoined){
+                            if($newUser->isIsSuspended()){
+                                $error = 3;
+                            }elseif($newUser->isIsBlock()){
+                                $error = 4;
+                            }else{
+                                $invitation = new Invitation();
+                                $invitation->setUser($newUser);
+                                $invitation->setIsUsed(0);
+                                $invitation->setIsActive(1);
+                                $invitation->setIsDeleted(0);
+                                $invitation->setAcceptedDeclineDate(null);
+                                $invitation->setIsAccepted(0);
+                                $invitation->setCommunity($community);
+                                $invitation->setDate(new \DateTime("now"));
+                                $invitation->setMessage("Invitación a: " . $community->getName());
+
+                                $em->persist($invitation);
+                                $em->flush();
+
+                                $notification = new Notification();
+                                $notification->setDate(new \DateTime("now"));
+                                $notification->setUser($newUser);
+                                $notification->setDescription("Has recibido una invitación para unirte a " . $community->getName());
+                                $notification->setType("com_invitation");
+
+                                $em->persist($notification);
+                                $em->flush();
+
+                                $error = 5;
+                            }
+                        }else{
+                            $error = 2;
+                        }
+                    }else{
+                        $error = 1;
+                    }
+                }
+
                 $info = $this->createForm(EditCommunityType::class, $community);
                 $info->handleRequest($request);
-
-
 
                 if($info->isSubmitted() && $info->isValid()){
                     $em->persist($community);
@@ -1054,6 +1116,7 @@ class CommunityController extends Controller
             'user' => $user,
             'community' => $community,
             'joined' => $joined,
+            'error' => $error,
             'info' => $info->createView()
         ]);
     }
@@ -1087,7 +1150,7 @@ class CommunityController extends Controller
         if($community){
             $em = $this->getDoctrine()->getManager();
 
-            if($community->getAdmin() == $user){
+            if($community->getAdmin() == $user || $user->getIsAdmin()){
                 $userToKick = $this->getDoctrine()->getRepository('AppBundle:User')->find($idUser);
 
                 if($userToKick){
@@ -1122,6 +1185,9 @@ class CommunityController extends Controller
 
     /**
      * @Route("/{id}/changeAdmin", name="changeAdministrator")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function changeAdministratorAction(Request $request, $id)
     {
@@ -1137,7 +1203,7 @@ class CommunityController extends Controller
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
-            if($community->getAdmin() == $user){
+            if($community->getAdmin() == $user || $user->getIsAdmin()){
                 if($username){
                     $admin = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(
                         array(

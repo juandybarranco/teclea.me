@@ -22,6 +22,35 @@
             <div class="card-body">
                 <div class="card">
                     <div class="card-header">
+                        Invitar a un Usuario
+                    </div>
+
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="col-md-10 m-auto">
+                                {% if error == 1 %}
+                                    <div class="alert alert-danger" role="alert">Este usuario no existe.</div>
+                                {% elseif error == 2 %}
+                                    <div class="alert alert-danger" role="alert">Este usuario ya pertenece a esta comunidad.</div>
+                                {% elseif error == 3 %}
+                                    <div class="alert alert-danger" role="alert">La cuenta de este usuario está suspendida.</div>
+                                {% elseif error == 4 %}
+                                    <div class="alert alert-danger" role="alert">La cuenta de este usuario está temporalmente bloqueada.</div>
+                                {% elseif error == 5 %}
+                                    <div class="alert alert-success" role="alert">Usuario invitado correctamente.</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <form method="post" action="{{ path('adminCommunity', {'id': community.id }) }}">
+                                <input type="text" placeholder="Nombre de Usuario: " name="newUser" required class="form-control" />
+                                <button type="submit" class="btn btn-lg btn-dark mt-lg-3"><span class="fa fa-user-plus"></span> Invitar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-lg-5">
+                    <div class="card-header">
                         Información Básica
                     </div>
                     <div class="card-body">
