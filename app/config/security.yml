@@ -46,3 +46,4 @@ security:
         - { path: ^/profile/edit, roles: ROLE_USER }
         - { path: ^/new, roles: ROLE_USER }
         - { path: ^/community/, roles: ROLE_USER }
+        - { path: ^/private/, roles: ROLE_USER }
