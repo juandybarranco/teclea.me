@@ -123,12 +123,21 @@ class UserController extends Controller
             ]);
 
             if(!$follow){
-                $lastURL = $request->headers->get('referer');
+                $check = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy(
+                    array(
+                        'follower' => $user,
+                        'following' => $otherUser,
+                        'isAccepted' => false,
+                        'isDeleted' => false
+                    )
+                );
 
-                if($lastURL == null){
-                    return $this->redirectToRoute('index');
-                }else{
-                    return $this->redirect($lastURL);
+                if($check){
+                    $check->setIsDeleted(1);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($check);
+                    $em->flush();
                 }
             }else{
                 $follow->setIsDeleted(1);
@@ -136,23 +145,16 @@ class UserController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($follow);
                 $em->flush();
-
-                $lastURL = $request->headers->get('referer');
-
-                if($lastURL == null){
-                    return $this->redirectToRoute('index');
-                }else{
-                    return $this->redirect($lastURL);
-                }
             }
+
+        }
+
+        $lastURL = $request->headers->get('referer');
+
+        if($lastURL == null){
+            return $this->redirectToRoute('index');
         }else{
-            $lastURL = $request->headers->get('referer');
-
-            if($lastURL == null){
-                return $this->redirectToRoute('index');
-            }else{
-                return $this->redirect($lastURL);
-            }
+            return $this->redirect($lastURL);
         }
     }
 
