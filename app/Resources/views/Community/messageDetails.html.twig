@@ -46,7 +46,7 @@
                             {% if message.user.id == user.id %}
                                 <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
-                            <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                            <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                             <div class="btn-options-sm col-md-10">
                                 {% if message.user.id == user.id %}
@@ -55,7 +55,7 @@
                                 {% if message.user.id == user.id %}
                                     <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                 {% endif %}
-                                <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                                         {% if reply.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
-                                        <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                        <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                             {% if message.user.id == user.id %}
                                 <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
-                            <a class="btn btn-sm btn-default btn-report"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                            <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                             <div class="btn-options-sm col-md-10">
                                 {% if status == 'protectedAllow' or status == 'full' %}
@@ -187,7 +187,7 @@
                                 {% if message.user.id == user.id %}
                                     <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                 {% endif %}
-                                <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
                                             {% if reply.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
-                                            <a class="btn btn-sm btn-default"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
+                                            <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
                                     </div>
                                 </div>
