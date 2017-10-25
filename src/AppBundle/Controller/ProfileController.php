@@ -117,6 +117,45 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route("/deleteFollower/", name="NULLdeleteFollower")
+     */
+    public function NULLDeleteFollowerAction()
+    {
+        return $this->redirectToRoute('followers');
+    }
+
+    /**
+     * @Route("/deleteFollower/{id}", name="deleteFollower")
+     */
+    public function deleteFollowerAction($id)
+    {
+        $user = $this->getUser();
+
+        $follower = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+        if($follower){
+            $isFollower = $this->getDoctrine()->getRepository('AppBundle:Follow')->findOneBy(
+                array(
+                    'follower' => $follower,
+                    'following' => $user,
+                    'isAccepted' => true,
+                    'isDeleted' => false
+                )
+            );
+
+            if($isFollower){
+                $isFollower->setIsDeleted(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($isFollower);
+                $em->flush();
+            }
+        }
+
+        return $this->redirectToRoute('followers');
+    }
+
+    /**
      * @Route("/edit", name="editProfile")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response

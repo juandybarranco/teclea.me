@@ -39,7 +39,7 @@
                                 <div class="col-md-2 text-right">
                                     <a href="{{ path('viewUserProfile', {'id': f.follower.id }) }}" title="Ver Perfil de {{ f.follower.username }}"><span class="fa fa-eye"></span></a>
                                     <a href="{{ path('newPMToUser', {'id': f.follower.id }) }}" title="Enviar Mensaje Privado a {{ f.follower.username }}"><span class="fa fa-envelope"></span></a>
-                                    <a href="#" title="Eliminar de tus seguidores" class="cRed"><span class="fa fa-times"></span></a>
+                                    <a href="{{ path('deleteFollower', {'id': f.follower.id }) }}" title="Eliminar de tus seguidores" class="cRed"><span class="fa fa-times"></span></a>
                                 </div>
                             </li>
                         {% endfor %}
