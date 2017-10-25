@@ -33,6 +33,13 @@ class ReportCommunity
     protected $informer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="reportCommunity")
+     *
+     * @var User
+     */
+    protected $admin;
+
+    /**
      * @ORM\Column(type="datetime", nullable=false)
      *
      * @var \DateTime
@@ -59,6 +66,61 @@ class ReportCommunity
      * @var boolean
      */
     protected $isDeleted = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var boolean
+     */
+    protected $isClosed = false;
+
+    /**
+     * @return mixed
+     */
+    public function getisClosed()
+    {
+        return $this->isClosed;
+    }
+
+    /**
+     * @param mixed $isClosed
+     */
+    public function setIsClosed($isClosed)
+    {
+        $this->isClosed = $isClosed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param bool $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
     /**
      * @return int

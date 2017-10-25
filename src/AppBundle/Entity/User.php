@@ -228,6 +228,29 @@ class User implements UserInterface
     protected $invitation;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ReportCommunity", mappedBy="admin")
+     *
+     * @var ReportCommunity
+     */
+    protected $reportCommunity;
+
+    /**
+     * @return mixed
+     */
+    public function getReportCommunity()
+    {
+        return $this->reportCommunity;
+    }
+
+    /**
+     * @param mixed $reportCommunity
+     */
+    public function setReportCommunity($reportCommunity)
+    {
+        $this->reportCommunity = $reportCommunity;
+    }
+
+    /**
      * @return mixed
      */
     public function getInvitation()
