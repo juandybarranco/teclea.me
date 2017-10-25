@@ -105,6 +105,7 @@ class ReportController extends Controller
     {
         $user = $this->getUser();
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
+        $error = 0;
 
         if($message){
             $report = new ReportCommunity();
@@ -113,42 +114,75 @@ class ReportController extends Controller
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
-                $report->setInformer($user);
-                $report->setMessageReported($message);
-                if($message->getCommunity()->getAdmin()){
-                    $report->setAdmin($message->getCommunity()->getAdmin());
-                }else{
-                    $report->setAdmin(null);
-                }
-                $report->setDate(new \DateTime("now"));
-                $report->setIsClosed(0);
-                $report->setIsActive(1);
-                $report->setIsDeleted(0);
-
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($report);
-                $em->flush();
 
-                $notification = new Notification();
-                $notification->setType('report');
-                if($message->getCommunity()->getAdmin()){
-                    $notification->setUser($message->getCommunity()->getAdmin());
+                $isReported = $this->getDoctrine()->getRepository('AppBundle:ReportCommunity')->findOneBy(
+                    array(
+                        'messageReported' => $message,
+                        'informer' => $user,
+                        'isDeleted' => false,
+                        'isActive' => true,
+                        'isClosed' => false
+                    )
+                );
+
+                if(!$isReported) {
+                    $report->setInformer($user);
+                    $report->setMessageReported($message);
+                    if ($message->getCommunity()->getAdmin()) {
+                        $report->setAdmin($message->getCommunity()->getAdmin());
+                    } else {
+                        $report->setAdmin(null);
+                    }
+                    $report->setDate(new \DateTime("now"));
+                    $report->setIsClosed(0);
+                    $report->setIsActive(1);
+                    $report->setIsDeleted(0);
+
+
+                    $em->persist($report);
+                    $em->flush();
+
+                    $notification = new Notification();
+                    $notification->setType('report');
+                    if ($message->getCommunity()->getAdmin()) {
+                        $notification->setUser($message->getCommunity()->getAdmin());
+                    } else {
+                        $notification->setUser(null);
+                    }
+                    $notification->setDate(new \DateTime("now"));
+                    $notification->setDescription("Has recibido un nuevo reporte de tu comunidad.");
+
+                    $em->persist($notification);
+                    $em->flush();
+
+                    $error = 2;
                 }else{
-                    $notification->setUser(null);
+                    $error = 1;
                 }
-                $notification->setDate(new \DateTime("now"));
-                $notification->setDescription("Has recibido un nuevo reporte de tu comunidad.");
 
-                $em->persist($notification);
-                $em->flush();
+                $nReports = $this->getDoctrine()->getRepository('AppBundle:ReportCommunity')->findBy(
+                    array(
+                        'isDeleted' => false,
+                        'isClosed' => false,
+                        'isActive' => true,
+                        'messageReported' => $message
+                    )
+                );
 
-                return $this->redirectToRoute('messageDetails', ['id' => $id]);
+                if(count($nReports) >= 10){
+                    $message->setIsBlock(1);
+
+                    $em->persist($message);
+                    $em->flush();
+                }
             }
 
             return $this->render('Report/newReport.html.twig', [
                 'user' => $user,
                 'message' => $message,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'error' => $error
             ]);
         }else{
             return $this->redirectToRoute('messageDetails', ['id' => $id]);

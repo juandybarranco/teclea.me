@@ -9,7 +9,6 @@
                 </header>
             </div>
             <div class="card-body">
-
                 <div class="col-md-10 m-auto mb-lg-5 mt-lg-3">
                     <div class="card">
                         <div class="card-body text-left">
@@ -18,7 +17,15 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    {{ form(form) }}
+                    {% if error == 1 %}
+                        <div class="alert alert-warning" role="alert">Ya has reportado este mensaje con anterioridad.</div>
+                        <a href="{{ path('messageDetails', {'id': message.id }) }}" class="btn btn-dark"><span class="fa fa-arrow-left"> Volver</span></a>
+                    {% elseif error == 2 %}
+                        <div class="alert alert-success" role="alert">Mensaje reportado correctamente. Será revisado pronto. ¡Gracias!</div>
+                        <a href="{{ path('messageDetails', {'id': message.id }) }}" class="btn btn-dark"><span class="fa fa-arrow-left"> Volver</span></a>
+                    {% else %}
+                        {{ form(form) }}
+                    {% endif %}
                 </div>
             </div>
         </div>
