@@ -102,6 +102,33 @@
                     </div>
                 </div>
 
+                <div class="card mt-lg-5">
+                    <div class="card-header">
+                        Solicitudes pendientes ({{ pending | length }})
+                    </div>
+                    <div class="card-body">
+                        {% if pending | length == 0 %}
+                            <div>No tienes solicitudes pendientes.</div>
+                        {% else %}
+                            <ul class="list-group">
+                                {% for p in pending %}
+                                    <li class="list-group-item dflexblock list-users">
+                                        <div class="col-md-8 text-left list-username">
+                                            <a href="{{ path('viewUserProfile', {'id': p.user.id }) }}">{{ p.user.username }}</a>
+                                        </div>
+
+                                        <div class="col-md-4 text-right list-options">
+                                            <a href="{{ path('viewUserProfile', {'id': p.user.id }) }}" title="Ver perfil de {{ p.user.username }}"><span class="fa fa-eye"></span></a>
+                                            <a href="{{ path('acceptRequest', {'id': p.community.id, 'idRequest': p.id}) }}" title="Aceptar Solicitud" class="cGreen"><span class="fa fa-check"></span></a>
+                                            <a href="{{ path('rejectRequest', {'id': p.community.id, 'idRequest': p.id }) }}" title="Rechazar Solicitud" class="cRed"><span class="fa fa-times"></span></a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
                 <div class="col-md-12 m-auto mt-lg-5">
                     <a href="{{ path('changeAdministrator', {'id': community.id }) }}" class="btn btn-lg btn-danger"><span class="fa fa-user-md"></span> Cambiar Administrador</a>
                 </div>

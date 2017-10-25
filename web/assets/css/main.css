@@ -2881,6 +2881,10 @@ li.dropdown ul li a span:before{
     color: red!important;
 }
 
+.cGreen{
+	color: #218838!important;
+}
+
 .bg-gray{
     background-color: #E6E6E6!important;
 }

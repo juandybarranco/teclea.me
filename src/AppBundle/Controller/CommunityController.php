@@ -1036,6 +1036,14 @@ class CommunityController extends Controller
                     )
                 );
 
+                $pending = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
+                    array(
+                        'community' => $community,
+                        'isDeleted' => false,
+                        'isActive' => false
+                    )
+                );
+
                 if($username){
                     $newUser = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(
                         array(
@@ -1111,6 +1119,7 @@ class CommunityController extends Controller
             'community' => $community,
             'joined' => $joined,
             'error' => $error,
+            'pending' => $pending,
             'info' => $info->createView()
         ]);
     }
@@ -1179,11 +1188,10 @@ class CommunityController extends Controller
 
     /**
      * @Route("/{id}/changeAdmin", name="changeAdministrator")
-     * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function changeAdministratorAction(Request $request, $id)
+    public function changeAdministratorAction($id)
     {
         $user = $this->getUser();
         $error = 0;
@@ -1248,5 +1256,97 @@ class CommunityController extends Controller
             'community' => $community,
             'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/{id}/accept", name="NULLacceptRequestNULL")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function NULLAcceptRequestAction($id)
+    {
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/{id}/accept/{idRequest}", name="acceptRequest")
+     */
+    public function acceptRequestAction($id, $idRequest)
+    {
+        $user = $this->getUser();
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+        $request = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->find($idRequest);
+
+        if($community){
+            if($request) {
+                if($community->getAdmin() == $user && $community == $request->getCommunity()) {
+                    if(!$request->getIsDeleted() && !$request->getIsActive()){
+                        $request->setIsActive(1);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($request);
+                        $em->flush();
+
+                        return $this->redirectToRoute('adminCommunity', ['id' => $id]);
+                    }
+                }
+            }
+
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/{id}/reject", name="NULLrejectRequestNULL")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function NULLRejectRequestAction($id)
+    {
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+
+        if($community){
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/{id}/reject/{idRequest}", name="rejectRequest")
+     */
+    public function rejectRequestAction($id, $idRequest)
+    {
+        $user = $this->getUser();
+        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
+        $request = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->find($idRequest);
+
+        if($community){
+            if($request) {
+                if($community->getAdmin() == $user && $community == $request->getCommunity()) {
+                    if(!$request->getIsDeleted() && !$request->getIsActive()){
+                        $request->setIsDeleted(1);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($request);
+                        $em->flush();
+
+                        return $this->redirectToRoute('adminCommunity', ['id' => $id]);
+                    }
+                }
+            }
+
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
     }
 }
