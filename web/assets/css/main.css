@@ -2922,6 +2922,10 @@ li.dropdown ul li a span:before{
     background-color: #F7F7F7;
 }
 
+.w-20{
+	width: 20%;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;
