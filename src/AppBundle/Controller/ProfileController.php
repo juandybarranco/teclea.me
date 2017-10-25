@@ -37,10 +37,19 @@ class ProfileController extends Controller
             )
         );
 
+        $pending = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'following' => $user,
+                'isDeleted' => false,
+                'isAccepted' => false
+            )
+        );
+
         return $this->render('Profile/viewProfile.html.twig', [
             'user' => $user,
             'followers' => $followers,
-            'following' => $following
+            'following' => $following,
+            'pending' => $pending
         ]);
     }
 
@@ -83,6 +92,27 @@ class ProfileController extends Controller
         return $this->render('Profile/following.html.twig', [
             'user' => $user,
             'following' => $following
+        ]);
+    }
+
+    /**
+     * @Route("/pending", name="pending")
+     */
+    public function pendingAction()
+    {
+        $user = $this->getUser();
+
+        $pending = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
+            array(
+                'following' => $user,
+                'isAccepted' => false,
+                'isDeleted' => false
+            )
+        );
+
+        return $this->render('Profile/pendingFollowers.html.twig', [
+            'user' => $user,
+            'pending' => $pending
         ]);
     }
 

@@ -24,13 +24,20 @@
 
             <div class="card-body ">
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-6">
+
+                    <div class="{% if user.isPublic %}col-md-6{% else %}col-md-4{% endif %}">
                         <a href="{{ path('followers') }}" title="Usuarios que te siguen.">Seguidores: {{ followers | length }}</a>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="{% if user.isPublic %}col-md-6{% else %}col-md-4{% endif %}">
                         <a href="{{ path('following') }}" title="Usuarios a los que sigues.">Siguiendo: {{ following | length }}</a>
                     </div>
+
+                    {% if user.isPublic == false %}
+                        <div class="col-md-4">
+                            <a href="{{ path('pending') }}" title="Solicitudes Pendientes.">Pendientes: {{ pending | length }}</a>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="col-md-10 m-auto">

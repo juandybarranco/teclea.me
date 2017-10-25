@@ -150,6 +150,54 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/follow/{id}/accept", name="acceptFollow")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function acceptFollowAction($id)
+    {
+        $user = $this->getUser();
+
+        $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->find($id);
+
+        if($follow){
+            if($follow->getFollowing() == $user && !$follow->isIsAccepted() && !$follow->isIsDeleted()){
+                $follow->setIsAccepted(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($follow);
+                $em->flush();
+            }
+        }
+
+        return $this->redirectToRoute('pending');
+    }
+
+    /**
+     * @Route("/follow/{id}/reject", name="rejectFollow")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function rejectFollowAction($id)
+    {
+        $user = $this->getUser();
+
+        $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->find($id);
+
+        if($follow){
+            if($follow->getFollowing() == $user && !$follow->isIsAccepted() && !$follow->isIsDeleted()){
+                $follow->setIsDeleted(1);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($follow);
+                $em->flush();
+            }
+        }
+
+        return $this->redirectToRoute('pending');
+    }
+
+    /**
      * @Route("/{id}", name="viewUserProfile")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
