@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="card-footer">
+                <div class="card-footer p-0">
                     <div class="dflexblock">
                         <div class="backToCommunity col-md-1 text-left">
                             {% if isGeneral %}
@@ -75,12 +75,12 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 replies mt-lg-5">
+                <div class="col-md-10 replies mt-lg-5">
                     {% if message.messageReply | length > 0 %}
                         {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
                             <div class="card mb-5">
-                                <div class="card-header small bg-gray">
-                                    <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                                <div class="card-header small bg-dark p-0">
+                                    <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                 </div>
                                 <div class="card-body text-left flex">
                                     <div class="messageImage">
@@ -98,7 +98,7 @@
                                         {{ reply.message | striptags('<b>') | raw }}
                                     </div>
                                 </div>
-                                <div class="card-footer">
+                                <div class="card-footer p-0">
                                     <div class="replyButtons">
                                         {% if reply.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div class="card-footer dflexblock">
+                    <div class="card-footer dflexblock p-0">
                         <div class="backToCommunity text-left">
                             {% if isGeneral %}
                                 <a href="{{ path('generalCommunity') }}" class="btn btn-sm btn-default"><span class="fa fa-arrow-left"></span> General</a>
@@ -197,12 +197,12 @@
                         </div>
                     {% endif %}
 
-                    <div class="col-md-12 replies">
+                    <div class="col-md-10 replies">
                         {% if message.messageReply | length > 0 %}
                             {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
                                 <div class="card mt-lg-5">
-                                    <div class="card-header small bg-gray">
-                                        <small>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                                    <div class="card-header small bg-dark p-0">
+                                        <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                     </div>
                                     <div class="card-body text-left flex">
                                         <div class="messageImage">
@@ -220,7 +220,7 @@
                                             {{ reply.message | striptags('<b>') | raw }}
                                         </div>
                                     </div>
-                                    <div class="card-footer">
+                                    <div class="card-footer p-0">
                                         <div class="replyButtons">
                                             {% if reply.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>

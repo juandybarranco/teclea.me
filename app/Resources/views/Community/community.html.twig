@@ -41,7 +41,7 @@
                     <div class="col-md-12">
                         {% for msg in messages %}
                             <div class="card messages mb-lg-5">
-                                <div class="card-header small bg-gray">
+                                <div class="card-header small bg-gray p-0">
                                     <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                 </div>
                                 <div class="card-body text-left flex">
@@ -60,7 +60,7 @@
                                         {{ msg.message | striptags('<b>') | raw }}
                                     </div>
                                 </div>
-                                <div class="card-footer dflexblock rCenter">
+                                <div class="card-footer dflexblock rCenter p-0">
                                     <div class="col-md-1 msgAnswers text-left">
                                         <button class="btn btn-sm btn-dark">
                                             {% set cont = 0 %}
@@ -117,7 +117,7 @@
                                                         {{ reply.message | striptags('<b>') | raw }}
                                                     </div>
                                                 </div>
-                                                <div class="card-footer dflexblock bg-gray small">
+                                                <div class="card-footer dflexblock bg-gray small p-0">
                                                     <div class="replyInfo small">
                                                         <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                     </div>
@@ -196,7 +196,7 @@
                         <div class="col-md-12">
                             {% for msg in messages %}
                                 <div class="card messages">
-                                    <div class="card-header small bg-gray">
+                                    <div class="card-header small bg-gray p-0">
                                         <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                     </div>
                                     <div class="card-body text-left flex">
@@ -215,7 +215,7 @@
                                             {{ msg.message | striptags('<b>') | raw }}
                                         </div>
                                     </div>
-                                    <div class="card-footer dflexblock rCenter">
+                                    <div class="card-footer dflexblock rCenter p-0">
                                         <div class="col-md-1 msgAnswers text-left">
                                             <button class="btn btn-sm btn-dark">
                                                 {% set cont = 0 %}
@@ -276,7 +276,7 @@
                                                             {{ reply.message | striptags('<b>') | raw }}
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer dflexblock small bg-gray">
+                                                    <div class="card-footer dflexblock small bg-gray p-0">
                                                         <div class="replyInfo small">
                                                             <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                         </div>

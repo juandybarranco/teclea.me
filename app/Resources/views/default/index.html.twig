@@ -13,7 +13,7 @@
                     <div class="card-body">
                         {% for message in messages %}
                             <div class="card mb-5">
-                                <div class="card-header bg-gray">
+                                <div class="card-header bg-gray p-0">
                                     <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>] - {{ message.date | date('d-m-Y H:i') }}
                                 </div>
 
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card-footer">
+                                <div class="card-footer p-0">
                                     <div class="msgButtons text-right">
                                         <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.user.id == user.id %}
@@ -63,7 +63,7 @@
                     <div class="card-body">
                         {% for reply in replies %}
                             <div class="card mb-5">
-                                <div class="card-header bg-gray">
+                                <div class="card-header bg-gray p-0">
                                     <span class="fa fa-reply"><a href="{{ path('messageDetails', {'id': reply.reply.id }) }}"> #{{ reply.reply.id }}</a></span><a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}"> {{ reply.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': reply.community.id }) }}">{{ reply.community.name }}</a>] - {{ reply.date | date('d-m-Y H:i') }}
                                 </div>
 
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card-footer ">
+                                <div class="card-footer p-0">
                                     <div class="msgButtons text-right">
                                         <a href="{{ path('messageDetails', {'id': reply.reply.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Conversación</a>
                                         {% if reply.user.id == user.id %}
