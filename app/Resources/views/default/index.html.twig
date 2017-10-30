@@ -1,7 +1,12 @@
 {% extends app.user ? 'userBase.html.twig' : 'anonIndex.twig' %}
 
+{% if app.user %}
+    {% block title %}Feed{% endblock %}
+{% endif %}
+
 {% block body %}
     {% if app.user %}
+
         <div id="feed" class="container">
             {% if messages|length == 0 and replies|length == 0 %}
                 <div class="alert alert-warning" role="alert">Tú Feed está vacío. <a href="{{ path('communityList') }}">¿Por qué no exploras las distintas comunidades?</a></div>

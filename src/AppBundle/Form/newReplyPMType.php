@@ -29,7 +29,7 @@ class newReplyPMType extends AbstractType
             ])
             ->add('Enviar', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-lg btn-primary'
+                    'class' => 'btn btn-lg btn-dark'
                 ]
             ]);
     }

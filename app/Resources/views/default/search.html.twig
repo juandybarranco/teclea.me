@@ -1,5 +1,7 @@
 {% extends 'userBase.html.twig' %}
 
+{% block title %}Buscar Comunidades{% endblock %}
+
 {% block body %}
     <div id="searchCommunity" class="container">
         {% if status == 0 %}
@@ -26,7 +28,7 @@
         {% elseif status == 1 %}
             <div class="card">
                 <div class="card-header bg-dark">
-                    <h3 class="cWhite">Resultados de la búsqueda ({{ communities | length }})</h3>
+                    <h4 class="cWhite">Resultados de la búsqueda ({{ communities | length }})</h4>
                 </div>
                 <div class="card-body">
                     <ul>
