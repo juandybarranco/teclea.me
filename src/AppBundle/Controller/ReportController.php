@@ -61,7 +61,7 @@ class ReportController extends Controller
 
                 return $this->render('Report/report.html.twig', [
                     'user' => $user,
-                    'report' => $report
+                    'rep' => $report
                 ]);
             }
         }

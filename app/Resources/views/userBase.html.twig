@@ -27,7 +27,7 @@
                     <a href="{{ path('viewProfile') }}">
                         {% if user.image is null %}
                             <img src="{{ asset('images/no-image.jpg') }}" alt="Sin imagen." class="img-circle" />
-                    {% else %}
+                        {% else %}
                             <img src="{{ asset('uploads/profileImages/' ~ user.image) }}" alt="Imagen de Perfil de {{ user.username }}" class="img-circle" />
                         {% endif %}
                     </a>
@@ -37,15 +37,30 @@
             </div>
 
             <!-- Nav -->
+            {% set pm = 0 %}
+            {% set report = 0 %}
+            {% set invitation = 0 %}
+
+            {% for n in user.notification %}
+                {% if n.type == 'PM' %}
+                    {% set pm = pm + 1 %}
+                {% elseif n.type == 'com_invitation' %}
+                    {% set invitation = invitation + 1 %}
+                {% elseif n.type == 'report' %}
+                    {% set report = report + 1 %}
+                {% endif %}
+            {% endfor %}
+
             <nav id="nav">
                 <ul>
                     <li><a href="{{ path('index') }}" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Inicio</span></a></li>
                     <li class="dropdown">
-                        <a href="#" class="skel-layers-ignoreHref"><span class="icon fa-id-card">Perfil</span></a>
+
+                        <a href="#" class="skel-layers-ignoreHref"><span class="icon fa-id-card {% if pm > 0 or report > 0 %}cGold{% endif %}">Perfil {% if pm > 0 or report > 0 %}({{ pm + report }}){% endif %}</span></a>
                         <ul>
                             <li><a href="{{ path('viewProfile') }}"><span class="icon fa-user-circle">Ver perfil</span></a></li>
-                            <li><a href="{{ path('inbox') }}"><span class="icon fa-envelope">Privados</span></a></li>
-                            <li><a href="{{ path('reportList') }}"><span class="icon fa-warning">Reportes</span></a></li>
+                            <li><a href="{{ path('inbox') }}"><span class="icon fa-envelope {% if pm > 0 %}cGold{% endif %}">Privados {% if pm > 0 %}({{ pm }}){% endif %}</span></a></li>
+                            <li><a href="{{ path('reportList') }}"><span class="icon fa-warning {% if report > 0 %}cGold{% endif %}">Reportes {% if report > 0 %}({{ report }}){% endif %}</span></a></li>
                             <li><a href="{{ path('logout') }}"><span class="icon fa-sign-out">Cerrar Sesión</span></a></li>
                         </ul>
                     </li>
@@ -59,11 +74,11 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-users">Comunidades</span></a>
+                        <a href="#" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-users {% if invitation > 0 %}cGold{% endif %}">Comunidades {% if invitation > 0 %}( {{ invitation }} ){% endif %}</span></a>
                         <ul>
                             <li><a href="{{ path('generalCommunity') }}"><span class="icon fa-bullseye">General</span></a></li>
                             <li><a href="{{ path('communityList') }}"><span class="icon fa-list">Comunidades</span></a></li>
-                            <li><a href="{{ path('invitationsCommunity') }}"><span class="icon fa-id-card-o">Invitaciones</span></a></li>
+                            <li><a href="{{ path('invitationsCommunity') }}"><span class="icon fa-id-card-o {% if invitation > 0 %}cGold{% endif %}">Invitaciones {% if invitation > 0 %}({{ invitation }}){% endif %}</span></a></li>
                             <li><a href="{{ path('newCommunity') }}"><span class="icon fa-plus">Crear Nueva</span></a></li>
                         </ul>
                     </li>
