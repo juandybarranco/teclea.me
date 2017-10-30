@@ -865,7 +865,9 @@ class CommunityController extends Controller
                 'id' => $community->getId()
             ]);
         }else{
-            return $this->redirectToRoute('communityList');
+            return $this->redirectToRoute('viewCommunity', [
+                'id' => $id
+            ]);
         }
     }
 
@@ -964,7 +966,9 @@ class CommunityController extends Controller
                 'id' => $community->getId()
             ]);
         }else{
-            return $this->redirectToRoute('communityList');
+            return $this->redirectToRoute('viewCommunity', [
+                'id' => $id
+            ]);
         }
     }
 
@@ -995,7 +999,9 @@ class CommunityController extends Controller
                 $isJoined = false;
             }
         }else{
-            return $this->redirectToRoute('communityList');
+            return $this->redirectToRoute('viewCommunity', [
+                'id' => $id
+            ]);
         }
 
         return $this->render('Community/communityInfo.html.twig', [
@@ -1111,7 +1117,7 @@ class CommunityController extends Controller
                 return $this->redirectToRoute('viewCommunity', ['id' => $community->getId()]);
             }
         }else{
-            return $this->redirectToRoute('communityList');
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
         }
 
         return $this->render('Community/communityAdmin.html.twig', [
@@ -1173,17 +1179,11 @@ class CommunityController extends Controller
                         $em->persist($users[$i]);
                         $em->flush();
                     }
-
-                    return $this->redirectToRoute('viewCommunity', ['id' => $id]);
-                }else{
-                    return $this->redirectToRoute('viewCommunity', ['id' => $id]);
                 }
-            }else{
-                return $this->redirectToRoute('viewCommunity', ['id' => $id]);
             }
-        }else{
-            return $this->redirectToRoute('homepage');
         }
+
+        return $this->redirectToRoute('viewCommunity', ['id' => $id]);
     }
 
     /**
@@ -1248,7 +1248,7 @@ class CommunityController extends Controller
                 return $this->redirectToRoute('viewCommunity', ['id' => $id]);
             }
         }else{
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
         }
 
         return $this->render('Community/communityChangeAdmin.html.twig', [
@@ -1265,13 +1265,7 @@ class CommunityController extends Controller
      */
     public function NULLAcceptRequestAction($id)
     {
-        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
-
-        if($community){
-            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
-        }else{
-            return $this->redirectToRoute('homepage');
-        }
+        return $this->redirectToRoute('viewCommunity', ['id' => $id]);
     }
 
     /**
@@ -1297,11 +1291,9 @@ class CommunityController extends Controller
                     }
                 }
             }
-
-            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
-        }else{
-            return $this->redirectToRoute('homepage');
         }
+
+        return $this->redirectToRoute('viewCommunity', ['id' => $id]);
     }
 
     /**
@@ -1311,13 +1303,7 @@ class CommunityController extends Controller
      */
     public function NULLRejectRequestAction($id)
     {
-        $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
-
-        if($community){
-            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
-        }else{
-            return $this->redirectToRoute('homepage');
-        }
+        return $this->redirectToRoute('viewCommunity', ['id' => $id]);
     }
 
     /**
@@ -1329,24 +1315,20 @@ class CommunityController extends Controller
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
         $request = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->find($idRequest);
 
-        if($community){
-            if($request) {
-                if($community->getAdmin() == $user && $community == $request->getCommunity()) {
-                    if(!$request->getIsDeleted() && !$request->getIsActive()){
+        if($community) {
+            if ($request) {
+                if ($community->getAdmin() == $user && $community == $request->getCommunity()) {
+                    if (!$request->getIsDeleted() && !$request->getIsActive()) {
                         $request->setIsDeleted(1);
 
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($request);
                         $em->flush();
-
-                        return $this->redirectToRoute('adminCommunity', ['id' => $id]);
                     }
                 }
             }
-
-            return $this->redirectToRoute('viewCommunity', ['id' => $id]);
-        }else{
-            return $this->redirectToRoute('homepage');
         }
+
+        return $this->redirectToRoute('viewCommunity', ['id' => $id]);
     }
 }

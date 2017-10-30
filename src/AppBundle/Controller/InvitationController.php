@@ -186,8 +186,6 @@ class InvitationController extends Controller
 
                 $em->persist($invitation);
                 $em->flush();
-
-                return $this->redirectToRoute('invitationsCommunity');
             }
         }
 

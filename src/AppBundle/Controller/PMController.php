@@ -48,66 +48,6 @@ class PMController extends Controller
     }
 
     /**
-     * @Route("/p{id}", name="readPrivate")
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function readPrivateAction($id)
-    {
-        $user = $this->getUser();
-
-        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-            array(
-                'recipient' => $user,
-                'isDeletedByRecipient' => false,
-                'id' => $id
-            )
-        );
-
-        $em = $this->getDoctrine()->getManager();
-
-        if(count($PM) == 1){
-            $PM = $PM[0];
-            $rs = 1;
-
-            if($PM->getRecipient() == $user){
-                $PM->setIsRead(1);
-            }
-
-            $em->persist($PM);
-            $em->flush();
-        }else{
-            $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
-                array(
-                    'sender' => $user,
-                    'isDeletedBySender' => false,
-                    'id' => $id
-                )
-            );
-
-            if(count($PM) == 1){
-                $PM = $PM[0];
-                $rs = 2;
-
-                if($PM->getRecipient() == $user){
-                    $PM->setIsRead(1);
-                }
-
-                $em->persist($PM);
-                $em->flush();
-            }else{
-                return $this->redirectToRoute('inbox');
-            }
-        }
-
-        return $this->render('PM/readPM.html.twig', array(
-            'user' => $user,
-            'PM' => $PM,
-            'rs' => $rs
-        ));
-    }
-
-    /**
      * @Route("/markAsRead/{id}", name="markPMAsRead")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -423,5 +363,66 @@ class PMController extends Controller
             'recipient' => $PM->getSender()->getUsername(),
             'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="readPrivate")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function readPrivateAction($id, Request $request)
+    {
+        $user = $this->getUser();
+
+        $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+            array(
+                'recipient' => $user,
+                'isDeletedByRecipient' => false,
+                'id' => $id
+            )
+        );
+
+        $em = $this->getDoctrine()->getManager();
+
+        if(count($PM) == 1){
+            $PM = $PM[0];
+            $rs = 1;
+
+            if($PM->getRecipient() == $user){
+                $PM->setIsRead(1);
+            }
+
+            $em->persist($PM);
+            $em->flush();
+        }else{
+            $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
+                array(
+                    'sender' => $user,
+                    'isDeletedBySender' => false,
+                    'id' => $id
+                )
+            );
+
+            if(count($PM) == 1){
+                $PM = $PM[0];
+                $rs = 2;
+
+                if($PM->getRecipient() == $user){
+                    $PM->setIsRead(1);
+                }
+
+                $em->persist($PM);
+                $em->flush();
+            }else{
+                return $this->redirectToRoute('inbox');
+            }
+        }
+
+        return $this->render('PM/readPM.html.twig', array(
+            'user' => $user,
+            'PM' => $PM,
+            'rs' => $rs
+        ));
     }
 }

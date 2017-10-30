@@ -2691,7 +2691,7 @@ li.dropdown ul li a span:before{
 }
 
 #newMessage button{
-    height: 55px;
+    height: 62px;
 }
 
 .messages .panel-heading, .messages .panel-footer{
@@ -2789,7 +2789,7 @@ li.dropdown ul li a span:before{
 .editProfile form input[type="text"],
 .editProfile form input[type="email"],
 .editProfile form input[type="password"]{
-    height: 45px;
+    height: 50px;
     font-size: 16px;
 }
 
