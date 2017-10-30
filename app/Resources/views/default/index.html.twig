@@ -22,21 +22,23 @@
                                     <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>] - {{ message.date | date('d-m-Y H:i') }}
                                 </div>
 
-                                <div class="card-body text-left dflexblock">
-                                    <div class="col-md-2 messageImage dflexblock">
-                                        <div class="image avatar95 m-auto">
-                                            <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
-                                                {% if message.user.image %}
-                                                    <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
-                                                {% else %}
-                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ message.user.username }}"/>
-                                                {% endif %}
-                                            </a>
+                                <div class="messageInfo">
+                                    <div class="card-body text-left dflexblock">
+                                        <div class="col-md-2 messageImage dflexblock">
+                                            <div class="image avatar95">
+                                                <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
+                                                    {% if message.user.image %}
+                                                        <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
+                                                    {% else %}
+                                                        <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ message.user.username }}"/>
+                                                    {% endif %}
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-10 message text-left p-0 dflexblock">
-                                        {{ message.message | striptags('<b>') | raw }}
+                                        <div class="col-md-10 message text-left p-0 dflexblock">
+                                            {{ message.message | striptags('<b>') | raw }}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -72,21 +74,23 @@
                                     <span class="fa fa-reply"><a href="{{ path('messageDetails', {'id': reply.reply.id }) }}"> #{{ reply.reply.id }}</a></span><a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}"> {{ reply.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': reply.community.id }) }}">{{ reply.community.name }}</a>] - {{ reply.date | date('d-m-Y H:i') }}
                                 </div>
 
-                                <div class="card-body text-left flex">
-                                    <div class="messageImage">
-                                        <div class="image avatar95">
-                                            <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
-                                                {% if reply.user.image %}
-                                                    <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                {% else %}
-                                                    <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
-                                                {% endif %}
-                                            </a>
+                                <div class="messageInfo">
+                                    <div class="card-body text-left dflexblock">
+                                        <div class="col-md-2 messageImage dflexblock">
+                                            <div class="image avatar95">
+                                                <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
+                                                    {% if reply.user.image %}
+                                                        <img src="{{ asset('uploads/profileImages/' ~ reply.user.image) }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                    {% else %}
+                                                        <img src="{{ asset('images/no-image.jpg') }}" alt="Imagen de {{ reply.user.username }}"/>
+                                                    {% endif %}
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-12 message">
-                                        {{ reply.message | striptags('<b>') | raw }}
+                                        <div class="col-md-10 message dflexblock">
+                                            {{ reply.message | striptags('<b>') | raw }}
+                                        </div>
                                     </div>
                                 </div>
 

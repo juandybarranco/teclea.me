@@ -2943,6 +2943,17 @@ li.dropdown ul li a span:before{
     }
 }
 
+@media screen and (max-width: 1160px){
+    .messageInfo .dflexblock{
+        display: block!important;
+    }
+
+    .messageInfo .messageImage{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 @media screen and (max-width: 1080px){
     .imageProfile h3{
         font-size: 1em!important;
