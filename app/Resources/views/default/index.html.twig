@@ -22,9 +22,9 @@
                                     <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>] - {{ message.date | date('d-m-Y H:i') }}
                                 </div>
 
-                                <div class="card-body text-left flex">
-                                    <div class="messageImage">
-                                        <div class="image avatar95">
+                                <div class="card-body text-left dflexblock">
+                                    <div class="col-md-2 messageImage dflexblock">
+                                        <div class="image avatar95 m-auto">
                                             <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
                                                 {% if message.user.image %}
                                                     <img src="{{ asset('uploads/profileImages/' ~ message.user.image) }}" alt="Imagen de {{ message.user.username }}"/>
@@ -35,7 +35,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 message">
+                                    <div class="col-md-10 message text-left p-0 dflexblock">
                                         {{ message.message | striptags('<b>') | raw }}
                                     </div>
                                 </div>

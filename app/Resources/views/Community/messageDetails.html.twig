@@ -10,8 +10,8 @@
                     {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                 </div>
 
-                <div class="card-body text-left flex">
-                    <div class="messageImage">
+                <div class="card-body text-left dflexblock">
+                    <div class="col-md-2 messageImage dflexblock">
                         <div class="image avatar95">
                             <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
                                 {% if message.user.image %}
@@ -23,7 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 message">
+                    <div class="col-md-10 message dflexblock">
                         {{ message.message | striptags('<b>') | raw }}
                     </div>
                 </div>
@@ -84,8 +84,8 @@
                                 <div class="card-header small bg-dark p-0">
                                     <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                 </div>
-                                <div class="card-body text-left flex">
-                                    <div class="messageImage">
+                                <div class="card-body text-left dflexblock">
+                                    <div class="col-md-1 messageImage dflexblock">
                                         <div class="image avatar48">
                                             <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
                                                 {% if reply.user.image %}
@@ -96,7 +96,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 message">
+                                    <div class="col-md-11 message dflexblock">
                                         {{ reply.message | striptags('<b>') | raw }}
                                     </div>
                                 </div>
@@ -130,8 +130,8 @@
                         {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                     </div>
 
-                    <div class="card-body text-left flex">
-                        <div class="messageImage">
+                    <div class="card-body text-left dflexblock">
+                        <div class="col-md-2 messageImage dflexblock">
                             <div class="image avatar95">
                                 <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}" title="Perfil de {{ message.user.username }}">
                                     {% if message.user.image %}
@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 message">
+                        <div class="col-md-10 message dflexblock">
                             {{ message.message | striptags('<b>') | raw }}
                         </div>
                     </div>
@@ -206,8 +206,8 @@
                                     <div class="card-header small bg-dark p-0">
                                         <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
                                     </div>
-                                    <div class="card-body text-left flex">
-                                        <div class="messageImage">
+                                    <div class="card-body text-left dflexblock">
+                                        <div class="col-md-1 messageImage dflexblock">
                                             <div class="image avatar48">
                                                 <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}" title="Perfil de {{ reply.user.username }}">
                                                     {% if reply.user.image %}
@@ -218,7 +218,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 message">
+                                        <div class="col-md-11 message dflexblock">
                                             {{ reply.message | striptags('<b>') | raw }}
                                         </div>
                                     </div>
