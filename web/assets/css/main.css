@@ -2931,6 +2931,15 @@ li.dropdown ul li a span:before{
 	width: 20%;
 }
 
+.page-item .page-link{
+    color: #343a40;
+}
+
+.page-item.active .page-link{
+	background-color: #343a40;
+    border-color: #343a40;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;

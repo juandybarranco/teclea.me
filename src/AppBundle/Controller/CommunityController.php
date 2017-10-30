@@ -93,6 +93,7 @@ class CommunityController extends Controller
     public function generalCommunityAction(Request $request)
     {
         $user = $this->getUser();
+        $nMSG = 0;
 
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->findOneBy([
             'privacy' => 'default',
@@ -126,6 +127,24 @@ class CommunityController extends Controller
         $form = $this->createForm(newMessageType::class, $msg);
         $form->handleRequest($request);
 
+        $page = 0;
+
+        if(isset($_GET['page'])){
+            if($_GET['page'] > 0){
+                $page = $_GET['page'] - 1;
+            }
+        }
+
+        $nMSG = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
+            'community' => $community,
+            'isReply' => false,
+            'isActive' => true,
+            'isDeleted' => false,
+            'isBlock' => false
+        ]);
+
+        $nMSG = count($nMSG);
+
         $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
             'community' => $community,
             'isReply' => false,
@@ -134,7 +153,7 @@ class CommunityController extends Controller
             'isBlock' => false
         ],[
             'date' => 'DESC'
-        ]);
+        ], 10, 10*$page);
 
         if($form->isSubmitted() && $form->isValid()){
             $x = 1;
@@ -212,7 +231,8 @@ class CommunityController extends Controller
             'community' => $community,
             'msg' => $form->createView(),
             'messages' => $messages,
-            'joined' => $joined
+            'joined' => $joined,
+            'nMSG' => $nMSG
         ]);
     }
 
@@ -396,6 +416,7 @@ class CommunityController extends Controller
         $messages = '';
         $form = '';
         $joined = 0;
+        $nMSG = 0;
 
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
@@ -507,6 +528,24 @@ class CommunityController extends Controller
                 }
 
                 if($userAccess){
+                    $page = 0;
+
+                    if(isset($_GET['page'])){
+                        if($_GET['page'] > 0){
+                            $page = $_GET['page'] - 1;
+                        }
+                    }
+
+                    $nMSG = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
+                        'community' => $community,
+                        'isReply' => false,
+                        'isActive' => true,
+                        'isDeleted' => false,
+                        'isBlock' => false
+                    ]);
+
+                    $nMSG = count($nMSG);
+
                     $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy([
                         'community' => $community,
                         'isReply' => false,
@@ -515,7 +554,7 @@ class CommunityController extends Controller
                         'isBlock' => false
                     ],[
                         'date' => 'DESC'
-                    ]);
+                    ], 10, 10*$page);
 
                     if($status == 'protectedAllow' || $status == 'full'){
                         $msg = new Message();
@@ -611,7 +650,8 @@ class CommunityController extends Controller
             'messages' => $messages,
             'msg' => $form,
             'userAccess' => $userAccess,
-            'joined' => $joined
+            'joined' => $joined,
+            'nMSG' => $nMSG
         ]);
     }
 

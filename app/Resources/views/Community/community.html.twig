@@ -149,6 +149,101 @@
                         {% endfor %}
                     </div>
                 </div>
+
+                {% if nMSG > 10 %}
+                    {% set nPages = nMSG / 10 %}
+                    {% set nPages = nPages | round(0, 'ceil') %}
+
+                    {% if app.request.get('page') == null %}
+                        {% set actualPage = 1 %}
+                    {% else %}
+                        {% set actualPage = app.request.get('page') %}
+                    {% endif %}
+
+                    <div class="col-md-12 text-center">
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item {% if actualPage == 1 %}disabled{% endif %}">
+                                    <a title="Página Anterior" class="page-link" href="{{ path('generalCommunity') }}?page={{ actualPage - 1 }}" aria-label="Anterior">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Anterior</span>
+                                    </a>
+                                </li>
+                                {% if actualPage > 3 %}
+                                    {% if actualPage - 3 > 1 %}
+                                        <li class="page-item {% if actualPage == 1 %}active{% endif %}">
+                                            <a class="page-link" href="{{ path('generalCommunity') }}?page=1">1</a>
+                                        </li>
+
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">...</a>
+                                        </li>
+                                    {% endif %}
+
+
+                                    {% for i in actualPage-3..actualPage %}
+                                        <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                            <a class="page-link" href="{{ path('generalCommunity') }}?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if actualPage < nPages %}
+                                        {% if actualPage + 3 > nPages %}
+                                            {% for i in actualPage+1..nPages %}
+                                                <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                    <a class="page-link" href="{{ path('generalCommunity') }}?page={{ i }}">{{ i }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for i in actualPage+1..actualPage+3 %}
+                                                <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                    <a class="page-link" href="{{ path('generalCommunity') }}?page={{ i }}">{{ i }}</a>
+                                                </li>
+                                            {% endfor %}
+
+                                            {% if actualPage+3 == nPages %}
+
+                                            {% else %}
+                                                {% if actualPage+3 == nPages-1 %}
+
+                                                {% else %}
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#">...</a>
+                                                    </li>
+                                                {% endif %}
+
+                                                <li class="page-item {% if actualPage == nPages %}active{% endif %}">
+                                                    <a class="page-link" href="{{ path('generalCommunity') }}?page={{ nPages }}">{{ nPages }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                {% else %}
+                                    {% for i in 1..7 %}
+                                        <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                            <a class="page-link" href="{{ path('generalCommunity') }}?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#">...</a>
+                                    </li>
+
+                                    <li class="page-item {% if actualPage == nPages %}active{% endif %}">
+                                        <a class="page-link" href="{{ path('generalCommunity') }}?page={{ nPages }}">{{ nPages }}</a>
+                                    </li>
+                                {% endif %}
+                                <li class="page-item {% if actualPage == nPages %}disabled{% endif %}">
+                                    <a title="Siguiente Página" class="page-link" href="{{ path('generalCommunity') }}?page={{ actualPage + 1 }}" aria-label="Siguiente">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Siguiente</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
             </div>
         {% elseif access == 'notFound' %}
             <div class="alert alert-danger" role="alert">Esta comunidad no existe.</div>
@@ -176,7 +271,7 @@
                             {% if community.admin.id == user.id %}
                                 <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
                             {% endif %}
-                            <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
+                                <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
                             {% if joined == 1 %}
                                 <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
                             {% elseif joined == 2 %}
@@ -204,7 +299,7 @@
 
                         <div class="col-md-12">
                             {% for msg in messages %}
-                                <div class="card messages">
+                                <div class="card messages mb-lg-5">
                                     <div class="card-header small bg-gray p-0">
                                         <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
                                     </div>
@@ -273,7 +368,6 @@
                                         <div class="card-body replies">
                                             {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
                                                 <div class="card mb-lg-3">
-
                                                     <div class="messageInfo">
                                                         <div class="card-body text-left dflexblock">
                                                             <div class="col-md-1 messageImage dflexblock">
@@ -314,6 +408,101 @@
                                     {% endif %}
                                 </div>
                             {% endfor %}
+
+                            {% if nMSG > 10 %}
+                                {% set nPages = nMSG / 10 %}
+                                {% set nPages = nPages | round(0, 'ceil') %}
+
+                                {% if app.request.get('page') == null %}
+                                    {% set actualPage = 1 %}
+                                {% else %}
+                                    {% set actualPage = app.request.get('page') %}
+                                {% endif %}
+
+                                <div class="col-md-12 text-center">
+                                    <nav>
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item {% if actualPage == 1 %}disabled{% endif %}">
+                                                <a title="Página Anterior" class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ actualPage - 1 }}" aria-label="Anterior">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">Anterior</span>
+                                                </a>
+                                            </li>
+                                            {% if actualPage > 3 %}
+                                                {% if actualPage - 3 > 1 %}
+                                                    <li class="page-item {% if actualPage == 1 %}active{% endif %}">
+                                                        <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page=1">1</a>
+                                                    </li>
+
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#">...</a>
+                                                    </li>
+                                                {% endif %}
+
+
+                                                {% for i in actualPage-3..actualPage %}
+                                                    <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                        <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ i }}">{{ i }}</a>
+                                                    </li>
+                                                {% endfor %}
+
+                                                {% if actualPage < nPages %}
+                                                    {% if actualPage + 3 > nPages %}
+                                                        {% for i in actualPage+1..nPages %}
+                                                            <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                                <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ i }}">{{ i }}</a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% for i in actualPage+1..actualPage+3 %}
+                                                            <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                                <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ i }}">{{ i }}</a>
+                                                            </li>
+                                                        {% endfor %}
+
+                                                        {% if actualPage+3 == nPages %}
+
+                                                        {% else %}
+                                                            {% if actualPage+3 == nPages-1 %}
+
+                                                            {% else %}
+                                                                <li class="page-item disabled">
+                                                                    <a class="page-link" href="#">...</a>
+                                                                </li>
+                                                            {% endif %}
+
+                                                            <li class="page-item {% if actualPage == nPages %}active{% endif %}">
+                                                                <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ nPages }}">{{ nPages }}</a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}
+
+                                            {% else %}
+                                                {% for i in 1..7 %}
+                                                    <li class="page-item {% if actualPage == i %}active{% endif %}">
+                                                        <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ i }}">{{ i }}</a>
+                                                    </li>
+                                                {% endfor %}
+
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#">...</a>
+                                                </li>
+
+                                                <li class="page-item {% if actualPage == nPages %}active{% endif %}">
+                                                    <a class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ nPages }}">{{ nPages }}</a>
+                                                </li>
+                                            {% endif %}
+                                            <li class="page-item {% if actualPage == nPages %}disabled{% endif %}">
+                                                <a title="Siguiente Página" class="page-link" href="{{ path('viewCommunity', {'id': community.id }) }}?page={{ actualPage + 1 }}" aria-label="Siguiente">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Siguiente</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
 
