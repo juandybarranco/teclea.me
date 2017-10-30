@@ -3,7 +3,7 @@
 {% block body %}
     <div id="community" class="container">
         <div class="card">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <header>
                     <h2 class="cWhite">{{ community.name }}</h2>
                     <div class="col-md-10 m-auto">
@@ -15,19 +15,19 @@
                     <hr/>
                 </div>
                 <div class="col-md-12 mb-lg-2">
-                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
-                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-commenting-o"></span> Mensajes</a>
+                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
+                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-commenting-o"></span> Mensajes</a>
                 </div>
             </div>
             <div class="card-body">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-gray">
                         <h4>{{ community.visits }} {% if community.visits | length == 1 %}visita{% else %}visitas{% endif %} a la comunidad.</h4>
                     </div>
                 </div>
                 <div class="card mt-lg-5">
-                    <div class="card-header">
-                        Invitar a un Usuario
+                    <div class="card-header bg-dark">
+                        <b class="cWhite"><span class="fa fa-user-plus"></span> Invitar a un Usuario</b>
                     </div>
 
                     <div class="card-body">
@@ -49,14 +49,14 @@
                         <div class="col-md-12">
                             <form method="post" action="{{ path('adminCommunity', {'id': community.id }) }}">
                                 <input type="text" placeholder="Nombre de Usuario: " name="newUser" required class="form-control" />
-                                <button type="submit" class="btn btn-lg btn-dark mt-lg-3"><span class="fa fa-user-plus"></span> Invitar</button>
+                                <button type="submit" class="btn btn-lg btn-dark mt-lg-3">Enviar </button>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="card mt-lg-5">
-                    <div class="card-header">
-                        Información Básica
+                    <div class="card-header bg-dark">
+                        <b class="cWhite"><span class="fa fa-info-circle"></span> Información Básica</b>
                     </div>
                     <div class="card-body">
                         {{ form_start(info) }}
@@ -76,8 +76,8 @@
                 </div>
 
                 <div class="card mt-lg-5">
-                    <div class="card-header">
-                        Usuarios Inscritos ({{ joined | length }})
+                    <div class="card-header bg-dark">
+                        <b class="cWhite"><span class="fa fa-list-ol"></span> Usuarios Inscritos ({{ joined | length }})</b>
                     </div>
                     <div class="card-body">
                         {% if joined | length == 0 %}
@@ -103,8 +103,8 @@
                 </div>
 
                 <div class="card mt-lg-5">
-                    <div class="card-header">
-                        Solicitudes pendientes ({{ pending | length }})
+                    <div class="card-header bg-dark">
+                        <b class="cWhite"><span class="fa fa-clock-o"></span> Solicitudes pendientes ({{ pending | length }})</b>
                     </div>
                     <div class="card-body">
                         {% if pending | length == 0 %}

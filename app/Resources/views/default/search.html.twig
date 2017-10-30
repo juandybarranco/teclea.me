@@ -3,17 +3,20 @@
 {% block body %}
     <div id="searchCommunity" class="container">
         {% if status == 0 %}
-            <div class="card panel-info">
-                <div class="card-header bg-primary cWhite">
+            <div class="card panel-dark">
+                <div class="card-header bg-dark cWhite">
                     <h2 class="cWhite">Buscador de Comunidades</h2>
-                    <p>¡Encuentra nuevas comunidades donde poder expresarte!</p>
+                    <div class="col-md-6 m-auto">
+                        <hr/>
+                    </div>
+                    <p class="m-0">¡Encuentra nuevas comunidades donde poder expresarte!</p>
                 </div>
 
                 <div class="card-body">
                     <div class="input-group searchBox">
                         <input type="text" id="search" placeholder="Busca una comunidad: " class="form-control"/>
                         <span class="input-group-btn">
-                            <button id="buttonSearch" class="btn btn-md btn-primary mt1" type="button">Buscar</button>
+                            <button id="buttonSearch" class="btn btn-md btn-dark" type="button">Buscar</button>
                         </span>
                     </div>
                 </div>
@@ -22,19 +25,13 @@
 
         {% elseif status == 1 %}
             <div class="card">
-                <div class="card-header bg-primary">
-                    <h2 class="cWhite">Resultados de la búsqueda</h2>
-                </div>
-            </div>
-
-            <div class="card ">
-                <div class="card-header">
-                    <h1><b>Número de Comunidades: {{ communities | length }}</b></h1>
+                <div class="card-header bg-dark">
+                    <h3 class="cWhite">Resultados de la búsqueda ({{ communities | length }})</h3>
                 </div>
                 <div class="card-body">
                     <ul>
                         {% for c in communities %}
-                            <div class="card list">
+                            <div class="card list mt-lg-3">
                                 <div class="card-body input-group text-left dflexblock">
                                     <div class="col-md-10">
                                         <h3><a href="{{ path('viewCommunity', { 'id': c.id }) }}">{{ c.name }}</a></h3>
@@ -49,7 +46,7 @@
                                             {% endif %}
                                         {% endfor %}
 
-                                        <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-primary"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                        <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-dark"><span class="fa fa-arrow-right"> Visitar</span></a></span>
                                         {% if x == 0 %}
                                             <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
                                         {% else %}
@@ -90,7 +87,7 @@
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ path('searchCommunity') }}" class="btn btn-link">Nueva Búsqueda</a>
+                    <a href="{{ path('searchCommunity') }}" class="btn btn-dark"><span class="fa fa-search"></span> Nueva Búsqueda</a>
                 </div>
             </div>
         {% endif %}

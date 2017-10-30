@@ -4,7 +4,7 @@
     <div id="community" class="container">
         {% if access == 'default' %}
             <div class="card">
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                     <header>
                         <h2 class="cWhite">{{ community.name }}</h2>
                         <div class="col-md-10 m-auto">
@@ -17,9 +17,9 @@
                     </div>
                     <div class="col-md-12 mb-lg-2">
                         {% if user.isAdmin == true %}
-                            <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
+                            <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
                         {% endif %}
-                        <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
+                        <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
                         {% if joined == true %}
                             <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
                         {% else %}
@@ -123,9 +123,6 @@
                                                     </div>
                                                     <div class="replyButtons">
                                                         {% if reply.user.id == user.id %}
-                                                            <a class="btn btn-sm btn-default" href="#"><span class="fa fa-edit"></span> Editar</a>
-                                                        {% endif %}
-                                                        {% if reply.user.id == user.id %}
                                                             <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                         {% endif %}
                                                         <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
@@ -154,7 +151,7 @@
             <div class="alert alert-danger" role="alert">Esta comunidad ha sido eliminada por su administrador.</div>
         {% elseif access == 'active' %}
             <div class="card ">
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                     <header>
                         <h2 class="cWhite">{{ community.name }}</h2>
                         <div class="col-md-10 m-auto">
@@ -168,9 +165,9 @@
                     <div class="col-md-12 mb-lg-2 mt-lg-3">
                         <div class="col-md-12 mb-lg-2">
                             {% if community.admin.id == user.id %}
-                                <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
+                                <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
                             {% endif %}
-                            <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
+                            <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
                             {% if joined == 1 %}
                                 <a href="{{ path('leaveCommunity', {'id': community.id }) }}" class="btn btn-danger"><span class="fa fa-times"></span> Abandonar</a>
                             {% elseif joined == 2 %}
@@ -284,11 +281,6 @@
                                                             <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
                                                         </div>
                                                         <div class="replyButtons">
-                                                            {% if status == 'protectedAllow' or status == 'full' %}
-                                                                {% if reply.user.id == user.id %}
-                                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                                                {% endif %}
-                                                            {% endif %}
                                                             {% if reply.user.id == user.id %}
                                                                 <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                             {% endif %}

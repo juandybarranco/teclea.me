@@ -37,7 +37,7 @@ class EditCommunityType extends AbstractType
             ])
             ->add('Editar', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-dark btn-lg fa fa-pencil'
+                    'class' => 'btn btn-dark btn-lg'
                 ]
             ]);
     }

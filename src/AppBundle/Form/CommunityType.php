@@ -46,9 +46,9 @@ class CommunityType extends AbstractType
                     'Privada' => 'private'
                 ]
             ])
-            ->add('Crear Comunidad', SubmitType::class, [
+            ->add('Crear', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-lg btn-primary mt4'
+                    'class' => 'btn btn-lg btn-dark'
                 ]
             ]);
     }

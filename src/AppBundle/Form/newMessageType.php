@@ -29,7 +29,7 @@ class newMessageType extends AbstractType
             ])
             ->add('Enviar', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-dark'
                 ]
             ]);
     }

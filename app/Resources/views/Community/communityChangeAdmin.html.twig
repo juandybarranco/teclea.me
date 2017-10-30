@@ -3,7 +3,7 @@
 {% block body %}
     <div id="community" class="container">
         <div class="card">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <header>
                     <h2 class="cWhite">{{ community.name }}</h2>
                     <div class="col-md-10 m-auto">
@@ -15,9 +15,9 @@
                     <hr/>
                 </div>
                 <div class="col-md-12 mb-lg-2">
-                    <a  href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-user-md"></span> Administrador</a>
-                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-info"></span> Información</a>
-                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-dark"><span class="fa fa-commenting-o"></span> Mensajes</a>
+                    <a  href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
+                    <a href="{{ path('communityInfo', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-info"></span> Información</a>
+                    <a href="{{ path('viewCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-commenting-o"></span> Mensajes</a>
                 </div>
             </div>
             <div class="card-body">

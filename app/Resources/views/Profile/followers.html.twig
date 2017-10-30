@@ -17,12 +17,8 @@
             <hr/>
         </header>
 
-        <div class="col-md-12 m-auto">
-            <a href="{{ path('viewProfile') }}" title="Volver al Perfil" class="btn btn-dark mt-2 mb-3"><span class="fa fa-arrow-left"></span> Volver al Perfil</a>
-        </div>
-
         <div class="card info">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <b class="cWhite"><span class="fa fa-address-card-o"></span> Tus seguidores ({{ followers | length }})</b>
             </div>
 
@@ -46,6 +42,10 @@
                     </ul>
                 {% endif %}
             </div>
+        </div>
+
+        <div class="col-md-12 m-auto mt-lg-3">
+            <a href="{{ path('viewProfile') }}" title="Volver al Perfil" class="btn btn-dark mt-2 mb-3"><span class="fa fa-arrow-left"></span> Volver al Perfil</a>
         </div>
     </div>
 {% endblock %}

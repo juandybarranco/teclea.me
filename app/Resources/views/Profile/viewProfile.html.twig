@@ -18,7 +18,7 @@
         </header>
 
         <div class="card info">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <b class="cWhite"><span class="fa fa-address-card-o"></span> Información sobre tu perfil</b>
             </div>
 
@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-user-circle"></span> Nombre de Usuario:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.username }}</label>
@@ -54,8 +54,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-envelope-o"></span> Correo Electrónico:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-envelope-o"></span> Correo Electrónico:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.email }}</label>
@@ -63,8 +63,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-globe"></span> País:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-globe"></span> País:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         <label>{{ user.country }}</label>
@@ -72,8 +72,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-location-arrow"></span> Localización:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-location-arrow"></span> Localización:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.location %}
@@ -85,8 +85,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-comment-o"></span> Mensaje Personal:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.personalMessage %}
@@ -98,8 +98,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-user-plus"></span> Referido:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-user-plus"></span> Referido:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.referred %}
@@ -115,8 +115,8 @@
                 </div>
 
                 <div class="col-md-12 dflexblock">
-                    <div class="col-md-4 text-center fa-border bg-info">
-                        <b class="cWhite"><span class="fa fa-shield"></span> Privacidad de Perfil:</b>
+                    <div class="col-md-4 text-left fa-border bg-gray">
+                        <b><span class="fa fa-shield"></span> Privacidad de Perfil:</b>
                     </div>
                     <div class="col-md-8 text-left fa-border">
                         {% if user.isPublic %}
@@ -131,7 +131,6 @@
                     <a href="{{ path('editProfile') }}" class="btn btn-secondary btn-lg">Editar Perfil</a>
                 </div>
             </div>
-
         </div>
     </div>
 {% endblock %}

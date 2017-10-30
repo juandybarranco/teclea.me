@@ -4,7 +4,7 @@
     <div id="message" class="container">
         {% if access == 'default'%}
             <div class="card messages">
-                <div class="card-header bg-primary cWhite">
+                <div class="card-header bg-dark cWhite">
                     {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                 </div>
 
@@ -41,17 +41,11 @@
                                 <a class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</a>
                             {% endif %}
                             {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
-                            {% endif %}
-                            {% if message.user.id == user.id %}
                                 <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
                             <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                             <div class="btn-options-sm col-md-10">
-                                {% if message.user.id == user.id %}
-                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                {% endif %}
                                 {% if message.user.id == user.id %}
                                     <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                 {% endif %}
@@ -64,7 +58,7 @@
 
             {% if message.isReply == false %}
                 <div class="card mt-lg-3 newReply">
-                    <div class="card-header bg-primary cWhite">
+                    <div class="card-header bg-dark cWhite">
                         ¡Escribe tu respuesta!
                     </div>
 
@@ -107,9 +101,6 @@
                                 <div class="card-footer">
                                     <div class="replyButtons">
                                         {% if reply.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                        {% endif %}
-                                        {% if reply.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
                                         <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
@@ -133,7 +124,7 @@
                 <div class="alert alert-danger" role="alert">No tienes permisos para ver este mensaje.</div>
             {% elseif status == 'full' %}
                 <div class="card messages">
-                    <div class="card-header bg-primary cWhite">
+                    <div class="card-header bg-dark cWhite">
                         {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
                     </div>
 
@@ -169,9 +160,6 @@
                                 {% if message.isReply == false %}
                                     <a class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</a>
                                 {% endif %}
-                                {% if message.user.id == user.id %}
-                                    <a class="btn btn-sm btn-default btn-edit"><span class="fa fa-edit"></span> Editar</a>
-                                {% endif %}
                             {% endif %}
                             {% if message.user.id == user.id %}
                                 <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -179,11 +167,6 @@
                             <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
                             <div class="btn-options-sm col-md-10">
-                                {% if status == 'protectedAllow' or status == 'full' %}
-                                    {% if message.user.id == user.id %}
-                                        <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                    {% endif %}
-                                {% endif %}
                                 {% if message.user.id == user.id %}
                                     <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                 {% endif %}
@@ -196,7 +179,7 @@
                 {% if message.isReply == false %}
                     {% if status == 'protectedAllow' or status == 'full' %}
                         <div class="card newReply mt-lg-5">
-                            <div class="card-header bg-primary cWhite">
+                            <div class="card-header bg-dark cWhite">
                                 ¡Escribe tu respuesta!
                             </div>
 
@@ -239,11 +222,6 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="replyButtons">
-                                            {% if status == 'protectedAllow' or status == 'full' %}
-                                                {% if reply.user.id == user.id %}
-                                                    <a class="btn btn-sm btn-default"><span class="fa fa-edit"></span> Editar</a>
-                                                {% endif %}
-                                            {% endif %}
                                             {% if reply.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
