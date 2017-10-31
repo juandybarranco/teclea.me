@@ -50,3 +50,4 @@ security:
         - { path: ^/invitation/, roles: ROLE_USER }
         - { path: ^/searchCommunity, roles: ROLE_USER }
         - { path: ^/user/, roles: ROLE_USER }
+        - { path: ^/help, roles: ROLE_USER }
