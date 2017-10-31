@@ -17,7 +17,7 @@
                     <div class="col-md-6 m-auto">
                         <hr/>
                     </div>
-                    <div class="col-md-12 mb-lg-2">
+                    <div class="col-md-12 mb-lg-2 communityButtons">
                         {% if user.isAdmin == true %}
                             <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
                         {% endif %}
@@ -44,7 +44,14 @@
                         {% for msg in messages %}
                             <div class="card messages mb-lg-5">
                                 <div class="card-header small bg-gray p-0">
-                                    <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
+                                    <div class="col-md-12 dflexblock">
+                                        <div class="col-md-6 dflexblock">
+                                            <small>{{ msg.user.username }}</small>
+                                        </div>
+                                        <div class="col-md-6 dflexblock">
+                                            <small class="m-left">{{ msg.date | date('d-m-Y H:i') }}</small>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="messageInfo">
@@ -85,7 +92,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="col-md-11 msgButtons text-right">
+                                    <div class="col-md-11 msgButtons text-right fwa">
                                         <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
                                         <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetailsGeneral', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
                                         {% if msg.user.id == user.id %}
@@ -106,7 +113,7 @@
                                 {% if msg.messageReply | length > 0 %}
                                     <div class="card-body replies">
                                         {% for reply in msg.messageReply | reverse | slice(0, 6) if reply.isdeleted == false %}
-                                            <div class="card mb-lg-3">
+                                            <div class="card mb-3">
                                                 <div class="messageInfo">
                                                     <div class="card-body text-left dflexblock">
                                                         <div class="col-md-1 messageImage dflexblock">
@@ -127,10 +134,15 @@
                                                 </div>
 
                                                 <div class="card-footer dflexblock bg-gray small p-0">
-                                                    <div class="replyInfo small">
-                                                        <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
+                                                    <div class="col-md-6 replyInfo small dflexblock">
+                                                        <div class="col-md-6 dflexblock">
+                                                            <span class="m-left">{{ reply.user.username }}</span>
+                                                        </div>
+                                                        <div class="col-md-6 dflexblock">
+                                                            <span class="m-right">{{ reply.date | date('d-m-Y H:i') }}</span>
+                                                        </div>
                                                     </div>
-                                                    <div class="replyButtons">
+                                                    <div class="col-md-6 replyButtons fwa m-auto-750">
                                                         {% if reply.user.id == user.id %}
                                                             <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                         {% endif %}
@@ -266,7 +278,7 @@
                     <div class="col-md-6 m-auto">
                         <hr/>
                     </div>
-                    <div class="col-md-12 mb-lg-2 mt-lg-3">
+                    <div class="col-md-12 mb-lg-2 mt-lg-3 communityButtons">
                         <div class="col-md-12 mb-lg-2">
                             {% if community.admin.id == user.id %}
                                 <a href="{{ path('adminCommunity', {'id': community.id }) }}" class="btn btn-light"><span class="fa fa-user-md"></span> Administrador</a>
@@ -301,7 +313,14 @@
                             {% for msg in messages %}
                                 <div class="card messages mb-lg-5">
                                     <div class="card-header small bg-gray p-0">
-                                        <small>{{ msg.user.username }} - {{ msg.date | date('d-m-Y H:i') }}</small>
+                                        <div class="col-md-12 dflexblock">
+                                            <div class="col-md-6 dflexblock">
+                                                <small>{{ msg.user.username }}</small>
+                                            </div>
+                                            <div class="col-md-6 dflexblock">
+                                                <small class="m-left">{{ msg.date | date('d-m-Y H:i') }}</small>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="messageInfo">
@@ -342,7 +361,7 @@
                                             </button>
                                         </div>
 
-                                        <div class="col-md-11 msgButtons text-right">
+                                        <div class="col-md-11 msgButtons text-right fwa">
                                             <a class="btn btn-sm btn-default btn-details" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-eye"></span> Detalles</a>
                                             {% if status == 'protectedAllow' or status == 'full' %}
                                                 <a class="btn btn-sm btn-default btn-reply" href="{{ path('messageDetails', { 'id': msg.id }) }}"><span class="fa fa-reply"></span> Responder</a>
@@ -389,9 +408,16 @@
 
                                                     <div class="card-footer dflexblock small bg-gray p-0">
                                                         <div class="replyInfo small">
-                                                            <span>{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</span>
+                                                            <div class="col-md-12 dflexblock">
+                                                                <div class="col-md-6 dflexblock">
+                                                                    <span class="m-left">{{ reply.user.username }}</span>
+                                                                </div>
+                                                                <div class="col-md-6 dflexblock">
+                                                                    <span class="m-right">{{ reply.date | date('d-m-Y H:i') }}</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="replyButtons">
+                                                        <div class="replyButtons fwa m-auto-750">
                                                             {% if reply.user.id == user.id %}
                                                                 <a class="btn btn-sm btn-default btn-delete-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                                             {% endif %}

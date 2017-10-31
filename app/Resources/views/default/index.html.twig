@@ -19,7 +19,17 @@
                         {% for message in messages %}
                             <div class="card mb-5">
                                 <div class="card-header bg-gray p-0">
-                                    <a href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>] - {{ message.date | date('d-m-Y H:i') }}
+                                    <div class="col-md-12 dflexblock">
+                                        <div class="col-md-4 dflexblock">
+                                            <a class="m-auto" href="{{ path('viewUserProfile', {'id': message.user.id }) }}">{{ message.user.username }}</a>
+                                        </div>
+                                        <div class="col-md-4 dflexblock">
+                                            <b class="m-auto">[<a href="{{ path('viewCommunity', {'id': message.community.id }) }}">{{ message.community.name }}</a>]</b>
+                                        </div>
+                                        <div class="col-md-4 dflexblock">
+                                            <b class="m-auto">{{ message.date | date('d-m-Y H:i') }}</b>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="messageInfo">
@@ -43,7 +53,7 @@
                                 </div>
 
                                 <div class="card-footer p-0">
-                                    <div class="msgButtons text-right">
+                                    <div class="msgButtons text-right fwa">
                                         <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.user.id == user.id %}
                                             <a class="btn btn-sm btn-default btn-delete" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
@@ -71,7 +81,27 @@
                         {% for reply in replies %}
                             <div class="card mb-5">
                                 <div class="card-header bg-gray p-0">
-                                    <span class="fa fa-reply"><a href="{{ path('messageDetails', {'id': reply.reply.id }) }}"> #{{ reply.reply.id }}</a></span><a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}"> {{ reply.user.username }}</a> [<a href="{{ path('viewCommunity', {'id': reply.community.id }) }}">{{ reply.community.name }}</a>] - {{ reply.date | date('d-m-Y H:i') }}
+                                    <div class="col-md-12 dflexblock">
+                                        <div class="col-md-2 dflexblock">
+                                            <a href="{{ path('messageDetails', {'id': reply.reply.id }) }}"><span class="fa fa-reply"></span> #{{ reply.reply.id }}</a>
+                                        </div>
+                                        <div class="col-md-4 dflexblock">
+                                            <a href="{{ path('viewUserProfile', {'id': reply.user.id }) }}"> {{ reply.user.username }}</a>
+                                        </div>
+                                        <div class="col-md-3 dflexblock">
+                                            [<a href="{{ path('viewCommunity', {'id': reply.community.id }) }}">
+                                                {% if reply.community.name | length > 10 %}
+                                                    {{ reply.community.name | slice(0, 10) }}...
+                                                {% else %}
+                                                    {{ reply.community.name }}
+                                                {% endif %}
+
+                                            </a>]
+                                        </div>
+                                        <div class="col-md-3 dflexblock">
+                                            {{ reply.date | date('d-m-Y H:i') }}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="messageInfo">
@@ -95,10 +125,10 @@
                                 </div>
 
                                 <div class="card-footer p-0">
-                                    <div class="msgButtons text-right">
+                                    <div class="msgButtons text-right fwa">
                                         <a href="{{ path('messageDetails', {'id': reply.reply.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Conversación</a>
                                         {% if reply.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default btn-delete-feed" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete btn-delete-feed" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
                                         <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>

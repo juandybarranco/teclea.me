@@ -2940,6 +2940,14 @@ li.dropdown ul li a span:before{
     border-color: #343a40;
 }
 
+.m-left{
+    margin-left: auto!important;
+}
+
+.m-right{
+    margin-right: auto!important;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;
@@ -2984,6 +2992,16 @@ li.dropdown ul li a span:before{
 }
 
 @media screen and (max-width: 750px) {
+    .m-auto-750{
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+
+    .replies .replyInfo{
+        width: 100%;
+        text-align: center;
+    }
+
     .dflexblock{
         display: block;
     }
@@ -3010,6 +3028,14 @@ li.dropdown ul li a span:before{
     .rCenter .text-left, .rCenter .text-right {
         text-align: center!important;
     }
+
+	.fwa a{
+		width: 100%;
+	}
+
+	.messageImage{
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 736px) {
@@ -3060,6 +3086,20 @@ li.dropdown ul li a span:before{
         margin-right: auto;
         margin-bottom: 20px;
     }
+}
+
+@media screen and (max-width: 500px){
+	.communityButtons a{
+        width: 100%!important;
+        margin-bottom: 3px;
+    }
+
+	.messages .panel-body .messageImage, #message .replies .panel-body .messageImage{
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+	}
 }
 
 @media screen and (max-width: 400px){

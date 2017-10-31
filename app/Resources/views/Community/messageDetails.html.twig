@@ -7,7 +7,14 @@
         {% if access == 'default'%}
             <div class="card messages">
                 <div class="card-header bg-dark cWhite">
-                    {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
+                    <div class="col-md-12 dflexblock">
+                        <div class="col-md-6 dflexblock">
+                            <small>{{ message.user.username }}</small>
+                        </div>
+                        <div class="col-md-6 dflexblock">
+                            <small class="m-left">{{ message.date | date('d-m-Y H:i') }}</small>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="messageInfo">
@@ -40,12 +47,12 @@
                             {% endif %}
                         </div>
 
-                        <div class="msgButtons col-md-11 text-right">
+                        <div class="msgButtons col-md-11 text-right fwa">
                             {% if message.isReply == false %}
                                 <a class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</a>
                             {% endif %}
                             {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                <a class="btn btn-sm btn-default btn-delete btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
                             <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
@@ -61,7 +68,7 @@
             </div>
 
             {% if message.isReply == false %}
-                <div class="card mt-lg-3 newReply">
+                <div class="card mt-5 newReply">
                     <div class="card-header bg-dark cWhite">
                         ¡Escribe tu respuesta!
                     </div>
@@ -82,9 +89,16 @@
                 <div class="col-md-10 replies mt-lg-5">
                     {% if message.messageReply | length > 0 %}
                         {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
-                            <div class="card mb-5">
+                            <div class="card mt-5">
                                 <div class="card-header small bg-dark p-0">
-                                    <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                                    <div class="col-md-12 dflexblock">
+                                        <div class="col-md-6 dflexblock">
+                                            <small class="cWhite">{{ reply.user.username }}</small>
+                                        </div>
+                                        <div class="col-md-6 dflexblock">
+                                            <small class="cWhite m-left">{{ reply.date | date('d-m-Y H:i') }}</small>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="messageInfo">
@@ -133,7 +147,14 @@
             {% elseif status == 'full' %}
                 <div class="card messages">
                     <div class="card-header bg-dark cWhite">
-                        {{ message.user.username }} - {{ message.date | date('d-m-Y H:i') }}
+                        <div class="col-md-12 dflexblock">
+                            <div class="col-md-6 dflexblock">
+                                <span>{{ message.user.username }}</span>
+                            </div>
+                            <div class="col-md-6 dflexblock">
+                                <span class="m-left">{{ message.date | date('d-m-Y H:i') }}</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="messageInfo">
@@ -165,14 +186,14 @@
                             {% endif %}
                         </div>
 
-                        <div class="msgButtons text-right">
+                        <div class="msgButtons text-right fwa">
                             {% if status == 'protectedAllow' or status == 'full' %}
                                 {% if message.isReply == false %}
                                     <a class="btn btn-sm btn-default btn-replyMSG"><span class="fa fa-reply"></span> Responder</a>
                                 {% endif %}
                             {% endif %}
                             {% if message.user.id == user.id %}
-                                <a class="btn btn-sm btn-default btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                <a class="btn btn-sm btn-default btn-delete btn-delete-inMessage" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                             {% endif %}
                             <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                             <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
@@ -188,7 +209,7 @@
 
                 {% if message.isReply == false %}
                     {% if status == 'protectedAllow' or status == 'full' %}
-                        <div class="card newReply mt-lg-5">
+                        <div class="card newReply mt-5">
                             <div class="card-header bg-dark cWhite">
                                 ¡Escribe tu respuesta!
                             </div>
@@ -210,9 +231,16 @@
                     <div class="col-md-10 replies">
                         {% if message.messageReply | length > 0 %}
                             {% for reply in message.messageReply | reverse if reply.isdeleted == false %}
-                                <div class="card mt-lg-5">
+                                <div class="card mt-5">
                                     <div class="card-header small bg-dark p-0">
-                                        <small class="cWhite">{{ reply.user.username }} - {{ reply.date | date('d-m-Y H:i') }}</small>
+                                        <div class="col-md-12 dflexblock">
+                                            <div class="col-md-6 dflexblock">
+                                                <small class="cWhite">{{ reply.user.username }}</small>
+                                            </div>
+                                            <div class="col-md-6 dflexblock">
+                                                <small class="cWhite m-left">{{ reply.date | date('d-m-Y H:i') }}</small>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="messageInfo">
@@ -239,6 +267,7 @@
                                             {% if reply.user.id == user.id %}
                                                 <a class="btn btn-sm btn-default btn-delete-inMessage-sm" name="{{ reply.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                             {% endif %}
+
                                             <a class="btn btn-sm btn-default" href="{{ path('newMessageReport', {'id': reply.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         </div>
                                     </div>

@@ -38,7 +38,7 @@
         idMessage = $(this).attr('name');
 
         swal({
-            title: "¿Estás seguro?",
+            title: "¿Seguro?",
             text: "Este mensaje se borrará completamente",
             type: "warning",
             showCancelButton: true,
@@ -65,7 +65,7 @@
         idMessage = $(this).attr('name');
 
         swal({
-                title: "¿Estás seguro?",
+                title: "¿Seguro?",
                 text: "Este mensaje se borrará completamente",
                 type: "warning",
                 showCancelButton: true,
@@ -92,7 +92,7 @@
         idMessage = $(this).attr('name');
 
         swal({
-                title: "¿Estás seguro?",
+                title: "¿Seguro?",
                 text: "Este mensaje se borrará completamente",
                 type: "warning",
                 showCancelButton: true,
@@ -119,7 +119,7 @@
         idMessage = $(this).attr('name');
 
         swal({
-                title: "¿Estás seguro?",
+                title: "¿Seguro?",
                 text: "Este mensaje se borrará completamente",
                 type: "warning",
                 showCancelButton: true,
