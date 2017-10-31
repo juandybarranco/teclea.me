@@ -12,6 +12,12 @@
             <hr/>
         </div>
 
+        {% if error == 1 %}
+            <div class="col-md-10 m-auto">
+                <div class="alert alert-success" role="alert"><span class="fa fa-check"></span> Mensaje Enviado. En breve nos pondremos en contacto contigo.</div>
+            </div>
+        {% endif %}
+
         <div id="help-tabs">
             <div class="card">
                 <div class="card-header bg-dark">
@@ -169,7 +175,26 @@
                     </div>
 
                     <div id="contact">
-                        Contacto
+                        <div class="card">
+                            <div class="card-header bg-gray text-center">
+                                <h1><span class="fa fa-envelope"></span> Contacto</h1>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="col-md-10 m-auto text-center">
+                                    <p class="font-sm">¿Tienes cualquier problema o duda? No dudes en ponerte en contacto con nosotros.
+                                    <br/>Te responderemos automáticamente al correo electrónico asociado a tu cuenta.
+                                    </p>
+
+                                    <hr/>
+
+                                    {{ form_start(form) }}
+                                        {{ form_widget(form.message) }}
+                                        {{ form_widget(form.Enviar) }}
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -235,6 +235,29 @@ class User implements UserInterface
     protected $reportCommunity;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mail", mappedBy="user")
+     *
+     * @var Mail
+     */
+    protected $mail;
+
+    /**
+     * @return mixed
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * @param mixed $mail
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+    }
+
+    /**
      * @return mixed
      */
     public function getReportCommunity()

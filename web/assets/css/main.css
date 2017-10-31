@@ -2966,6 +2966,10 @@ li.dropdown ul li a span:before{
     list-style: inside;
 }
 
+.font-sm{
+    font-size: 20px;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;

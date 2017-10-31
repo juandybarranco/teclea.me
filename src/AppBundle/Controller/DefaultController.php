@@ -4,12 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Community;
 use AppBundle\Entity\ForgottedPassword;
+use AppBundle\Entity\Mail;
 use AppBundle\Entity\MailAnon;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserCommunity;
 use AppBundle\Form\AnonContactType;
 use AppBundle\Form\CommunityType;
 use AppBundle\Form\ForgottedPasswordType;
+use AppBundle\Form\MailType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -355,12 +357,33 @@ class DefaultController extends Controller
     /**
      * @Route("/help", name="help")
      */
-    public function helpAction()
+    public function helpAction(Request $request)
     {
         $user = $this->getUser();
+        $error = 0;
+
+        $mail = new Mail();
+
+        $form = $this->createForm(MailType::class, $mail);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $mail->setDate(new \DateTime("now"));
+            $mail->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+            $mail->setUser($user);
+            $mail->setEmail($user->getEMail());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($mail);
+            $em->flush();
+
+            $error = 1;
+        }
 
         return $this->render('default/help.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'form' => $form->createView(),
+            'error' => $error
         ]);
     }
 }
