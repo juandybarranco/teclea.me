@@ -142,10 +142,6 @@
             });
     });
 
-    $("#tabs").click(function(){
-        $(this).tab('show');
-    });
-
     $("#buttonSearch").click(function(){
         search = $("#search").val();
         window.location.href = '/searchCommunity?s='+search;
