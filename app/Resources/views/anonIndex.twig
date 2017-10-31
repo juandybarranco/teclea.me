@@ -36,7 +36,6 @@
                     <li><a href="#signup">Regístrate</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contact">Contacto</a></li>
-                    <!--<li><a href="#elements">Elements</a></li>-->
                 </ul>
             </nav>
         </header>
@@ -97,9 +96,38 @@
             </article>
 
             <!-- FAQ -->
-            <article id="faq" class="text-center">
-                <h2 class="major center">Preguntas Frecuentes</h2>
-                <p>En desarrollo...</p>
+            <article id="faq" class="text-left">
+                <h2 class="major center">FAQ</h2>
+                <div id="accordion">
+                    <h3><span class="fa fa-arrow-down"></span> ¿Qué es TecleaME?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">TecleaME es una red social, de código libre y gratuito, basada en microblogging.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> ¿Es gratuito?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">TecleaME es totalmente gratuito. Puedes crear una cuenta de manera totalmente gratuita y nunca se te pedirá que pagues para acceder.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> Si es gratuito, ¿cómo se financia?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">En un principio, los recursos para el mantenimiento de TecleaME no son muy exigentes, por lo tanto se hace cargo de nuestro propio bolsillo, aunque en un futuro se incorporará algo de publicidad para financiarnos, sin afectar a la economía de nuestros usuarios.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> ¿Qué hay de mi privacidad?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">En TecleaME nos tomamos muy en serio la seguridad y privacidad del usuario. Jamás venderemos tus datos y, tu contraseña estará desde primera hora encriptada para asegurar la seguridad de tu identidad.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> ¿Hay alguna aplicación para Android e iOS?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">No, pero no te preocupes, ya que desde cualquier smartphone y usando tu navegador por defecto, podrás usar TecleaME muy cómodamente, debido al diseño responsive, muy amigable con 'las pantallas pequeñas'.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> ¿Cómo contacto con el equipo de TecleaME?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">Tenemos a disposición de cualquier usuario de internet, un formulario de contacto, <a href="#contact">haciendo click aquí</a>. También, tenemos otro formulario, dentro de TecleaME para nuestros usuarios.</p>
+                    </div>
+                    <h3><span class="fa fa-arrow-down"></span> ¿Cómo me creo una cuenta?</h3>
+                    <div class="bgLight">
+                        <p class="m-3">Es muy fácil. Tan solo necesitas Registrarte, haciendo click sobre 'Regístrate' en la página principal o <a href="#signup">haciendo click aquí</a>. Una vez rellenes los datos de acceso, ya podrás acceder.</p>
+                    </div>
+                </div>
             </article>
 
             <!-- Contact -->
@@ -191,6 +219,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/skel.min.js') }}"></script>
     <script src="{{ asset('assets/js/util.js') }}"></script>
     <script src="{{ asset('assets/js/main_anon.js') }}"></script>

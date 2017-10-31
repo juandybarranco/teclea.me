@@ -7,6 +7,23 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+/* Customize */
+.bgLight{
+	background-color: #999999;
+}
+
+.cBlack{
+	color: black;
+}
+
+.p-0{
+	padding: 0;
+}
+
+.m-3{
+	margin: 3px;
+}
+
 /* Fixed */
 
 .form-control:focus{
