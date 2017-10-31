@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Community;
 use AppBundle\Entity\ForgottedPassword;
+use AppBundle\Entity\MailAnon;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserCommunity;
+use AppBundle\Form\AnonContactType;
 use AppBundle\Form\CommunityType;
 use AppBundle\Form\ForgottedPasswordType;
 use AppBundle\Form\UserType;
@@ -79,12 +81,16 @@ class DefaultController extends Controller
             $auth = $this->get('security.authentication_utils');
 
             $user = new User();
+            $anonMail = new MailAnon();
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
 
             $form2 = $this->createForm(ForgottedPasswordType::class);
             $form2->handleRequest($request);
+
+            $form3 = $this->createForm(AnonContactType::class, $anonMail);
+            $form3->handleRequest($request);
 
             $sendMail = 0;
             $options = 0;
@@ -161,11 +167,23 @@ class DefaultController extends Controller
                 }
             }
 
+            if($form3->isSubmitted() && $form3->isValid()){
+                $anonMail->setIP($this->get('request_stack')->getCurrentRequest()->getClientIp());
+                $anonMail->setDate(new \DateTime("now"));
+
+                $sendMail = 5;
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($anonMail);
+                $em->flush();
+            }
+
             return $this->render('default/index.html.twig', [
                 'last_username' => $auth->getLastUsername(),
                 'error' => $auth->getLastAuthenticationError(),
                 'form' => $form->createView(),
                 'formForgottedPassword' => $form2->createView(),
+                'contactForm' => $form3->createView(),
                 'sendMail' => $sendMail,
                 'option' => $options
             ]);

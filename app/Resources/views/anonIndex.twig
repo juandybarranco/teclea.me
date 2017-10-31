@@ -133,30 +133,32 @@
             <!-- Contact -->
             <article id="contact" class="text-center">
                 <h2 class="major center">Contacto</h2>
-                <p>¿Tienes algún problema? Háznoslo saber.</p>
-                <form method="post" action="#">
+                <p>¿Tienes algún problema? ¿Alguna duda? Ponte en contacto con nosotros.</p>
+                {% if sendMail == 5 %}
+                    <div class="alert alert-success" role="alert">Mensaje enviado correctamente. En breve nos pondremos en contacto contigo.</div>
+                {% endif %}
+                {{ form_start(contactForm) }}
                     <div class="field half first">
                         <label for="name">Nombre: </label>
-                        <input type="text" name="name" id="name" />
+                        {{ form_widget(contactForm.name) }}
                     </div>
                     <div class="field half">
                         <label for="email">Correo Electrónico: </label>
-                        <input type="text" name="email" id="email" />
+                        {{ form_widget(contactForm.email) }}
                     </div>
                     <div class="field">
                         <label for="message">Mensaje: </label>
-                        <textarea name="message" id="message" rows="4"></textarea>
+                        {{ form_widget(contactForm.message) }}
                     </div>
                     <ul class="actions">
-                        <li><input type="submit" value="Enviar Mensaje" class="special" /></li>
-                        <li><input type="reset" value="Reiniciar" /></li>
+                        <li>{{ form_widget(contactForm.Enviar) }}</li>
+                        <li>{{ form_widget(contactForm.Reiniciar) }}</li>
                     </ul>
-                </form>
+                {{ form_end(contactForm) }}
                 <ul class="icons">
-                    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+                    <li><a href="https://twitter.com/pDevNetwork" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.facebook.com/pDevNetwork/" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/p-Dev-Network/teclea.me" class="icon fa-github"><span class="label">GitHub</span></a></li>
                 </ul>
             </article>
 
