@@ -159,6 +159,15 @@
         }
     });
 
+    $("#help-tabs").tabs({
+        active: 0
+    });
+
+    $(".tab").click(function(){
+        $(".activeTab").removeClass("activeTab");
+        $(this).addClass("activeTab");
+    });
+
 	skel.breakpoints({
 		wide: '(min-width: 961px) and (max-width: 1880px)',
 		normal: '(min-width: 961px) and (max-width: 1620px)',

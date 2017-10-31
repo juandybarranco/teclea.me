@@ -351,4 +351,16 @@ class DefaultController extends Controller
             'joined' => $joined
         ]);
     }
+
+    /**
+     * @Route("/help", name="help")
+     */
+    public function helpAction()
+    {
+        $user = $this->getUser();
+
+        return $this->render('default/help.html.twig', [
+            'user' => $user
+        ]);
+    }
 }

@@ -1,0 +1,56 @@
+{% extends 'userBase.html.twig' %}
+
+{% block title %}Página de Ayuda{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <span class="fa fa-info-circle fa-2x"></span>
+        <h2>Ayuda</h2>
+        <h1>Aquí encontrarás información, preguntas frecuentes y muchos datos más acerca de TecleaME. Si tienes cualquier duda, no dudes en ponerte en contacto con nosotros.</h1>
+
+        <div class="col-md-6 m-auto">
+            <hr/>
+        </div>
+
+        <div id="help-tabs">
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <div class="col-md-12">
+                        <ul id="tabs" class="nav nav-tabs cWhite" role="tablist">
+                            <li role="presentation">
+                                <a class="btn btn-default text-center cWhite activeTab tab" href="#faq"><span class="fa fa-question-circle"></span> FAQ</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="btn btn-default text-center cWhite tab" href="#general-info"><span class="fa fa-info-circle"></span> Información General</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="btn btn-default text-center cWhite tab" href="#develop"><span class="fa fa-code"></span> Desarrollo</a>
+                            </li>
+                            <li role="presentation">
+                                <a class="btn btn-default text-center cWhite tab" href="#contact"><span class="fa fa-envelope"></span> Contacto</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div id="faq">
+                        FAQ
+                    </div>
+
+                    <div id="general-info">
+                        Información General
+                    </div>
+
+                    <div id="develop">
+                        Desarrollo
+                    </div>
+
+                    <div id="contact">
+                        Contacto
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
