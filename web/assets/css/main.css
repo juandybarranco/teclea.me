@@ -2958,6 +2958,10 @@ li.dropdown ul li a span:before{
     padding-right: 25px;
 }
 
+.font-weight-800{
+    font-weight: 800;
+}
+
 @media screen and (max-width: 1320px){
     #buttonSearch{
         margin-top: -2px;
