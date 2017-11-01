@@ -242,7 +242,7 @@ class DefaultController extends Controller
 
                 $message = \Swift_Message::newInstance(null)
                     ->setSubject('Nueva contraseña')
-                    ->setFrom('tecleadotme@gmail.com')
+                    ->setFrom('admin@teclea.me')
                     ->setTo($user->getEmail())
                     ->setBody(
                         $this->renderView(

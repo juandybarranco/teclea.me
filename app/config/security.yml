@@ -33,6 +33,7 @@ security:
             logout:
                 path: logout
                 target: /
+
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -43,7 +44,7 @@ security:
 
     access_control:
         - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/new, roles: ROLE_USER }
+        - { path: ^/new$, roles: ROLE_USER }
         - { path: ^/community/, roles: ROLE_USER }
         - { path: ^/private/, roles: ROLE_USER }
         - { path: ^/notifications/, roles: ROLE_USER }
@@ -51,3 +52,4 @@ security:
         - { path: ^/searchCommunity, roles: ROLE_USER }
         - { path: ^/user/, roles: ROLE_USER }
         - { path: ^/help, roles: ROLE_USER }
+        - { path: ^/newPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
