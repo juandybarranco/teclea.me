@@ -149,7 +149,7 @@ class DefaultController extends Controller
 
                     $message = \Swift_Message::newInstance(null)
                         ->setSubject('Reestablece tu contraseña')
-                        ->setFrom('tecleadotme@gmail.com')
+                        ->setFrom('admin@teclea.me')
                         ->setTo($email)
                         ->setBody(
                             $this->renderView(
