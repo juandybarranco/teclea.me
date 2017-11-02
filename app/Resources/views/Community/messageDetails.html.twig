@@ -144,7 +144,7 @@
         {% elseif access == 'active' %}
             {% if status == 'userRelationNotFound' or status == 'notAccepted' %}
                 <div class="alert alert-danger" role="alert">No tienes permisos para ver este mensaje.</div>
-            {% elseif status == 'full' %}
+            {% elseif status == 'full' or status == 'protectedAllow' %}
                 <div class="card messages">
                     <div class="card-header bg-dark cWhite">
                         <div class="col-md-12 dflexblock">
