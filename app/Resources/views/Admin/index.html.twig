@@ -58,7 +58,7 @@
                                 {% set replyMessages = 0 %}
 
                                 {% for m in messages %}
-                                    {% if m.isActive and m.isDeleted == false %}
+                                    {% if m.isActive and m.isDeleted == false and m.isReply == false %}
                                         {% set activeMessages = activeMessages + 1 %}
                                     {% elseif m.isDeleted %}
                                         {% set deletedMessages = deletedMessages + 1 %}
