@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="col-md-10 message dflexblock">
-                            {{ message.message | striptags('<b>') | raw }}
+                            <p>{{ message.message | striptags('<b>') | raw }}</p>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-11 message dflexblock">
-                                            {{ reply.message | striptags('<b>') | raw }}
+                                            <p>{{ reply.message | striptags('<b>') | raw }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                             </div>
 
                             <div class="col-md-10 message dflexblock">
-                                {{ message.message | striptags('<b>') | raw }}
+                                <p>{{ message.message | striptags('<b>') | raw }}</p>
                             </div>
                         </div>
                     </div>
@@ -257,7 +257,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-11 message dflexblock">
-                                                {{ reply.message | striptags('<b>') | raw }}
+                                                <p>{{ reply.message | striptags('<b>') | raw }}</p>
                                             </div>
                                         </div>
                                     </div>
