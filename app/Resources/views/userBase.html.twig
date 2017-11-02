@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/sweetalert.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery-eu-cookie-law-popup.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
 
@@ -27,7 +28,7 @@
 
     </head>
 
-    <body>
+    <body class="eupopup eupopup-fixedtop eupopup-style-compact">
 
     <!-- Header -->
     <div id="header">
@@ -145,8 +146,20 @@
     <script src="{{ asset('assets/js/util.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-eu-cookie-law-popup.js') }}"></script>
     {% block javascripts %}{% endblock %}
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109137082-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109137082-1');
+    </script>
+
 
     </body>
 </html>
