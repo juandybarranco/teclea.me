@@ -5,14 +5,16 @@
     <title>{% block title %}tecleaME{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery-eu-cookie-law-popup.css') }}" />
 
     <meta name="description" content="Simple, segura y robusta red social basada en Microblogging. Crea tu comunidad, únete a distintas comunidades y comunícate con los distintos usuarios." />
     <meta name="keywords" content="TecleaME, Red Social, p-Dev, Microblogging, pedrojanula, Comunidad" />
     <meta name="author" content="Pedro José Anula">
     <meta name="revisit-after" content="7 days">
 </head>
-<body>
+<body class="eupopup eupopup-fixedtop eupopup-style-compact">
 {% block body %}{% endblock %}
+<script src="{{ asset('assets/js/jquery-eu-cookie-law-popup.js') }}"></script>
 {% block javascripts %}{% endblock %}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
