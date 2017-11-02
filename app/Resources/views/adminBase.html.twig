@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Administrador - TecleaME</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap-responsive.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/fullcalendar.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/matrix-style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/matrix-media.css') }}" />
+        <link href="{{ asset('assets/admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('assets/admin/css/jquery.gritter.css') }}" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+
+        <!--Header-part-->
+        <div id="header">
+
+        </div>
+        <!--close-Header-part-->
+
+
+        <!--top-Header-menu-->
+        <div id="user-nav" class="navbar navbar-inverse">
+            <ul class="nav">
+                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">{{ user.username }}</span><b class="caret"></b></a></li>
+                <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Configuración</span></a></li>
+                <li class=""><a title="" href="{{ path('index') }}"><i class="icon icon-share-alt"></i> <span class="text">Salir</span></a></li>
+            </ul>
+        </div>
+        <!--close-top-Header-menu-->
+        <!--sidebar-menu-->
+        <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+            <ul>
+                <li class="active"><a href="{{ path('adminPanelIndex') }}"><i class="icon icon-home"></i> <span>Inicio</span></a> </li>
+                <li> <a href="#"><i class="icon icon-signal"></i> <span>Gráficos</span></a> </li>
+                <li> <a href="#"><i class="icon icon-user"></i> <span>Usuarios</span></a> </li>
+                <li><a href="#"><i class="icon icon-envelope-alt"></i> <span>Mensajes</span></a></li>
+                <li><a href="#"><i class="icon icon-warning-sign"></i> <span>Reportes</span></a></li>
+            </ul>
+        </div>
+        <!--sidebar-menu-->
+
+        <!--main-container-part-->
+        <div id="content">
+            {% block adminBody %}{% endblock %}
+        </div>
+
+        <!--end-main-container-part-->
+
+        <!--Footer-part-->
+
+        <div class="row-fluid">
+            <div id="footer" class="span12"> 2017 &copy; <a href="https://www.teclea.me">TecleaME</a>.</div>
+        </div>
+
+        <!--end-Footer-part-->
+
+        <script src="{{ asset('assets/admin/js/excanvas.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.ui.custom.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.flot.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.flot.resize.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.peity.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/fullcalendar.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.dashboard.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.gritter.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.interface.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.chat.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.validate.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.form_validation.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.wizard.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.uniform.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.popover.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/js/matrix.tables.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block adminBody %}
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb"> <a href="{{ path('adminPanelIndex') }}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Panel de Administración</a></div>
+    </div>
+    <!--End-breadcrumbs-->
+
+    <!--Action boxes-->
+    <div class="container-fluid">
+        <div class="quick-actions_homepage">
+            <ul class="quick-actions">
+                <li class="bg_lg span3"> <a href="#"> <i class="icon-signal"></i> Gráficos</a> </li>
+                <li class="bg_lb"> <a href="#"> <i class="icon-user"></i> Usuarios </a> </li>
+                <li class="bg_ly"> <a href="#"> <i class="icon-envelope-alt"></i> Mensajes </a> </li>
+                <li class="bg_lo"> <a href="#"> <i class="icon-warning-sign"></i> Reportes</a> </li>
+            </ul>
+        </div>
+        <!--End-Action boxes-->
+
+        <!--Chart-box-->
+        <div class="row-fluid">
+            <div class="widget-box">
+                <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
+                    <h5>Estadísticas</h5>
+                </div>
+                <div class="widget-content" >
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <ul class="site-stats">
+                                {% set activeUsers = 0 %}
+                                {% set suspendedUsers = 0 %}
+                                {% set blockedUsers = 0 %}
+
+                                {% for u in users %}
+                                    {% if u.isSuspended == false and u.isBlock == false %}
+                                        {% set activeUsers = activeUsers + 1 %}
+
+                                    {% elseif u.isSuspended %}
+                                        {% set suspendedUsers = suspendedUsers + 1 %}
+
+                                    {% elseif u.isBlock %}
+                                        {% set blockedUsers = blockedUsers + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="bg_lh"><i class="icon-user"></i> <strong>{{ users | length }}</strong> <small>Total Users</small></li>
+                                <li class="bg_lh"><i class="icon-plus-sign"></i> <strong>{{ activeUsers }}</strong> <small>Usuarios Activos </small></li>
+                                <li class="bg_lh"><i class="icon-ban-circle"></i> <strong>{{ suspendedUsers }}</strong> <small>Usuarios Suspendidos</small></li>
+                                <li class="bg_lh"><i class="icon-lock"></i> <strong>{{ blockedUsers }}</strong> <small>Usuarios Bloqueados</small></li>
+                            </ul>
+                        </div>
+                        <div class="span6">
+                            <ul class="site-stats">
+                                {% set activeMessages = 0 %}
+                                {% set deletedMessages = 0 %}
+                                {% set blockedMessages = 0 %}
+                                {% set replyMessages = 0 %}
+
+                                {% for m in messages %}
+                                    {% if m.isActive and m.isDeleted == false %}
+                                        {% set activeMessages = activeMessages + 1 %}
+                                    {% elseif m.isDeleted %}
+                                        {% set deletedMessages = deletedMessages + 1 %}
+                                    {% elseif m.isBlock %}
+                                        {% set blockedMessages = blockedMessages + 1 %}
+                                    {% elseif m.isReply %}
+                                        {% set replyMessages = replyMessages + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="bg_lh"><i class="icon-envelope-alt"></i> <strong>{{ activeMessages }}</strong> <small>Mensajes Activos</small></li>
+                                <li class="bg_lh"><i class="icon-trash"></i> <strong>{{ deletedMessages }}</strong> <small>Mensajes Borrados </small></li>
+                                <li class="bg_lh"><i class="icon-ban-circle"></i> <strong>{{ blockedMessages }}</strong> <small>Mensajes Bloqueados</small></li>
+                                <li class="bg_lh"><i class="icon-reply"></i> <strong>{{ replyMessages }}</strong> <small>Respuestas</small></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End-Chart-box-->
+        <hr/>
+
+    </div>
+{% endblock %}
