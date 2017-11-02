@@ -18,8 +18,18 @@ class AdminController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->getIsAdmin()){
+            $messages = $this->getDoctrine()->getRepository('AppBundle:Message')->findAll();
+
+            $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        }else{
+            return $this->redirectToRoute('index');
+        }
+
         return $this->render('Admin/index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'messages' => $messages,
+            'users' => $users
         ]);
     }
 }

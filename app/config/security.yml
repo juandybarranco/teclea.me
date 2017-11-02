@@ -53,3 +53,4 @@ security:
         - { path: ^/user/, roles: ROLE_USER }
         - { path: ^/help, roles: ROLE_USER }
         - { path: ^/newPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
