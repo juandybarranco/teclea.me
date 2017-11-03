@@ -23,6 +23,10 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(
                 'recipient' => $user,
@@ -56,6 +60,10 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
         if($PM){
@@ -88,6 +96,10 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
         if($PM){
@@ -119,6 +131,10 @@ class PMController extends Controller
     public function deletePMAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->find($id);
 
@@ -157,6 +173,11 @@ class PMController extends Controller
     public function newPMAction(Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         $PM = new PM();
@@ -218,6 +239,11 @@ class PMController extends Controller
     public function newPMToUserAction(Request $request, $id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         $PM = new PM();
@@ -274,6 +300,10 @@ class PMController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(
                 'sender' => $user,
@@ -315,6 +345,11 @@ class PMController extends Controller
     public function replyPMAction(Request $request, $id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         $reply = new PM();
@@ -374,6 +409,10 @@ class PMController extends Controller
     public function readPrivateAction($id, Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $PM = $this->getDoctrine()->getRepository('AppBundle:PM')->findBy(
             array(

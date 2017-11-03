@@ -23,6 +23,11 @@ class CommunityController extends Controller
     public function communityListAction()
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $signup = [];
 
         $joined = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->findBy(
@@ -93,6 +98,11 @@ class CommunityController extends Controller
     public function generalCommunityAction(Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $nMSG = 0;
 
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->findOneBy([
@@ -245,6 +255,11 @@ class CommunityController extends Controller
     public function messageDetailsGeneralAction($id, Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $form = null;
 
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
@@ -365,6 +380,10 @@ class CommunityController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
 
         if(!$message){
@@ -411,6 +430,11 @@ class CommunityController extends Controller
     public function viewCommunityAction($id, Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $userAccess = false;
         $status = '';
         $messages = '';
@@ -664,6 +688,11 @@ class CommunityController extends Controller
     public function messageDetailsAction($id, Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $userAccess = false;
         $status = "";
         $form = null;
@@ -858,6 +887,10 @@ class CommunityController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
@@ -927,6 +960,10 @@ class CommunityController extends Controller
     public function joinCommunityAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
@@ -1021,6 +1058,10 @@ class CommunityController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
@@ -1060,6 +1101,11 @@ class CommunityController extends Controller
     public function adminCommunityAction(Request $request, $id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         if(isset($_POST['newUser'])){
@@ -1194,6 +1240,10 @@ class CommunityController extends Controller
     public function kickUserAction($id, $idUser){
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
 
         if($community){
@@ -1234,6 +1284,11 @@ class CommunityController extends Controller
     public function changeAdministratorAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         if(isset($_POST['username'])){
@@ -1314,6 +1369,11 @@ class CommunityController extends Controller
     public function acceptRequestAction($id, $idRequest)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
         $request = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->find($idRequest);
 
@@ -1352,6 +1412,11 @@ class CommunityController extends Controller
     public function rejectRequestAction($id, $idRequest)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = $this->getDoctrine()->getRepository('AppBundle:Community')->find($id);
         $request = $this->getDoctrine()->getRepository('AppBundle:UserCommunity')->find($idRequest);
 

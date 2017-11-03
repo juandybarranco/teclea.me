@@ -30,6 +30,11 @@ class UserController extends Controller
     public function followUserAction(Request $request, $id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
         if($otherUser){
@@ -100,6 +105,11 @@ class UserController extends Controller
     public function unfollowUserAction(Request $request, $id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
         if($otherUser){
@@ -158,6 +168,10 @@ class UserController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->find($id);
 
         if($follow){
@@ -182,6 +196,10 @@ class UserController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $follow = $this->getDoctrine()->getRepository('AppBundle:Follow')->find($id);
 
         if($follow){
@@ -204,6 +222,11 @@ class UserController extends Controller
      */
     public function viewUserProfileAction($id){
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $otherUser = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
         $follow = 0;
         $followers = null;

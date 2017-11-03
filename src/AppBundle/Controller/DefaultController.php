@@ -28,6 +28,11 @@ class DefaultController extends Controller
     {
         if($this->isGranted('ROLE_USER')){
             $user = $this->getUser();
+
+            if($user->isIsSuspended() || $user->isIsBlock()){
+                return $this->redirectToRoute('logout');
+            }
+
             $messages = [];
             $replies = [];
 
@@ -278,6 +283,10 @@ class DefaultController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $community = new Community();
         $form = $this->createForm(CommunityType::class, $community);
         $form->handleRequest($request);
@@ -365,6 +374,11 @@ class DefaultController extends Controller
     public function helpAction(Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $error = 0;
 
         $mail = new Mail();

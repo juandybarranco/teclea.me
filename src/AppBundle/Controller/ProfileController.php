@@ -21,6 +21,10 @@ class ProfileController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
             array(
                 'following' => $user,
@@ -60,6 +64,10 @@ class ProfileController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $followers = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
             array(
                 'following' => $user,
@@ -81,6 +89,10 @@ class ProfileController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $following = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
             array(
                 'follower' => $user,
@@ -101,6 +113,10 @@ class ProfileController extends Controller
     public function pendingAction()
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $pending = $this->getDoctrine()->getRepository('AppBundle:Follow')->findBy(
             array(
@@ -130,6 +146,10 @@ class ProfileController extends Controller
     public function deleteFollowerAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $follower = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
@@ -163,6 +183,11 @@ class ProfileController extends Controller
     public function editProfileAction(Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $check = 0;
 
         $form = $this->createForm(editUserType::class, $user);
@@ -251,6 +276,10 @@ class ProfileController extends Controller
     public function userChangePrivacy()
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         if($user->getIsPublic()){
             $user->setIsPublic(0);

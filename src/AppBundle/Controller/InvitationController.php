@@ -18,6 +18,10 @@ class InvitationController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $invitations = $this->getDoctrine()->getRepository('AppBundle:Invitation')->findBy(
             array(
                 'user' => $user,
@@ -47,6 +51,11 @@ class InvitationController extends Controller
     public function acceptInvitationAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $invitation = $this->getDoctrine()->getRepository('AppBundle:Invitation')->find($id);
 
         if($invitation) {
@@ -132,6 +141,11 @@ class InvitationController extends Controller
     public function declineInvitationAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $invitation = $this->getDoctrine()->getRepository('AppBundle:Invitation')->find($id);
 
         if($invitation) {
