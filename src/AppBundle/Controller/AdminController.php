@@ -99,9 +99,7 @@ class AdminController extends Controller
         } else {
             $userInfo = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
-            if (!$userInfo) {
-                return $this->redirectToRoute('usersList');
-            }else{
+            if ($userInfo) {
                 if(!$userInfo->isIsSuspended()){
                     $userInfo->setIsSuspended(1);
 
@@ -109,9 +107,9 @@ class AdminController extends Controller
                     $em->persist($userInfo);
                     $em->flush();
                 }
-
-                return $this->redirectToRoute('userDetailsAdmin', ['id' => $userInfo->getId()]);
             }
+
+            return $this->redirectToRoute('usersList');
         }
     }
 
@@ -129,23 +127,73 @@ class AdminController extends Controller
         } else {
             $userInfo = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
 
-            if (!$userInfo) {
-                return $this->redirectToRoute('usersList');
-            }else{
+            if ($userInfo) {
                 if($userInfo->isIsSuspended()){
                     $userInfo->setIsSuspended(0);
-                }
 
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($userInfo);
+                    $em->flush();
+                }
+            }
+
+            return $this->redirectToRoute('usersList');
+        }
+    }
+
+    /**
+     * @Route("/user/{id}/block", name="blockUser")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function blockUserAction($id)
+    {
+        $user = $this->getUser();
+
+        if (!$user->getIsAdmin()) {
+            return $this->redirectToRoute('index');
+        } else {
+            $userInfo = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+            if ($userInfo) {
+                if(!$userInfo->isIsBlock()){
+                    $userInfo->setIsBlock(1);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($userInfo);
+                    $em->flush();
+                }
+            }
+
+            return $this->redirectToRoute('usersList');
+        }
+    }
+
+    /**
+     * @Route("/user/{id}/unblock", name="unblockUser")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function unblockUserAction($id)
+    {
+        $user = $this->getUser();
+
+        if (!$user->getIsAdmin()) {
+            return $this->redirectToRoute('index');
+        } else {
+            $userInfo = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+            if ($userInfo) {
                 if($userInfo->isIsBlock()){
                     $userInfo->setIsBlock(0);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($userInfo);
+                    $em->flush();
                 }
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($userInfo);
-                $em->flush();
-
-                return $this->redirectToRoute('userDetailsAdmin', ['id' => $userInfo->getId()]);
             }
+
+            return $this->redirectToRoute('usersList');
         }
     }
 }

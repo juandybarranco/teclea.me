@@ -42,7 +42,12 @@
                                             {% else %}
                                                 <a href="{{ path('suspendUser', {'id': u.id }) }}" title="Suspender"><i class="icon-ban-circle"></i></a>
                                             {% endif %}
-                                            <a href="#" title="Bloquear"><i class="icon-lock"></i></a>
+
+                                            {% if u.isBlock %}
+                                                <a href="{{ path('unblockUser', {'id': u.id }) }}" title="Desbloquear"><i class="icon-unlock"></i></a>
+                                            {% else %}
+                                                <a href="{{ path('blockUser', {'id': u.id }) }}" title="Bloquear"><i class="icon-lock"></i></a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
