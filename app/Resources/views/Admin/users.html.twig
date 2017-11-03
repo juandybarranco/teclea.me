@@ -36,8 +36,12 @@
                                         <td>{{ u.email }}</td>
                                         <td>{{ u.signUpDate | date('d-m-Y H:i') }}</td>
                                         <td>
-                                            <a href="#" title="Ver Perfil"><i class="icon-eye-open"></i></a>
-                                            <a href="#" title="Suspender"><i class="icon-ban-circle"></i></a>
+                                            <a href="{{ path('userDetailsAdmin', {'id': u.id }) }}" title="Ver Perfil"><i class="icon-eye-open"></i></a>
+                                            {% if u.isSuspended %}
+                                                <a href="{{ path('activateUser', {'id': u.id }) }}" title="Activar"><i class="icon-check"></i></a>
+                                            {% else %}
+                                                <a href="{{ path('suspendUser', {'id': u.id }) }}" title="Suspender"><i class="icon-ban-circle"></i></a>
+                                            {% endif %}
                                             <a href="#" title="Bloquear"><i class="icon-lock"></i></a>
                                         </td>
                                     </tr>
