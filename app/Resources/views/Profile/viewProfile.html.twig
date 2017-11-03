@@ -134,5 +134,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="card mt-5">
+            <div class="card-header bg-dark">
+                <b class="cWhite"><span class="fa fa-user-plus"></span> Invita a un amigo</b>
+            </div>
+
+            <div class="card-body">
+                <p class="small">Envía este enlace a cualquier amigo y se registrará utilizando directamente tu usuario como referido: </p>
+
+                <label><span class="font-weight-800">Enlace</span>: <a href="{{ path('index') }}?r={{ user.username }}" target="_blank">https://www.teclea.me/?r={{ user.username }}</a></label>
+            </div>
+        </div>
     </div>
 {% endblock %}
