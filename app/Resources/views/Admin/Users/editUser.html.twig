@@ -1,0 +1,21 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block adminBody %}
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href="{{ path('index') }}" title="Inicio" class="tip-bottom"><i class="icon-home"></i> Panel de Administración</a>
+            /
+            <a href="{{ path('adminPanelIndex') }}" title="Lista de Usuarios" class="tip-bottom"><i class="icon-user"></i> Lista de Usuarios</a></div>
+    </div>
+    <!--End-breadcrumbs-->
+    <div class="container-fluid">
+        <hr>
+        <div class="row-fluid">
+            <div class="span12">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block adminBody %}
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href="{{ path('index') }}" title="Inicio" class="tip-bottom"><i class="icon-home"></i> Panel de Administración</a>
+            /
+            <a href="{{ path('adminPanelIndex') }}" title="Lista de Usuarios" class="tip-bottom"><i class="icon-user"></i> Lista de Usuarios</a>
+            /
+            <a href="{{ path('userDetailsAdmin', {'id': userInfo.id }) }}" title="Perfil de {{ userInfo.username }}" class="tip-bottom"><i class="icon-ok"></i> {{ userInfo.username }}</a></div>
+    </div>
+    <!--End-breadcrumbs-->
+    <div class="container-fluid">
+        <hr>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab1"><i class="icon-info-sign"></i> Información</a></li>
+                            <li><a data-toggle="tab" href="#tab2"><i class="icon-envelope"></i> Mensajes</a></li>
+                            <li><a data-toggle="tab" href="#tab3"><i class="icon-warning-sign"></i> Reportes</a></li>
+                            <li><a data-toggle="tab" href="#tab4"><i class="icon-cog"></i> Acciones</a></li>
+                        </ul>
+                    </div>
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <div class="alert alert-info alert-block"> <a class="close" data-dismiss="alert" href="#">×</a>
+                                <h4 class="alert-heading"><i class="icon-info-sign"></i> Información de {{ userInfo.username }}</h4>
+                            </div>
+                            <div>
+                                <div class="span12">
+                                    <div class="widget-box">
+                                        <div class="widget-content nopadding">
+                                            <div class="form-horizontal">
+                                                <div class="control-group">
+                                                    <label class="control-label">Nombre de Usuario:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.username }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Correo Electrónico:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.email }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Fecha de Registro:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.signUpDate | date('d-m-Y H:i') }}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">País:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.country }}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Localización:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.location }}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Referido:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{{ userInfo.referred }}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Privacidad:</label>
+                                                    <div class="controls">
+                                                        <input disabled type="text" class="span11" placeholder="" value="{% if userInfo.isPublic %}Público{% else %}Privado{% endif %}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Estado:</label>
+                                                    <div class="controls">
+                                                        <div class="span11">
+                                                            {% if userInfo.isSuspended %}
+                                                                <div class="label label-important">
+                                                                    <i class="icon-ban-circle"> Suspendido</i>
+                                                                </div>
+                                                            {% elseif userInfo.isBlock %}
+                                                                <div class="label label-warning">
+                                                                    <i class="icon-lock"> Bloqueado</i>
+                                                                </div>
+                                                            {% else %}
+                                                                <div class="label label-success">
+                                                                    <i class="icon-check"> Activo</i>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="tab2" class="tab-pane">
+
+                        </div>
+                        <div id="tab3" class="tab-pane">
+
+                        </div>
+
+                        <div id="tab4" class="tab-pane">
+                            <div class="alert alert-info alert-block"> <a class="close" data-dismiss="alert" href="#">×</a>
+                                <h4 class="alert-heading"><i class="icon-cog"></i> Acciones para {{ userInfo.username }}</h4>
+                            </div>
+                            <div>
+                                <div class="span12">
+                                    <div class="widget-box">
+                                        <div class="widget-content">
+                                            <a href="#" class="btn btn-info btn-large"><i class="icon-pencil"></i> Editar</a>
+
+                                            {% if userInfo.isSuspended %}
+                                                <a href="{{ path('activateUser', {'id': userInfo.id }) }}" class="btn btn-success btn-large"><i class="icon-check"></i> Reactivar</a>
+                                            {% else %}
+                                                <a href="{{ path('suspendUser', {'id': userInfo.id }) }}" class="btn btn-danger btn-large"><i class="icon-ban-circle"></i> Suspender</a>
+                                            {% endif %}
+
+                                            {% if userInfo.isBlock %}
+                                                <a href="{{ path('unblockUser', {'id': userInfo.id }) }}" class="btn btn-success btn-large"><i class="icon-unlock"></i> Desbloquear</a>
+                                            {% else %}
+                                                <a href="{{ path('blockUser', {'id': userInfo.id }) }}" class="btn btn-warning btn-large"><i class="icon-ban-circle"></i> Bloquear</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
