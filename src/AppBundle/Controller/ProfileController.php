@@ -234,7 +234,7 @@ class ProfileController extends Controller
             $file = $img->get('image')->getData();
 
             if($file != null){
-                if(($file->guessExtension() == 'jpg') || ($file->guessExtension() == 'jpeg') || ($file->guessExtension() == 'png')){
+                if(($file->guessExtension() == 'jpg') || ($file->guessExtension() == 'jpeg') || ($file->guessExtension() == 'png') || ($file->guessExtension() == 'gif')){
                     if($file->getClientSize() < 1048576){
                         $fileName = 'img'.md5(uniqid()).'.'.$file->guessExtension();
 
