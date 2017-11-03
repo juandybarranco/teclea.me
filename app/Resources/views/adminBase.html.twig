@@ -37,7 +37,7 @@
             <ul>
                 <li class="active"><a href="{{ path('adminPanelIndex') }}"><i class="icon icon-home"></i> <span>Inicio</span></a> </li>
                 <li> <a href="#"><i class="icon icon-signal"></i> <span>Gráficos</span></a> </li>
-                <li> <a href="#"><i class="icon icon-user"></i> <span>Usuarios</span></a> </li>
+                <li> <a href="{{ path('usersList') }}"><i class="icon icon-user"></i> <span>Usuarios</span></a> </li>
                 <li><a href="#"><i class="icon icon-envelope-alt"></i> <span>Mensajes</span></a></li>
                 <li><a href="#"><i class="icon icon-warning-sign"></i> <span>Reportes</span></a></li>
             </ul>
@@ -80,5 +80,7 @@
         <script src="{{ asset('assets/admin/js/matrix.popover.js') }}"></script>
         <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/admin/js/matrix.tables.js') }}"></script>
+
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

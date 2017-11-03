@@ -32,4 +32,23 @@ class AdminController extends Controller
             'users' => $users
         ]);
     }
+
+    /**
+     * @Route("/users", name="usersList")
+     */
+    public function  usersListAction()
+    {
+        $user = $this->getUser();
+
+        if(!$user->getIsAdmin()){
+            return $this->redirectToRoute('index');
+        }else{
+            $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        }
+
+        return $this->render('Admin/users.html.twig', [
+            'user' => $user,
+            'users' => $users
+        ]);
+    }
 }
