@@ -79,9 +79,25 @@ class AdminController extends Controller
             }
         }
 
-        return $this->render('Admin/user.html.twig', [
+        return $this->render('Admin/Users/user.html.twig', [
             'user' => $user,
             'userInfo' => $userInfo
+        ]);
+    }
+
+    /**
+     * @Route("/user/{id}/edit", name="editUserAdmin")
+     */
+    public function editUserAdmin(Request $request, $id)
+    {
+        $user = $this->getUser();
+
+        if (!$user->getIsAdmin()) {
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('Admin/Users/editUser.html.twig', [
+            'user' => $user
         ]);
     }
 
