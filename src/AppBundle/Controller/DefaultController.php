@@ -81,9 +81,14 @@ class DefaultController extends Controller
             ]);
         }else{
             $auth = $this->get('security.authentication_utils');
+            $referer = '';
 
             $user = new User();
             $anonMail = new MailAnon();
+
+            if(isset($_GET['r'])){
+                $user->setReferred($_GET['r']);
+            }
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
