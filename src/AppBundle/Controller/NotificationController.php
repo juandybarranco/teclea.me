@@ -17,6 +17,10 @@ class NotificationController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $notifications = $this->getDoctrine()->getRepository('AppBundle:Notification')->findBy(
             array(
                 'user' => $user
@@ -35,6 +39,10 @@ class NotificationController extends Controller
     public function deleteAllAction()
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $notifications = $this->getDoctrine()->getRepository('AppBundle:Notification')->findBy(
             array(
@@ -62,6 +70,10 @@ class NotificationController extends Controller
     public function deleteNotificationAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $notification = $this->getDoctrine()->getRepository('AppBundle:Notification')->findBy(
             array(

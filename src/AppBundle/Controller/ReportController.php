@@ -21,6 +21,10 @@ class ReportController extends Controller
     {
         $user = $this->getUser();
 
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $reports = $this->getDoctrine()->getRepository('AppBundle:ReportCommunity')->findBy(
             array(
                 'admin' => $user,
@@ -54,6 +58,11 @@ class ReportController extends Controller
     public function viewReportAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $report = $this->getDoctrine()->getRepository('AppBundle:ReportCommunity')->find($id);
 
         if($report){
@@ -77,6 +86,10 @@ class ReportController extends Controller
     public function closeReportAction($id)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
 
         $report = $this->getDoctrine()->getRepository('AppBundle:ReportCommunity')->find($id);
 
@@ -104,6 +117,11 @@ class ReportController extends Controller
     public function newReportAction($id, Request $request)
     {
         $user = $this->getUser();
+
+        if($user->isIsSuspended() || $user->isIsBlock()){
+            return $this->redirectToRoute('logout');
+        }
+
         $message = $this->getDoctrine()->getRepository('AppBundle:Message')->find($id);
         $error = 0;
 
