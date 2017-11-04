@@ -217,6 +217,8 @@ class PMController extends Controller
                     $em->flush();
 
                     $error = 100;
+
+                    $form = $this->createForm(newPMType::class);
                 }
             }else{
                 $error = 1;
@@ -279,6 +281,8 @@ class PMController extends Controller
                     $em->flush();
 
                     $error = 100;
+
+                    $form = $this->createForm(newPMToUserType::class);
                 }
             }
         }else{
