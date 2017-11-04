@@ -86,7 +86,6 @@ class DefaultController extends Controller
             ]);
         }else{
             $auth = $this->get('security.authentication_utils');
-            $referer = '';
 
             $user = new User();
             $anonMail = new MailAnon();
@@ -106,19 +105,34 @@ class DefaultController extends Controller
 
             $sendMail = 0;
             $options = 0;
+            $status = 0;
 
             if (isset($_GET['o'])) {
                 $options = $_GET['o'];
             }
 
             if ($form->isSubmitted() && $form->isValid()) {
-                if($form->get('referred')->getData()){
+                if(isset($_GET['r'])){
                     $userReferred = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy([
-                        'username' => $form->get('referred')->getData()
+                        'username' => $_GET['r']
                     ]);
 
                     if($userReferred){
                         $user->setReferred($userReferred);
+                    }else{
+                        $user->setReferred(null);
+                    }
+                }else{
+                    if($form->get('referred')->getData()){
+                        $userReferred = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy([
+                            'username' => $form->get('referred')->getData()
+                        ]);
+
+                        if($userReferred){
+                            $user->setReferred($userReferred);
+                        }else{
+                            $status = 404;
+                        }
                     }
                 }
 
@@ -197,7 +211,8 @@ class DefaultController extends Controller
                 'formForgottedPassword' => $form2->createView(),
                 'contactForm' => $form3->createView(),
                 'sendMail' => $sendMail,
-                'option' => $options
+                'option' => $options,
+                'status' => $status
             ]);
         }
     }

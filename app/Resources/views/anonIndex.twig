@@ -92,6 +92,12 @@
                         </div>
                     {% endif %}
 
+                    {% if status == 404 %}
+                        <div class="alert alert-danger text-left">
+                            El usuario de referido no existe.
+                        </div>
+                    {% endif %}
+
                     {{ form_widget(form.username) }}
                     {{ form_widget(form.password.first) }}
                     {{ form_widget(form.password.second) }}
