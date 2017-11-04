@@ -31,11 +31,9 @@ class newPMToUserType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => false,
                 'required' => true,
-                'post_max_size_message' => 1024,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Escribe un nuevo mensaje: ',
-                    'maxlength' => 1024
+                    'placeholder' => 'Escribe un nuevo mensaje: '
                 ]
             ])
             ->add('Enviar', SubmitType::class, [
