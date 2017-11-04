@@ -43,16 +43,17 @@
                                         {% set x = 0 %}
 
                                         {% for j in joined %}
-                                            {% if j.id == c.id %}
+                                            {% if j.community.id == c.id %}
                                                 {% set x = 1 %}
                                             {% endif %}
                                         {% endfor %}
 
+
                                         <span><a href="{{ path('viewCommunity', { 'id': c.id }) }}" class="btn btn-dark"><span class="fa fa-arrow-right"> Visitar</span></a></span>
                                         {% if x == 0 %}
-                                            <span><a href="#" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
+                                            <span><a href="{{ path('joinCommunity', {'id': c.id }) }}" class="btn btn-success"><span class="fa fa-plus"> Unirse</span></a></span>
                                         {% else %}
-                                            <span><a href="#" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
+                                            <span><a href="{{ path('leaveCommunity', {'id': c.id }) }}" class="btn btn-danger"><span class="fa fa-times"> Abandonar</span></a></span>
                                         {% endif %}
                                     </div>
                                 </div>
