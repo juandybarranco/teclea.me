@@ -47,7 +47,7 @@ class PM
     protected $subject;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      *
      * @var string
      */

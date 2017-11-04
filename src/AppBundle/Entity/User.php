@@ -109,14 +109,14 @@ class User implements UserInterface
     protected $isAdmin = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="referred")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="referred")
      *
      * @var User
      */
     protected $userRef;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="userRef")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userRef")
      *
      * @var User
      */

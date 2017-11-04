@@ -56,7 +56,7 @@
                                     <div class="msgButtons text-right fwa">
                                         <a href="{{ path('messageDetails', {'id': message.id } ) }}" class="btn btn-sm btn-default"><span class="fa fa-eye"></span> Detalles</a>
                                         {% if message.user.id == user.id %}
-                                            <a class="btn btn-sm btn-default btn-delete" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
+                                            <a class="btn btn-sm btn-default btn-delete btn-delete-feed" name="{{ message.id }}"><span class="fa fa-trash"></span> Borrar</a>
                                         {% endif %}
                                         <a class="btn btn-sm btn-default btn-report" href="{{ path('newMessageReport', {'id': message.id }) }}"><span class="fa fa-exclamation-triangle"></span> Reportar</a>
                                         <a class="btn btn-sm btn-default btn-options">Opciones <span class="caret"></span></a>
