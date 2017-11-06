@@ -16,6 +16,7 @@ use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -55,7 +56,7 @@ class DefaultController extends Controller
                     ),
                     array(
                         'date' => 'DESC'
-                    ), 30
+                    ), 15
                 );
 
                 $r = $this->getDoctrine()->getRepository('AppBundle:Message')->findBy(
@@ -68,7 +69,7 @@ class DefaultController extends Controller
                     ),
                     array(
                         'date' => 'DESC'
-                    ), 30
+                    ), 15
                 );
 
                 foreach($msgs as $msg){
@@ -79,10 +80,67 @@ class DefaultController extends Controller
                     array_push($replies, $reply);
                 }
             }
+
+            // Order Messages
+            $dates = [];
+            $messages_ordered = [];
+
+            for($i=0; $i<count($messages); $i++){
+                array_push($dates, $messages[$i]->getDate());
+            }
+
+            $x = 0;
+            $count = count($messages);
+
+            while($x != $count){
+                $max = max($dates);
+
+                for($i=0; $i<count($messages); $i++){
+                    if(strtotime(date_format($messages[$i]->getDate(), 'd-m-Y H:i:s')) == strtotime(date_format($max, 'd-m-Y H:i:s'))){
+                        array_push($messages_ordered, $messages[$i]);
+                        unset($messages[$i]);
+                        unset($dates[$i]);
+
+                        $messages = array_values($messages);
+                        $dates = array_values($dates);
+                    }
+                }
+
+                $x++;
+            }
+
+            // Order Replies
+            $dates = [];
+            $replies_ordered = [];
+
+            for($i=0; $i<count($replies); $i++){
+                array_push($dates, $replies[$i]->getDate());
+            }
+
+            $x = 0;
+            $count = count($replies);
+
+            while($x != $count){
+                $max = max($dates);
+
+                for($i=0; $i<count($replies); $i++){
+                    if(strtotime(date_format($replies[$i]->getDate(), 'd-m-Y H:i:s')) == strtotime(date_format($max, 'd-m-Y H:i:s'))){
+                        array_push($replies_ordered, $replies[$i]);
+                        unset($replies[$i]);
+                        unset($dates[$i]);
+
+                        $replies = array_values($replies);
+                        $dates = array_values($dates);
+                    }
+                }
+
+                $x++;
+            }
+
             return $this->render('default/index.html.twig', [
                 'user' => $user,
-                'messages' => $messages,
-                'replies' => $replies
+                'messages' => $messages_ordered,
+                'replies' => $replies_ordered
             ]);
         }else{
             $auth = $this->get('security.authentication_utils');
