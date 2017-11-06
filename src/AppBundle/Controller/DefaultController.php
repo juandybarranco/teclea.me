@@ -178,7 +178,17 @@ class DefaultController extends Controller
                     if($userReferred){
                         $user->setReferred($userReferred);
                     }else{
-                        $user->setReferred(null);
+                        $status = 404;
+                        return $this->render('default/index.html.twig', [
+                            'last_username' => $auth->getLastUsername(),
+                            'error' => $auth->getLastAuthenticationError(),
+                            'form' => $form->createView(),
+                            'formForgottedPassword' => $form2->createView(),
+                            'contactForm' => $form3->createView(),
+                            'sendMail' => $sendMail,
+                            'option' => $options,
+                            'status' => $status
+                        ]);
                     }
                 }else{
                     if($form->get('referred')->getData()){
@@ -190,6 +200,16 @@ class DefaultController extends Controller
                             $user->setReferred($userReferred);
                         }else{
                             $status = 404;
+                            return $this->render('default/index.html.twig', [
+                                'last_username' => $auth->getLastUsername(),
+                                'error' => $auth->getLastAuthenticationError(),
+                                'form' => $form->createView(),
+                                'formForgottedPassword' => $form2->createView(),
+                                'contactForm' => $form3->createView(),
+                                'sendMail' => $sendMail,
+                                'option' => $options,
+                                'status' => $status
+                            ]);
                         }
                     }
                 }
