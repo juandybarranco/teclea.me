@@ -1,0 +1,58 @@
+{% extends 'userBase.html.twig' %}
+
+{% block title %}Buscar Comunidades{% endblock %}
+
+{% block body %}
+    <div id="searchCommunity" class="container">
+        {% if status == 0 %}
+            <div class="card panel-dark">
+                <div class="card-header bg-dark cWhite">
+                    <h2 class="cWhite">Buscador de Usuarios</h2>
+                    <div class="col-md-6 m-auto">
+                        <hr/>
+                    </div>
+                    <p class="m-0">¡Encuentra tus amigos!</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="input-group searchBox">
+                        <input type="text" id="search" placeholder="Nombre de Usuario: " class="form-control"/>
+                        <span class="input-group-btn">
+                            <button id="buttonUserSearch" class="btn btn-md btn-dark" type="button">Buscar</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+        {% elseif status == 1 %}
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <h4 class="cWhite">Resultados de la búsqueda ({{ users | length }})</h4>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for u in users %}
+                            <div class="card list mt-lg-3">
+                                <div class="card-body input-group text-left dflexblock">
+                                    <div class="col-md-10">
+                                        <h3><a href="{{ path('viewUserProfile', { 'id': u.id }) }}"><span class="fa fa-user"></span> {{ u.username }}</a></h3>
+                                        <h1>{{ u.personalMessage }}</h1>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span><a href="{{ path('viewUserProfile', { 'id': u.id }) }}" class="btn btn-dark"><span class="fa fa-arrow-right"> Visitar</span></a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">No se ha encontrado ningún usuario relacionado con tu búsqueda.</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('searchUser') }}" class="btn btn-dark"><span class="fa fa-search"></span> Nueva Búsqueda</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

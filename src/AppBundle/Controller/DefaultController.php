@@ -462,6 +462,37 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/searchUser", name="searchUser")
+     */
+    public function searchUserAction()
+    {
+        $user = $this->getUser();
+        $string = "";
+        $status = 0;
+        $users = [];
+
+        if(isset($_GET['s'])){
+            $status = 1;
+            $string = $_GET['s'];
+
+            if(strlen($string) < 3){
+                return $this->redirectToRoute('searchUser');
+            }else{
+                $users = $this->getDoctrine()->getManager()->createQuery(
+                    'SELECT p FROM AppBundle:User p WHERE p.username like :string AND p.isBlock = FALSE AND p.isSuspended = FALSE'
+                )->setParameter('string', '%' . $string . '%')->getResult();
+            }
+        }
+
+        return $this->render('default/userSearch.html.twig', [
+            'user' => $user,
+            'status' => $status,
+            'string' => $string,
+            'users' => $users
+        ]);
+    }
+
+    /**
      * @Route("/help", name="help")
      */
     public function helpAction(Request $request)

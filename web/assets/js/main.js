@@ -147,6 +147,11 @@
         window.location.href = '/searchCommunity?s='+search;
     });
 
+    $("#buttonUserSearch").click(function(){
+        search = $("#search").val();
+        window.location.href = '/searchUser?s='+search;
+    });
+
     $("#search").keydown(function(event){
         if(event.keyCode == 13){
             if($("#search").val().length > 0){

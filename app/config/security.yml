@@ -50,6 +50,7 @@ security:
         - { path: ^/notifications/, roles: ROLE_USER }
         - { path: ^/invitation/, roles: ROLE_USER }
         - { path: ^/searchCommunity, roles: ROLE_USER }
+        - { path: ^/searchUser, roles: ROLE_USER }
         - { path: ^/user/, roles: ROLE_USER }
         - { path: ^/help, roles: ROLE_USER }
         - { path: ^/newPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
