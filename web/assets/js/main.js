@@ -156,6 +156,7 @@
         if(event.keyCode == 13){
             if($("#search").val().length > 0){
                 $("#buttonSearch").click();
+                $("#buttonUserSearch").click();
             }
         }
     });
