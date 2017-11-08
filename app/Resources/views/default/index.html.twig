@@ -6,8 +6,22 @@
 
 {% block body %}
     {% if app.user %}
-
         <div id="feed" class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="input-group searchBox">
+                        <input type="text" id="search" placeholder="Busca un Usuario: " class="form-control"/>
+                        <span class="input-group-btn">
+                        <button id="buttonUserSearch" class="btn btn-dark border-dark" type="button">Buscar</button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 m-auto">
+                <hr/>
+            </div>
+
             {% if messages|length == 0 and replies|length == 0 %}
                 <div class="alert alert-warning" role="alert">Tú Feed está vacío. <a href="{{ path('communityList') }}">¿Por qué no exploras las distintas comunidades?</a></div>
             {% else %}
