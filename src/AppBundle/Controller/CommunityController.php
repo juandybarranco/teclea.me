@@ -769,7 +769,8 @@ class CommunityController extends Controller
                     }
 
                     case 'default': {
-                        $status = null;
+                        $userAccess = true;
+                        $status = 'full';
                         break;
                     }
                 }
